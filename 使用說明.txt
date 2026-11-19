@@ -1,14 +1,9 @@
-滙嘉管理 APP V47｜完整重新上傳包
+滙嘉管理 APP V49｜固定手機畫面比例
 
-這是完整 APP，不是只有單一 HTML。
-基礎：V40 版面 + V46 歷史關鍵字中文輸入修正。
-包含 index.html、sw.js、manifest.webmanifest、icon.svg、使用說明.txt。
+以 V48 為基礎，設定手機 viewport 初始／最小／最大比例為 1，關閉一般手勢縮放，並將 iPhone 可輸入欄位字級統一至少 16px，避免點擊輸入時自動放大。
 
-GitHub 更新：
-1. 將 ZIP 解壓縮，請勿直接上傳 ZIP 當網站內容。
-2. 在儲存庫 main 分支根目錄上傳 index.html、sw.js、manifest.webmanifest、icon.svg，覆蓋原檔並提交。
-3. 等待 GitHub Actions 的 Pages 部署成功。
-4. Safari 開啟原網站網址，測試歷史單據的中文關鍵字。
-5. 若仍是舊版，可能是 iPhone 桌面安裝版的 Service Worker 快取；先在 Safari 測試，不要刪除 APP 或清除網站資料，以免本機單據遺失。
+上傳 index.html、sw.js、icon.svg、manifest.webmanifest 至 GitHub Pages 儲存庫根目錄，提交並等待部署。
 
-注意：資料可能儲存於裝置瀏覽器 localStorage。重新上傳程式不會主動清空，但不同裝置不會自動同步。
+注意：此設定限制使用者手動縮放，可能影響需要放大文字的無障礙使用者；系統層級的放大功能仍可能有效。
+
+本版沒有更動資料格式或清除資料；切勿刪除舊 APP 或清除網站資料，避免遺失本機單據。
