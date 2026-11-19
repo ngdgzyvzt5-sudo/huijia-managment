@@ -302,6 +302,35 @@ body.hj-v31-in-history #main{padding-top:8px}
   .sheet select, .sheet textarea { font-size: 16px !important; }
 }
 </style>
+
+<style id="hj-v50-mobile-layout-stability">
+/* Maintain a viewport-width layout across all pages, sheets and form details. */
+html,body{width:100%;max-width:100%;overflow-x:hidden}*,*::before,*::after{box-sizing:border-box}
+.app,#main,.sheet,.modal,.item-row,.field{min-width:0;max-width:100%}
+.sheet{overflow-x:hidden;overflow-wrap:anywhere}
+.sheet .row,.sheet .cols{min-width:0;max-width:100%}
+.sheet p,.sheet b,.sheet strong,.sheet .detail-number{overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:600px){
+  /* Three 16px inputs (especially iOS native dates) cannot fit safely in one row. */
+  .hj-sample-triple{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .hj-sample-triple>.field:first-child{grid-column:1/-1}
+  .hj-sample-triple>.field,.hj-sample-double>.field,.hj-project-dates>.field{min-width:0!important;max-width:100%!important}
+  .hj-sample-triple input,.hj-sample-double input,.hj-project-dates input{display:block;width:100%!important;min-width:0!important;max-width:100%!important;font-size:16px!important}
+  .hj-sample-triple input[type=date],.hj-sample-double input[type=date],.hj-project-dates input[type=date]{min-height:44px}
+  .sheet .row:has(.action-large){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sheet .row:has(.action-large)>*{min-width:0}
+}
+</style>
+<script id="hj-v50-mobile-fixed-zoom">
+/* Stop pinch/gesture page zoom in iOS Safari and installed web app.
+   Do not interfere with single-finger scrolling or text editing. */
+(function(){
+  document.addEventListener('gesturestart',function(e){e.preventDefault()},{passive:false});
+  document.addEventListener('gesturechange',function(e){e.preventDefault()},{passive:false});
+  document.addEventListener('gestureend',function(e){e.preventDefault()},{passive:false});
+  document.addEventListener('touchmove',function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});
+})();
+</script>
 </head><body><div class="app"><header><button class="hj-h-logo" onclick="hjV26LogoClick()" aria-label="開啟歷史表單" title="歷史表單"><span class="hj-v32-h-letter" aria-hidden="true">H</span></button><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div><span style="font-size:26px">🛠️</span></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script>
 
 function navIcon(id){const paths={

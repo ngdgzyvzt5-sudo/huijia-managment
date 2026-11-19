@@ -1,4 +1,4 @@
-const CACHE='huijia-v49-fixed-viewport-20261119';
+const CACHE='huijia-v50-mobile-form-layout-20261119';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('huijia-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
