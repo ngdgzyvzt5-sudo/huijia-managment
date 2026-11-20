@@ -115,6 +115,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(
 
 /* V49: keep all input controls at iOS-safe 16px to avoid focus zoom. */
 @supports (-webkit-touch-callout: none) {input:not([type="checkbox"]):not([type="radio"]),textarea,select,[contenteditable="true"]{font-size:16px!important}}
+.hj-catalog-import-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.hj-import-preview{max-height:42vh;overflow:auto;margin:14px 0}.hj-import-line{padding:9px;border-bottom:1px solid rgba(130,110,90,.2);overflow-wrap:anywhere}.hj-import-line small{display:block;color:#887765}@media(max-width:420px){.hj-catalog-header{align-items:flex-start}.hj-catalog-import-actions{justify-content:flex-end}.hj-catalog-import-actions .btn{font-size:12px;padding:8px}}
 </style><style id="hj-v11-compact-actions">.hj-other-toggle{display:flex;align-items:center;gap:9px;margin:10px 0 6px;font-size:13px;font-weight:650}.hj-other-toggle input{width:18px;height:18px;flex:0 0 18px}.hj-detail-delete{margin-top:22px;padding-top:14px;border-top:1px solid rgba(125,125,125,.16);display:flex;justify-content:flex-end}.hj-detail-delete .btn{min-width:110px}.sheet .row:has(> .action-large){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sheet .row:has(> .action-large)>.btn{min-width:0;width:100%;margin:0}.sheet .row:has(> .action-large)+.row:has(>.btn.outline){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sheet .row:has(> .action-large)+.row:has(>.btn.outline)>.btn{width:100%;min-width:0;margin:0}@media(max-width:420px){.sheet .row:has(> .action-large)+.row:has(>.btn.outline){grid-template-columns:repeat(2,minmax(0,1fr))}}</style><style id="hj-v15-card-meta">.ticket .hj-card-meta{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;column-gap:7px;row-gap:3px;text-align:left}.ticket .hj-meta-pair{display:inline-flex;align-items:baseline;gap:4px;max-width:100%;min-width:0}.ticket .hj-meta-label{white-space:nowrap;flex-shrink:0}.ticket .hj-meta-value{overflow-wrap:anywhere}.ticket .hj-meta-separator{color:rgba(102,110,120,.55);font-weight:400;flex-shrink:0}.ticket .compact-inst.hj-card-meta{margin-top:4px}@media(max-width:370px){.ticket .hj-card-meta{column-gap:5px}.ticket .hj-meta-pair{gap:3px}}</style><style id="hj-v22-seamless-modal">
 /* V22: seamless modal top area, no contrasting header strip */
 .sheet{position:relative;}
@@ -347,7 +348,21 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}*,*::before,*::after{box-s
 @media(max-width:390px){
  .hj-v23-filter-grid label:has(input[type="month"]),.hj-v39-grid label:has(input[type="month"]){grid-column:1/-1}
 }
-</style></head><body><div class="app"><header><button class="hj-h-logo" onclick="hjV26LogoClick()" aria-label="開啟歷史表單" title="歷史表單"><span class="hj-v32-h-letter" aria-hidden="true">H</span></button><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div><span style="font-size:26px">🛠️</span></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script>
+</style>
+<style id="hj-v56-mobile-filter-fix">
+/* 手機篩選欄位不再被 iOS 月份控制項擠壓 */
+@media (max-width:600px){
+  #hjV23Panel .hj-v23-filter-grid{grid-template-columns:minmax(0,1fr)!important;gap:13px!important}
+  #hjV23Panel .hj-v23-filter-grid label{grid-column:auto!important;min-width:0!important;overflow:visible!important;width:100%}
+  #hjV23Panel .hj-v23-filter-grid input[type=month],
+  #hjV23Panel .hj-v23-filter-grid select{display:block;width:100%!important;max-width:100%!important;min-width:0!important;height:48px!important;min-height:48px!important;padding:9px 13px!important;font-size:16px!important;line-height:1.4!important;border-radius:13px!important;box-sizing:border-box!important}
+  #hjV23Panel .hj-v23-filter-grid input[type=month]::-webkit-date-and-time-value{min-width:0!important;max-width:100%;text-align:left}
+}
+/* 未選月份時視覺上留白，保留右側日期選擇圖示及可點選功能 */
+#hjV23Month[value=""]::-webkit-date-and-time-value{visibility:hidden}
+#hjV23Month[value=""]::-webkit-datetime-edit{color:transparent}
+</style>
+</head><body><div class="app"><header><button class="hj-h-logo" onclick="hjV26LogoClick()" aria-label="開啟歷史表單" title="歷史表單"><span class="hj-v32-h-letter" aria-hidden="true">H</span></button><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div><span style="font-size:26px">🛠️</span></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script src="jszip.min.js"></script><script>
 
 function navIcon(id){const paths={
  tickets:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6M8 10h8M8 14h8M8 18h5"/>',
@@ -602,8 +617,63 @@ function catalogSettings(kind){
   const sorted=[...catalogFor(kind)].sort((a,b)=>Number(b.enabled)-Number(a.enabled));
   const activeCount=sorted.filter(x=>x.enabled).length;
   let activeSerial=0;
-  modal(`<div class="hj-catalog-header"><h2>${title}</h2><button type="button" class="btn small hj-add-product" onclick="catalogEdit('${kind}',null)">＋ 新增品項</button></div><div class="hj-catalog-summary"><strong>使用中 ${activeCount} 項</strong><span>已停用 ${sorted.length-activeCount} 項（不計入序號）</span></div><p class="muted hj-catalog-intro">申請單僅顯示品名；停用品項排列在最後，可隨時重新啟用。</p><div class="hj-catalog-list">${sorted.map(x=>`<div class="hj-catalog-item ${x.enabled?'':'hj-catalog-disabled'}"><div class="hj-catalog-index ${x.enabled?'':'is-off'}">${x.enabled?++activeSerial:'—'}</div><div class="hj-catalog-info"><div class="hj-catalog-name"><b>${esc(x.name)}</b><span class="hj-state ${x.enabled?'':'off'}">${x.enabled?'使用中':'已停用'}</span></div><div class="hj-catalog-meta">品號：${esc(x.code||'—')}</div><div class="hj-catalog-meta hj-catalog-note">備註：${esc(x.note||'—')}</div></div><div class="hj-catalog-actions"><button type="button" class="btn secondary small" onclick="catalogEdit('${kind}','${x.id}')">編輯</button><button type="button" class="btn outline small" onclick="catalogToggle('${kind}','${x.id}')">${x.enabled?'停用':'啟用'}</button></div></div>`).join('')||'<p class="muted">尚無品項</p>'}</div>`);
+  modal(`<div class="hj-catalog-header"><h2>${title}</h2><div class="hj-catalog-import-actions"><button type="button" class="btn secondary small" onclick="catalogImportPick('${kind}')">匯入 Excel</button><button type="button" class="btn small hj-add-product" onclick="catalogEdit('${kind}',null)">＋ 新增品項</button></div></div><div class="hj-catalog-summary"><strong>使用中 ${activeCount} 項</strong><span>已停用 ${sorted.length-activeCount} 項（不計入序號）</span></div><p class="muted hj-catalog-intro">申請單僅顯示品名；停用品項排列在最後，可隨時重新啟用。</p><div class="hj-catalog-list">${sorted.map(x=>`<div class="hj-catalog-item ${x.enabled?'':'hj-catalog-disabled'}"><div class="hj-catalog-index ${x.enabled?'':'is-off'}">${x.enabled?++activeSerial:'—'}</div><div class="hj-catalog-info"><div class="hj-catalog-name"><b>${esc(x.name)}</b><span class="hj-state ${x.enabled?'':'off'}">${x.enabled?'使用中':'已停用'}</span></div><div class="hj-catalog-meta">品號：${esc(x.code||'—')}</div><div class="hj-catalog-meta hj-catalog-note">備註：${esc(x.note||'—')}</div></div><div class="hj-catalog-actions"><button type="button" class="btn secondary small" onclick="catalogEdit('${kind}','${x.id}')">編輯</button><button type="button" class="btn outline small" onclick="catalogToggle('${kind}','${x.id}')">${x.enabled?'停用':'啟用'}</button></div></div>`).join('')||'<p class="muted">尚無品項</p>'}</div>`);
 }
+
+/* V57: offline Excel item import; match by product code; preview before commit. */
+let catalogImportPending=null;
+function catalogImportPick(kind){
+  let el=document.getElementById('hj-catalog-xlsx-file');
+  if(!el){el=document.createElement('input');el.id='hj-catalog-xlsx-file';el.type='file';el.accept='.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';el.style.display='none';document.body.appendChild(el)}
+  el.value='';el.onchange=()=>{if(el.files?.[0])catalogImportRead(kind,el.files[0])};el.click();
+}
+function hjXlsxText(node){return [...node.getElementsByTagName('*')].filter(x=>x.localName==='t').map(x=>x.textContent||'').join('')}
+function hjXlsxChildren(node,name){return [...node.children].filter(x=>x.localName===name)}
+async function catalogImportRead(kind,file){
+  if(file.name!=='品項建立.xlsx')return alert('請選擇檔名為「品項建立.xlsx」的 Excel 檔案。');
+  if(file.size>10*1024*1024)return alert('檔案超過 10 MB，請縮小後再匯入。');
+  if(typeof JSZip==='undefined')return alert('Excel 讀取元件尚未載入，請重新整理 APP 後再試。');
+  try{
+    const zip=await JSZip.loadAsync(file),parser=new DOMParser();
+    const readXml=async path=>{const f=zip.file(path);if(!f)throw Error('缺少 Excel 必要資料：'+path);const doc=parser.parseFromString(await f.async('string'),'application/xml');if(doc.querySelector('parsererror'))throw Error('Excel XML 格式錯誤');return doc};
+    const wb=await readXml('xl/workbook.xml'),rels=await readXml('xl/_rels/workbook.xml.rels');
+    const relMap=new Map([...rels.getElementsByTagName('*')].filter(x=>x.localName==='Relationship').map(x=>[x.getAttribute('Id'),x.getAttribute('Target')]));
+    const sheets=[...wb.getElementsByTagName('*')].filter(x=>x.localName==='sheet');
+    let sheetPath='';for(const sheet of sheets){const rid=sheet.getAttribute('r:id')||sheet.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','id');let target=relMap.get(rid);if(target){sheetPath=target.startsWith('/')?target.slice(1):target.startsWith('xl/')?target:'xl/'+target;break}}
+    if(!sheetPath)throw Error('找不到 Excel 工作表');
+    let strings=[];if(zip.file('xl/sharedStrings.xml')){const shared=await readXml('xl/sharedStrings.xml');strings=[...shared.getElementsByTagName('*')].filter(x=>x.localName==='si').map(hjXlsxText)}
+    const sheet=await readXml(sheetPath),xmlRows=[...sheet.getElementsByTagName('*')].filter(x=>x.localName==='row');
+    const rows=xmlRows.map(row=>{let obj={};for(const c of hjXlsxChildren(row,'c')){const ref=c.getAttribute('r')||'',col=(ref.match(/^[A-Z]+/)||[])[0];if(!col)continue;const type=c.getAttribute('t');let val='';if(type==='inlineStr')val=hjXlsxText(c);else{const v=hjXlsxChildren(c,'v')[0]?.textContent||'';val=type==='s'?strings[Number(v)]??'':v}obj[col]=String(val).trim()}return obj}).filter(x=>Object.values(x).some(Boolean));
+    if(!rows.length||rows[0].A!=='品號'||rows[0].B!=='品名'||rows[0].C!=='備註')throw Error('第一列欄位必須依序為「品號、品名、備註」。');
+    const existing=catalogFor(kind),existingByCode=new Map(existing.filter(x=>x.code?.trim()).map(x=>[x.code.trim(),x]));
+    const seen=new Set(),changes=[],errors=[];let skipped=0;
+    rows.slice(1).forEach((row,i)=>{
+      const code=(row.A||'').trim(),name=(row.B||'').trim(),note=(row.C||'').trim(),line=i+2;
+      if(!code&&!name&&!note)return;
+      if(!code||!name){errors.push(`第 ${line} 列：品號與品名不可空白`);return}
+      if(seen.has(code)){errors.push(`第 ${line} 列：Excel 內品號「${code}」重複`);return}seen.add(code);
+      const match=existingByCode.get(code);
+      if(match){if(match.name===name&&match.note===note){skipped++;return}
+        if(existing.some(x=>x.id!==match.id&&x.name===name)){errors.push(`第 ${line} 列：品名「${name}」已由其他品號使用`);return}
+        changes.push({action:'update',id:match.id,code,name,note,oldName:match.name});
+      }else{
+        if(existing.some(x=>x.name===name)||changes.some(x=>x.name===name)){errors.push(`第 ${line} 列：品名「${name}」已存在，請先確認原品項的品號`);return}
+        changes.push({action:'add',code,name,note});
+      }
+    });
+    if(errors.length)throw Error('資料檢查未通過，尚未匯入：\n'+errors.slice(0,8).join('\n')+(errors.length>8?`\n另有 ${errors.length-8} 筆錯誤`:''));
+    catalogImportPending={kind,changes};
+    const add=changes.filter(x=>x.action==='add').length,update=changes.length-add;
+    modal(`<h2>匯入品項預覽</h2><p class="muted">檔案：品項建立.xlsx　｜　${kind==='repair'?'維修':'專案／樣品'}品項</p><div class="notice">新增 ${add} 筆、更新 ${update} 筆、內容相同略過 ${skipped} 筆。依品號比對，不刪除未列於 Excel 的品項。</div><div class="hj-import-preview">${changes.slice(0,50).map(x=>`<div class="hj-import-line"><b>${x.action==='add'?'新增':'更新'}</b>　${esc(x.code)}　${esc(x.name)}${x.oldName&&x.oldName!==x.name?`<small>（原品名：${esc(x.oldName)}）</small>`:''}</div>`).join('')||'<p>沒有需要變更的品項。</p>'}</div>${changes.length>50?`<p class="muted">僅預覽前 50 筆，共 ${changes.length} 筆變更。</p>`:''}<div class="row"><button class="btn" onclick="catalogImportCommit()" ${changes.length?'':'disabled'}>確認匯入</button><button class="btn secondary" onclick="catalogImportPending=null;catalogSettings('${kind}')">取消</button></div>`);
+  }catch(e){catalogImportPending=null;alert('Excel 匯入失敗：'+(e?.message||e))}
+}
+function catalogImportCommit(){
+  const p=catalogImportPending;if(!p)return;
+  const list=catalogFor(p.kind);
+  for(const x of p.changes){if(x.action==='add')list.push({id:'cat-'+uid(),code:x.code,name:x.name,note:x.note,enabled:true});else{const old=list.find(a=>a.id===x.id);if(old)Object.assign(old,{name:x.name,note:x.note})}}
+  catalogImportPending=null;syncLegacyProducts();alert(`匯入完成：新增 ${p.changes.filter(x=>x.action==='add').length} 筆、更新 ${p.changes.filter(x=>x.action==='update').length} 筆。`);catalogSettings(p.kind);
+}
+
 function catalogEdit(kind,id){const x=id?catalogFor(kind).find(x=>x.id===id):null;modal(`<h2>${x?'編輯':'新增'}${kind==='repair'?'維修':'專案／樣品'}品項</h2><label class="field"><span>品號</span><input id="cat-code" value="${esc(x?.code||'')}" placeholder="例如：HJ-001"></label><label class="field"><span>品名 *</span><input id="cat-name" value="${esc(x?.name||'')}" placeholder="例如：智慧光纖薄墊"></label><label class="field"><span>備註</span><textarea id="cat-note" placeholder="例如：規格、型號或填寫提示">${esc(x?.note||'')}</textarea></label><p class="notice">品名是申請單顯示與記錄的文字。已使用過的品名建議不要改成不同產品，以免與歷史單據混淆。</p><div class="row"><button class="btn" onclick="catalogSave('${kind}',${id?`'${id}'`:'null'})">儲存品項</button><button class="btn secondary" onclick="catalogSettings('${kind}')">返回品項管理</button></div>`)}
 function catalogSave(kind,id){let code=document.getElementById('cat-code').value.trim(),name=document.getElementById('cat-name').value.trim(),note=document.getElementById('cat-note').value.trim(),items=catalogFor(kind);if(!name)return alert('請輸入品名');if(items.some(x=>x.name===name&&x.id!==id))return alert('品名已存在，請直接編輯或重新啟用原品項');if(code&&items.some(x=>x.code===code&&x.id!==id))return alert('品號已存在，請使用不同品號');if(id){let x=items.find(x=>x.id===id);if(!x)return alert('找不到品項');Object.assign(x,{code,name,note})}else items.push({id:'cat-'+uid(),code,name,note,enabled:true});syncLegacyProducts();catalogSettings(kind)}
 function catalogToggle(kind,id){let x=catalogFor(kind).find(x=>x.id===id);if(!x)return;x.enabled=!x.enabled;syncLegacyProducts();catalogSettings(kind)}
@@ -841,7 +911,7 @@ function hjV38PendingCards(arr,showReminder=false){
 function hjV23Card(t){let kind=mode==='repair'?'repair':t.kind;let badges=statusBadges(t);let label=kind==='sample'?'使用單位':'機構';let click=mode==='repair'?`detail('${t.id}')`:`projectDetail('${t.id}')`;return `<article class="hj-v23-card ${hjV23Done(t)?'hj-v25-completed':''}" tabindex="0" role="button" onclick="${click}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${click}}"><span class="hj-v23-card-icon" aria-hidden="true">${kind==='repair'?'⚒':kind==='project'?'▤':'◇'}</span><div class="hj-v23-card-body"><strong>${hjV23Escape(t.number)}</strong><div class="hj-v23-meta">申請日期：${hjV23Escape(t.date)} &nbsp;|&nbsp; 申請人：${hjV23Escape(t.applicant)}</div><div class="hj-v23-meta">${label}：${hjV23Escape(t.institution)}</div></div><span class="status-pair">${!hjV23History&&hjV23Old(t)&&!hjV23Done(t)?'<span class="hj-cross-month">跨月未完成</span>':''}${badges}</span><span class="hj-v23-arrow">›</span></article>`}
 function hjV23Units(){return [...new Set(hjV23All().map(t=>String(t.institution||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'zh-Hant'))}
 function hjV23Filter(t){let d=String(t.date||'');return (!hjV23Month||d.startsWith(hjV23Month))&&(!hjV23Unit||String(t.institution||'').trim()===hjV23Unit)&&matchesQuick(t)}
-function hjV23FilterPanel(){let units=hjV23Units().map(x=>`<option value="${hjV23Escape(x)}" ${x===hjV23Unit?'selected':''}>${hjV23Escape(x)}</option>`).join('');return `<div class="hj-v23-filters" id="hjV23Panel" ${hjV23Expanded?'':'hidden'}><div class="hj-v23-filter-head"><b>進階篩選</b><span class="muted" style="font-size:11px">申請月份與機構可搭配關鍵字搜尋</span></div><div class="hj-v23-filter-grid"><label>申請月份<input type="month" id="hjV23Month" value="${hjV23Escape(hjV23Month)}" onchange="hjV23Change()"></label><label>機構／使用單位<select id="hjV23Unit" onchange="hjV23Change()"><option value="">全部機構／使用單位</option>${units}</select></label></div><div class="hj-v23-filter-actions"><button class="btn secondary small" onclick="hjV23Clear()">清除篩選</button><button class="btn secondary small" onclick="hjV23Toggle()">收起 ⌃</button></div></div>`}
+function hjV23FilterPanel(){let units=hjV23Units().map(x=>`<option value="${hjV23Escape(x)}" ${x===hjV23Unit?'selected':''}>${hjV23Escape(x)}</option>`).join('');return `<div class="hj-v23-filters" id="hjV23Panel" ${hjV23Expanded?'':'hidden'}><div class="hj-v23-filter-head"><b>進階篩選</b><span class="muted" style="font-size:11px">申請月份與機構可搭配關鍵字搜尋</span></div><div class="hj-v23-filter-grid"><label>申請月份<input type="month" id="hjV23Month" value="${hjV23Escape(hjV23Month)}" onchange="hjV23Change()"></label><label>機構／使用單位<select id="hjV23Unit" onchange="hjV23Change()"><option value="">　</option>${units}</select></label></div><div class="hj-v23-filter-actions"><button class="btn secondary small" onclick="hjV23Clear()">清除篩選</button><button class="btn secondary small" onclick="hjV23Toggle()">收起 ⌃</button></div></div>`}
 function hjV23Refresh(){
  if(!hjV23ListTab())return;
  const m=document.getElementById('main');if(!m)return;
