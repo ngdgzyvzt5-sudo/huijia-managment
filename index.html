@@ -610,7 +610,8 @@ input:is([type="date"],[type="month"],[type="time"],[type="datetime-local"])::-w
 textarea{text-align:left!important;vertical-align:top!important;}
 </style>
 <style id="hj-v73-history-in-settings">
-.hj-settings-h-mark{display:inline-grid;place-items:center;width:39px;height:39px;margin-right:9px;vertical-align:middle;border-radius:13px;background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(218,218,235,.8));box-shadow:inset 1px 2px 2px #fff,2px 4px 9px #6558492a;border:1px solid #ffffffdb;font:800 23px/1 Arial,Helvetica,sans-serif;color:var(--hj-strong,#78614d)}
+.hj-settings-h-mark{display:inline-grid;place-items:center;width:30px;height:30px;margin-right:10px;vertical-align:middle;color:inherit;background:none;border:0;border-radius:0;box-shadow:none}
+.hj-settings-h-mark svg{display:block;flex:none;width:27px;height:27px}
 .hj-setting-sort[data-setting-id="history"] .setting{min-height:65px}
 .hj-report-handle-spacer{display:block;flex:0 0 20px;width:20px}.hj-report-setting{cursor:default}
  /* V87: independent left/right controls, even with close-only header styles. */
@@ -1148,24 +1149,25 @@ function hjSettingsArrange(){
  const repair=mode==='repair';
  const definitions=repair?[
   ['report','📊 維修單資料報表','依申請日期匯出維修總表、待出貨及待回收報表','hjRepairReportDialog()'],
-  ['history','<span class="hj-settings-h-mark" aria-hidden="true">H</span> 歷史表單','查看維修、專案與樣品的歷史單據','hjV26LogoClick()'],
+  ['history','<span class="hj-settings-h-mark" aria-hidden="true"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span> 歷史表單','查看維修、專案與樣品的歷史單據','hjV26LogoClick()'],
   ['theme','🎨 APP 色調設定','暖米杏預設色與自訂顏色','themeSettings()'],
   ['number','🔢 單據格式設定','維修單號編碼規則','numberSettings(\'repair\')'],
   ['products','📋 品項管理','新增、編輯、停用與重新啟用品項','settingsProducts()'],
-  ['sync','🔑 專屬同步碼','雲端同步尚未啟用','settingsSync()'],
+  ['sync','☁️ 私人雲端同步','登入 Supabase 並手動上傳／下載單據','hjCloudDialog()'],
   ['archive','🗂️ 封存／已刪除單據','查看與管理封存單據','settingsDeleted()'],
   ['backup','💾 匯出資料備份','下載 JSON 備份','exportBackup()'],
-  ['features','⚙️ 功能','清除所有測試資料','hjFeatureSettings()']
+  ['features','🧹 格式化測試資料','清除所有測試資料','hjFeatureSettings()']
  ]:[
-  ['history','<span class="hj-settings-h-mark" aria-hidden="true">H</span> 歷史表單','查看維修、專案與樣品的歷史單據','hjV26LogoClick()'],
+  ['project-report','📊 專案/樣品資料報表','依申請日期匯出專案、樣品統計與待出貨／待回收報表','hjProjectReportDialog()'],
+  ['history','<span class="hj-settings-h-mark" aria-hidden="true"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span> 歷史表單','查看維修、專案與樣品的歷史單據','hjV26LogoClick()'],
   ['theme','🎨 APP 色調設定','暖米杏預設色與自訂顏色','themeSettings()'],
   ['number','🔢 單據格式設定','專案與樣品單號分別設定','combinedNumberSettings()'],
   ['products','📋 品項管理','專案／樣品品項','projectProductsSettings()'],
   ['reminder','🔔 預計回收提醒','調整回收提醒天數','reminderSettings()'],
-  ['sync','🔑 專屬同步碼','雲端同步尚未啟用','settingsSync()'],
+  ['sync','☁️ 私人雲端同步','登入 Supabase 並手動上傳／下載單據','hjCloudDialog()'],
   ['archive','🗂️ 封存／已刪除單據','查看與管理封存單據','projectArchive()'],
   ['backup','💾 匯出資料備份','下載 JSON 備份','exportBackup()'],
-  ['features','⚙️ 功能','清除所有測試資料','hjFeatureSettings()']
+  ['features','🧹 格式化測試資料','清除所有測試資料','hjFeatureSettings()']
  ];
  const order=hjReadSettingOrder(hjSettingsMode());
  definitions.sort((a,b)=>{const x=order.indexOf(a[0]),y=order.indexOf(b[0]);return (x<0?999:x)-(y<0?999:y)});
@@ -1222,7 +1224,7 @@ function hjBindSettingsDrag(list){
 }
 function hjMoveSetting(i,d){let ids=[...(window.hjCurrentSettingsOrder||[])],j=i+d;if(j<0||j>=ids.length)return;[ids[i],ids[j]]=[ids[j],ids[i]];hjSaveSettingOrder(hjSettingsMode(),ids);render()}
 function hjFeatureSettings(){
- modal(`<h2>功能</h2><h3>資料整理</h3><p class="notice">清除目前裝置的維修、專案、樣品測試單據、出貨回收紀錄與草稿。保留品項及單號設定；無法復原，請先備份。</p><button class="btn danger" onclick="clearAllTestData()">清除所有測試資料</button>`);
+ modal(`<h2>格式化測試資料</h2><h3>資料整理</h3><p class="notice">清除目前裝置的維修、專案、樣品測試單據、出貨回收紀錄與草稿。保留品項及單號設定；無法復原，請先備份。</p><button class="btn danger" onclick="clearAllTestData()">清除所有測試資料</button>`);
 }
 const hjRenderBeforeV17=render;
 render=function(){hjRenderBeforeV17();hjSettingsArrange()};
@@ -1536,7 +1538,7 @@ async function hjPendingExcel(data){
  const sheets=[
  [['滙嘉健康生活科技｜維修待出貨／待回收報表'],['報表生成日期',data.generated],['未完成維修單數',data.ticketCount],['待出貨總件數',data.ship],['待回收總件數',data.recover],['說明','待回收數量＝申請－已回收；待出貨數量＝申請－已出貨']],
  [['品項名稱','待出貨數量','待回收數量'],...data.summary.map(x=>[x.name,x.ship,x.recover]),['總計',data.ship,data.recover]],
- [['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],...data.rows.map((r,i)=>i&&r[0]===data.rows[i-1][0]?['',...r.slice(1)]:r)]
+ [['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','預計出貨日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],...data.rows.map((r,i)=>i&&r[0]===data.rows[i-1][0]?['',...r.slice(1)]:r)]
  ];
  z.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${names.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`);
  z.file('_rels/.rels',`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`);
@@ -1565,7 +1567,7 @@ function hjPendingJpg(data){
  const W=2200,margin=55,inner=W-2*margin,ratio=2;
  const sections=[
   {title:'待處理品項統計',headers:['產品名稱','待出貨數量','待回收數量'],weights:[3.5,1,1],rows:data.summary.map(x=>[x.name,x.ship,x.recover])},
-  {title:'待處理維修明細',headers:['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],weights:[1.4,1,1.7,2.2,.9,1.3,1.15,1.15,1,1],rows:data.rows,mergeFirst:true}
+  {title:'待處理維修明細',headers:['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','預計出貨日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],weights:[1.4,1,1.7,2.2,.9,1.3,1.15,1.15,1,1],rows:data.rows,mergeFirst:true}
  ];
  const cv=document.createElement('canvas'),ctx=cv.getContext('2d');
  const font='"BiauKai", "DFKai-SB", "Noto Sans TC", sans-serif';
@@ -1631,6 +1633,129 @@ function hjPendingJpg(data){
  cv.toBlob(blob=>{if(blob)showJpgPreview(blob,`滙嘉維修待出貨待回收報表_${new Date().toISOString().slice(0,10)}.jpg`);else alert('JPG 產生失敗')},'image/jpeg',.92);
 }
 async function hjExportPendingRepair(format){try{const d=hjPendingRepairData();if(format==='jpg')hjPendingJpg(d);else await hjPendingExcel(d)}catch(e){console.error(e);alert('報表產生失敗：'+e.message)}}
+
+
+/* V97: project and sample reports; independent of repair ticket reports. */
+function hjProjectReportDialog(){
+ const y=new Date().getFullYear();
+ modal(`<h2>專案/樣品資料報表</h2>
+ <p class="muted">依申請日期產生專案與樣品總表，或匯出目前待出貨／待回收資料；不包含封存／刪除單據。</p>
+ <label class="field"><span>報表類型</span><select id="hj-pr-kind"><option value="all">專案＋樣品</option><option value="project">僅專案申請單</option><option value="sample">僅樣品申請單</option></select></label>
+ <label class="field"><span>開始日期</span><input id="hj-pr-start" type="date" value="${y}-01-01"></label>
+ <label class="field"><span>結束日期</span><input id="hj-pr-end" type="date" value="${today()}"></label>
+ <h3>專案／樣品總表</h3><p class="muted">包含統計總覽、申請品項、申請單明細。</p>
+ <div class="row"><button class="btn" onclick="hjProjectExport('total','xlsx')">匯出 Excel</button><button class="btn secondary" onclick="hjProjectExport('total','jpg')">匯出 JPG</button></div>
+ <div class="line"></div><h3>待出貨／待回收報表</h3>
+ <label class="field"><span>待處理報表單據類型</span><select id="hj-pr-pending-kind"><option value="all">專案＋樣品申請單</option><option value="project">僅專案申請單</option><option value="sample">僅樣品申請單</option></select></label>
+ <label class="field"><span><input type="checkbox" id="hj-pr-all" checked style="width:auto;height:auto;margin-right:8px">統計全部日期（取消勾選則依上方日期區間）</span></label>
+ <p class="muted">依各申請品項的申請數量扣除已出貨、已回收數量，列出待處理品項及明細。</p>
+ <div class="row"><button class="btn secondary" onclick="hjProjectExport('pending','xlsx')">匯出 Excel</button><button class="btn secondary" onclick="hjProjectExport('pending','jpg')">匯出 JPG</button></div>`);
+}
+function hjProjectReportData(type){
+ const start=document.getElementById('hj-pr-start')?.value||'',end=document.getElementById('hj-pr-end')?.value||'';
+ const all=type==='pending'&&document.getElementById('hj-pr-all')?.checked;
+ if(!all&&(!start||!end||start>end))throw Error('請選擇正確的開始及結束日期');
+ const kind=document.getElementById(type==='pending'?'hj-pr-pending-kind':'hj-pr-kind')?.value||'all';
+ const tickets=(state.projects||[]).filter(t=>!t.deleted&&(kind==='all'||t.kind===kind)&&(all||(hjRepairDate(t.date)>=start&&hjRepairDate(t.date)<=end)));
+ const summary=new Map(),rows=[],ticketIds=new Set();
+ let requested=0,sentTotal=0,returnedTotal=0,shipTotal=0,recoverTotal=0;
+ for(const t of tickets){
+  (t.items||[]).forEach((it,i)=>{
+   const qty=Math.max(0,Number(it.qty)||0),sent=Math.min(qty,Math.max(0,shipped(t,i))),returned=Math.min(qty,Math.max(0,recovered(t,i)));
+   const ps=Math.max(0,qty-sent),pr=Math.max(0,qty-returned);
+   if(type==='pending'&&!ps&&!pr)return;
+   const name=String(it.name||'未命名品項'),rec=summary.get(name)||{name,qty:0,ship:0,recover:0};
+   rec.qty+=qty;rec.ship+=ps;rec.recover+=pr;summary.set(name,rec);
+   requested+=qty;sentTotal+=sent;returnedTotal+=returned;shipTotal+=ps;recoverTotal+=pr;
+   ticketIds.add(t.id||t.number);
+   rows.push([String(t.number||''),t.kind==='sample'?'樣品':'專案',String(t.applicant||''),String(t.institution||''),name,qty,hjRepairDate(t.date),hjRepairDate(t.expectedShip),
+    returned>=qty?'已回收':returned>0?'部分回收':'待回收',sent>=qty?'已出貨':sent>0?'部分出貨':'待出貨',ps,pr]);
+  });
+ }
+ rows.sort((a,b)=>a[0].localeCompare(b[0],'zh-TW')||a[4].localeCompare(b[4],'zh-TW'));
+ const items=[...summary.values()].sort((a,b)=>type==='pending'?(b.ship+b.recover)-(a.ship+a.recover)||a.name.localeCompare(b.name,'zh-TW'):b.qty-a.qty||a.name.localeCompare(b.name,'zh-TW'));
+ return {type,kind,rows,items,ticketCount:type==='pending'?ticketIds.size:tickets.length,requested,sentTotal,returnedTotal,ship:shipTotal,recover:recoverTotal,period:all?'全部日期':hjReportPeriod(start,end),generated:new Date().toLocaleDateString('zh-TW'),title:type==='pending'?'專案／樣品待出貨／待回收報表':'專案／樣品統計總表'};
+}
+function hjProjectReportSheets(d){
+ const heading=['申請單號','單據類型','申請人','機構／使用單位','品項名稱','申請數量','申請日期','預計出貨日期','回收狀態','出貨狀態','待出貨數量','待回收數量'];
+ const overview=d.type==='pending'?
+ [['統計項目','數量／結果'],['報表生成日期',d.generated],['表單期間',d.period],['待處理單據數',d.ticketCount],['待出貨總件數',d.ship],['待回收總件數',d.recover]]:
+ [['統計項目','數量／結果'],['報表生成日期',d.generated],['表單期間',d.period],['申請單總數',d.ticketCount],['申請品項總件數',d.requested],['已出貨總件數',d.sentTotal],['已回收總件數',d.returnedTotal],['待出貨總件數',d.ship],['待回收總件數',d.recover]];
+ const product=d.type==='pending'?
+ [['品項名稱','待出貨數量','待回收數量'],...d.items.map(x=>[x.name,x.ship,x.recover])]:
+ [['品項名稱','申請數量','待出貨數量','待回收數量'],...d.items.map(x=>[x.name,x.qty,x.ship,x.recover])];
+ const detail=[heading,...d.rows.map((r,i)=>i&&r[0]===d.rows[i-1][0]?['',...r.slice(1)]:r)];
+ return [overview,product,detail];
+}
+async function hjProjectReportExcel(d){
+ if(typeof JSZip==='undefined')throw Error('Excel 元件尚未載入');
+ const sheets=hjProjectReportSheets(d),names=['統計總覽','品項統計','申請單明細'],z=new JSZip();
+ z.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${names.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`);
+ z.file('_rels/.rels','<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>');
+ z.file('xl/workbook.xml',`<?xml version="1.0"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${names.map((n,i)=>`<sheet name="${n}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')}</sheets></workbook>`);
+ z.file('xl/_rels/workbook.xml.rels',`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${names.map((_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}<Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
+ z.file('xl/styles.xml','<?xml version="1.0"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="1"><font><sz val="12"/><name val="標楷體"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE8F1FA"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF0EAF8"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf xfId="0"/><xf xfId="0" fontId="0" applyFont="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf xfId="0" fontId="0" fillId="1" applyFill="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf xfId="0" fontId="0" fillId="2" applyFill="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs></styleSheet>');
+ sheets.forEach((rows,i)=>{
+  let xml=hjPendingSheet(rows,i===2?[24,14,17,28,30,15,18,20,18,18,18,18]:i===1?[32,20,20,20]:[28,25]);
+  if(i===2){
+   // Color every data cell in the row, including the merged order-number cell.
+   xml=xml.replace(/<row r="(\d+)"([^>]*)>([\s\S]*?)<\/row>/g,(whole,r,attrs,cells)=>{
+    const idx=Number(r)-2;
+    if(idx<0||!d.rows[idx])return whole;
+    const style=d.rows[idx][1]==='樣品'?3:2;
+    return `<row r="${r}"${attrs}>${cells.replace(/(<c \b[^>]*?)s="1"/g,`$1s="${style}"`)}</row>`;
+   });
+  }
+  xml=xml.replace('</worksheet>','<pageMargins left="0.3" right="0.3" top="0.5" bottom="0.5" header="0.2" footer="0.2"/><pageSetup orientation="landscape" fitToWidth="1" fitToHeight="0"/></worksheet>');
+  if(i===2){
+   const merges=[];let a=0;
+   while(a<d.rows.length){let b=a+1;while(b<d.rows.length&&d.rows[b][0]===d.rows[a][0])b++;if(b-a>1)merges.push(`<mergeCell ref="A${a+2}:A${b+1}"/>`);a=b}
+   if(merges.length)xml=xml.replace('<pageMargins ',`<mergeCells count="${merges.length}">${merges.join('')}</mergeCells><pageMargins `);
+  }
+  z.file(`xl/worksheets/sheet${i+1}.xml`,xml);
+ });
+ downloadBlob(await z.generateAsync({type:'blob',compression:'DEFLATE'}),`滙嘉_${d.title}_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+function hjProjectReportJpg(d){
+ const sheets=hjProjectReportSheets(d),W=2400,margin=55,inner=W-margin*2,font='"Noto Sans TC","Microsoft JhengHei",sans-serif';
+ const cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+ const sections=sheets.map((rows,i)=>({name:['統計總覽','品項統計','申請單明細'][i],headers:rows[0],rows:rows.slice(1),weights:i===2?[1.35,1.0,1.2,1.7,1.8,.85,1.2,1.25,1.1,1.1,1.05,1.05]:i===1?[2.8,...rows[0].slice(1).map(()=>1)]:[2.2,1.4]}));
+ function lines(value,w){ctx.font=`23px ${font}`;let result=[],line='';for(const ch of Array.from(String(value??''))){if(line&&ctx.measureText(line+ch).width>w-24){result.push(line);line=ch}else line+=ch}result.push(line);return result}
+ function rh(vals,weights){const sum=weights.reduce((a,b)=>a+b,0);return Math.max(56,...vals.map((v,i)=>lines(v,inner*weights[i]/sum).length*32+20))}
+ const heights=sections.map(sec=>sec.rows.map(r=>rh(r,sec.weights)));
+ let H=205;sections.forEach((sec,i)=>{H+=120+heights[i].reduce((a,b)=>a+b,0)+(sec.rows.length?0:56)+38});H+=55;
+ cv.width=W;cv.height=H;ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#263c50';ctx.font=`bold 44px ${font}`;ctx.fillText('滙嘉健康生活科技｜'+d.title,margin,72);
+ ctx.fillStyle='#64748b';ctx.font=`25px ${font}`;ctx.fillText(`報表生成日期：${d.generated}　　表單期間：${d.period}`,margin,125);
+ ctx.fillText(`申請單類型：${d.kind==='project'?'僅專案申請單':d.kind==='sample'?'僅樣品申請單':'專案＋樣品申請單'}`,margin,159);
+ let y=194;
+ function cell(x,top,w,h,val,fill,bold=false){ctx.fillStyle=fill;ctx.fillRect(x,top,w,h);ctx.strokeStyle='#bcc8d2';ctx.lineWidth=1.2;ctx.strokeRect(x,top,w,h);ctx.fillStyle='#35495a';ctx.font=`${bold?'bold ':''}23px ${font}`;const txt=lines(val,w),ty=top+(h-txt.length*32)/2+24;txt.forEach((t,k)=>ctx.fillText(t,x+11,ty+k*32))}
+ function draw(vals,weights,h,fill='#fff',header=false,skipFirst=false){let x=margin;const total=weights.reduce((a,b)=>a+b,0);vals.forEach((v,i)=>{const w=inner*weights[i]/total;if(!(skipFirst&&i===0))cell(x,y,w,h,v,fill,header);x+=w});y+=h}
+ sections.forEach((sec,si)=>{
+  ctx.fillStyle='#e7eff5';ctx.fillRect(margin,y,inner,54);ctx.fillStyle='#263c50';ctx.font=`bold 30px ${font}`;ctx.fillText(sec.name,margin+12,y+37);y+=54;
+  draw(sec.headers,sec.weights,62,'#e7eff5',true);
+  if(!sec.rows.length){draw(['無符合條件的資料',...sec.headers.slice(1).map(()=>'')],sec.weights,56)}
+  else if(si!==2){sec.rows.forEach((r,i)=>draw(r,sec.weights,heights[si][i]))}
+  else{
+   // Draw a single order-number cell spanning the full height of adjacent items on the same application.
+   const colW=inner*sec.weights[0]/sec.weights.reduce((a,b)=>a+b,0);
+   let i=0;
+   while(i<sec.rows.length){let end=i+1;while(end<sec.rows.length&&d.rows[end][0]===d.rows[i][0])end++;
+    const groupY=y,groupH=heights[si].slice(i,end).reduce((a,b)=>a+b,0);
+    const fill=d.rows[i][1]==='樣品'?'#f0eaf8':'#e8f1fa';
+    for(let k=i;k<end;k++)draw(sec.rows[k],sec.weights,heights[si][k],fill,false,true);
+    cell(margin,groupY,colW,groupH,d.rows[i][0],fill,true);
+    i=end;
+   }
+  }
+  y+=38;
+ });
+ cv.toBlob(blob=>blob?showJpgPreview(blob,`滙嘉_${d.title}_${new Date().toISOString().slice(0,10)}.jpg`):alert('JPG 產生失敗'),'image/jpeg',.92);
+}
+async function hjProjectExport(type,format){
+ try{const data=hjProjectReportData(type);if(format==='jpg')hjProjectReportJpg(data);else await hjProjectReportExcel(data)}
+ catch(e){console.error(e);alert('報表產生失敗：'+e.message)}
+}
 
 /* V79: five-section JPG summary, using exactly the same filtered dataset as Excel. */
 function hjExportRepairSummaryJpg(){
@@ -1700,5 +1825,139 @@ modal=function(html){
 };
 closeModal=function(){hjSettingsModalHistory=[];hjSettingsModalActive=false;hjV85CloseModal()};
 
+
+/* V100 private cloud synchronization trial. Explicit upload/download only. */
+const HJ_CLOUD_URL='https://nvrxyhfxnmyfuyvymzbp.supabase.co';
+const HJ_CLOUD_KEY='sb_publishable_6KqNzA6oik_RV1mXEUrrSQ_GwS5Ann6';
+const HJ_CLOUD_SESSION='hj-v100-cloud-session';
+let hjCloudBusy=false;
+function hjCloudSession(){try{return JSON.parse(localStorage.getItem(HJ_CLOUD_SESSION)||'null')}catch{return null}}
+function hjCloudStore(session){if(session)localStorage.setItem(HJ_CLOUD_SESSION,JSON.stringify(session));else localStorage.removeItem(HJ_CLOUD_SESSION)}
+function hjCloudText(v){return esc(String(v??''))}
+function hjCloudCount(d){return (d?.tickets||[]).filter(x=>!x.deleted).length+' 張維修單、'+(d?.projects||[]).filter(x=>!x.deleted).length+' 張專案／樣品單'}
+function hjCloudSetStatus(message,error=false){const el=document.getElementById('hj-cloud-status');if(el){el.textContent=message;el.style.color=error?'#a94442':''}}
+async function hjCloudFetch(path,opts={},auth=true){
+ let sess=hjCloudSession();
+ if(auth){if(!sess?.access_token)throw Error('請先登入');if(Date.now()>=((sess.expires_at||0)*1000-60000)){
+  const r=await fetch(HJ_CLOUD_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:HJ_CLOUD_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:sess.refresh_token})});
+  const data=await r.json();if(!r.ok){hjCloudStore(null);throw Error('登入已過期，請重新登入')}
+  sess={...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)};hjCloudStore(sess);
+ }}
+ const headers={apikey:HJ_CLOUD_KEY,...opts.headers};if(auth)headers.Authorization='Bearer '+sess.access_token;
+ const response=await fetch(HJ_CLOUD_URL+path,{...opts,headers});
+ const raw=await response.text();let body;try{body=raw?JSON.parse(raw):null}catch{body=raw}
+ if(!response.ok)throw Error(typeof body==='object'?(body?.msg||body?.message||body?.error_description||body?.error||('HTTP '+response.status)):('HTTP '+response.status));
+ return body;
+}
+function hjCloudDialog(){
+ const sess=hjCloudSession();
+ modal(`<h2>☁️ 私人雲端同步（V100 測試版）</h2>
+ <p class="muted">手機和電腦請登入相同的 APP Email 帳號。此版採手動上傳／下載，不會在背景自動覆蓋資料。</p>
+ <div class="panel"><h3>登入狀態</h3><p id="hj-cloud-account" class="muted">${sess?.user?.email?'已登入：'+hjCloudText(sess.user.email):'尚未登入'}</p>
+ ${sess?.access_token?`<button class="btn secondary small" onclick="hjCloudLogout()">登出雲端</button>`:
+ `<label class="field"><span>Email</span><input type="email" id="hj-cloud-email" autocomplete="username" placeholder="你的 APP 登入 Email"></label>
+ <label class="field"><span>密碼</span><input type="password" id="hj-cloud-password" autocomplete="current-password" placeholder="APP 登入密碼"></label>
+ <button class="btn" onclick="hjCloudLogin()">登入雲端</button>`}</div>
+ <div class="panel"><h3>目前本機資料</h3><p class="muted">${hjCloudCount(state)}</p>
+ <p class="muted">第一次操作：先在主要裝置按「上傳本機資料」，另一台裝置登入後按「下載雲端資料」。</p>
+ <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn" ${sess?.access_token?'':'disabled'} onclick="hjCloudUpload()">⬆ 上傳本機資料</button><button class="btn secondary" ${sess?.access_token?'':'disabled'} onclick="hjCloudDownload()">⬇ 下載雲端資料</button></div>
+ <p class="muted">上傳前會詢問是否取代雲端版本；下載前會自動備份本機資料並詢問是否取代。若雲端版本在操作期間已變更，系統會拒絕舊版本上傳。</p>
+ <button class="btn secondary small" onclick="hjCloudInspect()" ${sess?.access_token?'':'disabled'}>查看雲端資料狀態</button></div>
+ <p id="hj-cloud-status" class="muted" role="status">等待操作</p>
+ <p class="muted" style="font-size:12px">注意：這是同步測試版。請不要在兩台裝置同時編輯同一張單據；此版不會自動合併衝突資料。登出僅清除本機登入憑證，不會刪除單據。</p>`);
+}
+async function hjCloudLogin(){
+ if(hjCloudBusy)return;const email=document.getElementById('hj-cloud-email')?.value.trim(),password=document.getElementById('hj-cloud-password')?.value;
+ if(!email||!password)return hjCloudSetStatus('請輸入 Email 與密碼',true);
+ hjCloudBusy=true;hjCloudSetStatus('登入中…');
+ try{const data=await hjCloudFetch('/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})},false);
+  if(!data.access_token)throw Error('登入未成功');hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudDialog();hjCloudSetStatus('登入成功。請先查看雲端資料狀態。');
+ }catch(e){hjCloudSetStatus('登入失敗：'+e.message,true)}finally{hjCloudBusy=false}
+}
+function hjCloudLogout(){hjCloudStore(null);hjCloudShowGate("已登出，請重新登入才能使用 APP。");}
+async function hjCloudRemote(){
+ const sess=hjCloudSession();if(!sess?.user?.id)throw Error('請先登入');
+ const rows=await hjCloudFetch('/rest/v1/app_sync?select=user_id,app_data,version,updated_at&user_id=eq.'+encodeURIComponent(sess.user.id)+'&limit=1');
+ return rows?.[0]||null;
+}
+async function hjCloudInspect(){try{hjCloudSetStatus('讀取中…');const remote=await hjCloudRemote();hjCloudSetStatus(remote?`雲端：${hjCloudCount(remote.app_data)}；版本 ${remote.version}；更新時間 ${new Date(remote.updated_at).toLocaleString('zh-TW')}`:'雲端目前沒有資料，可先上傳本機資料。')}catch(e){hjCloudSetStatus('讀取失敗：'+e.message,true)}}
+function hjCloudBackup(){
+ const blob=new Blob([JSON.stringify({exported_at:new Date().toISOString(),state},null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='滙嘉管理APP_同步前本機備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),20000);
+}
+async function hjCloudUpload(){
+ if(hjCloudBusy)return;hjCloudBusy=true;hjCloudSetStatus('檢查雲端資料…');
+ try{
+  const remote=await hjCloudRemote();
+  const localCount=hjCloudCount(state);
+  if(!confirm(remote?`雲端目前有 ${hjCloudCount(remote.app_data)}（版本 ${remote.version}）。\n你要以這台裝置的 ${localCount} 取代雲端內容嗎？\n\n此動作不會自動合併資料。`:`雲端目前沒有資料。\n要上傳這台裝置的 ${localCount} 嗎？`)){hjCloudSetStatus('已取消上傳');return}
+  hjCloudBackup();
+  const sess=hjCloudSession();
+  if(remote){
+   const rows=await hjCloudFetch('/rest/v1/app_sync?user_id=eq.'+encodeURIComponent(sess.user.id)+'&version=eq.'+remote.version,{method:'PATCH',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({app_data:state,version:Number(remote.version)+1,updated_at:new Date().toISOString()})});
+   if(!Array.isArray(rows)||rows.length!==1)throw Error('雲端版本已變更，上傳已取消。請先查看雲端資料。');
+  }else{
+   try{await hjCloudFetch('/rest/v1/app_sync',{method:'POST',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({user_id:sess.user.id,app_data:state})})}
+   catch(e){throw Error('雲端可能已有其他裝置建立的資料，請先查看雲端狀態。'+e.message)}
+  }
+  hjCloudSetStatus('上傳成功！另一台裝置登入後，按「下載雲端資料」。');
+ }catch(e){hjCloudSetStatus('上傳失敗：'+e.message,true)}finally{hjCloudBusy=false}
+}
+async function hjCloudDownload(){
+ if(hjCloudBusy)return;hjCloudBusy=true;hjCloudSetStatus('讀取雲端資料…');
+ try{
+  const remote=await hjCloudRemote();if(!remote){hjCloudSetStatus('雲端尚無資料，請先在主要裝置上傳。',true);return}
+  const d=remote.app_data;
+  if(!d||typeof d!=='object'||!Array.isArray(d.tickets)||!Array.isArray(d.projects))throw Error('雲端資料格式不完整，已停止下載');
+  if(!confirm(`雲端目前有 ${hjCloudCount(d)}（版本 ${remote.version}）。\n下載會取代這台裝置的 ${hjCloudCount(state)}。\n系統會先下載本機 JSON 備份。確定繼續嗎？`)){hjCloudSetStatus('已取消下載');return}
+  hjCloudBackup();
+  state=structuredClone(d);save();closeModal();render();
+  alert('雲端資料已下載並更新本機單據。');
+ }catch(e){hjCloudSetStatus('下載失敗：'+e.message,true)}finally{hjCloudBusy=false}
+}
+
+
+/* V101 login required at startup; synchronization remains manual. */
+(function(){const st=document.createElement('style');st.textContent=`
+#hj-cloud-gate{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(145deg,#dbe6df,#e5e2e7);overflow:auto}
+#hj-cloud-gate[hidden]{display:none!important}
+#hj-cloud-gate .hj-login-card{width:min(430px,100%);padding:30px 26px;border:1px solid rgba(255,255,255,.85);border-radius:26px;background:rgba(255,255,255,.77);box-shadow:0 16px 55px rgba(41,49,67,.15);color:#35434b}
+#hj-cloud-gate h2{margin:0 0 8px;text-align:center;font-size:24px}
+#hj-cloud-gate p{font-size:13px;line-height:1.7;text-align:center;color:#67757e}
+#hj-cloud-gate label{display:block;margin-top:16px;font-size:13px;font-weight:600}
+#hj-cloud-gate input{display:block;width:100%;box-sizing:border-box;margin-top:7px;padding:13px 14px;border:1px solid #c9d1d7;border-radius:12px;background:white;font-size:16px;color:#26343b}
+#hj-cloud-gate button{display:block;width:100%;margin-top:20px;padding:14px;border:0;border-radius:12px;background:#777ca7;color:white;font-weight:700;font-size:15px;cursor:pointer}
+#hj-cloud-gate button:disabled{opacity:.55;cursor:wait}
+#hj-cloud-gate #hj-gate-status{min-height:24px;margin-top:13px;color:#9d3939;white-space:pre-wrap}
+`;document.head.appendChild(st)})();
+function hjCloudShowGate(message=''){
+ let el=document.getElementById('hj-cloud-gate');if(!el){el=document.createElement('div');el.id='hj-cloud-gate';document.body.appendChild(el)}
+ el.hidden=false;el.innerHTML=`<div class="hj-login-card" role="dialog" aria-modal="true" aria-labelledby="hj-gate-title">
+ <h2 id="hj-gate-title">滙嘉管理 APP</h2><p>請先登入私人雲端帳號，再開始建立或編輯單據。</p>
+ <form onsubmit="hjCloudGateLogin(event)"><label>Email<input id="hj-gate-email" type="email" autocomplete="username" required placeholder="請輸入登入 Email"></label>
+ <label>密碼<input id="hj-gate-password" type="password" autocomplete="current-password" required placeholder="請輸入密碼"></label>
+ <button id="hj-gate-submit" type="submit">登入並進入 APP</button></form>
+ <p id="hj-gate-status" role="status">${hjCloudText(message)}</p><p>V101 仍採手動上傳／下載同步，登入不代表資料已自動同步。</p></div>`;
+}
+function hjCloudHideGate(){const el=document.getElementById('hj-cloud-gate');if(el)el.hidden=true}
+async function hjCloudGateLogin(event){
+ event.preventDefault();if(hjCloudBusy)return;
+ const email=document.getElementById('hj-gate-email')?.value.trim(),password=document.getElementById('hj-gate-password')?.value;
+ const btn=document.getElementById('hj-gate-submit'),msg=document.getElementById('hj-gate-status');if(!email||!password)return;
+ hjCloudBusy=true;if(btn)btn.disabled=true;if(msg)msg.textContent='正在驗證登入…';
+ try{const data=await hjCloudFetch('/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})},false);
+ if(!data?.access_token||!data?.user?.id)throw Error('未取得有效的登入憑證');
+ hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudHideGate();
+ }catch(e){if(msg)msg.textContent='登入失敗：'+e.message}
+ finally{hjCloudBusy=false;if(btn)btn.disabled=false}
+}
+async function hjCloudCheckOnStart(){
+ hjCloudShowGate('正在確認登入狀態…');const sess=hjCloudSession();
+ if(!sess?.access_token||!sess?.refresh_token||!sess?.user?.id){hjCloudShowGate();return}
+ try{const user=await hjCloudFetch('/auth/v1/user');if(!user?.id||user.id!==sess.user.id)throw Error('登入帳號驗證失敗');hjCloudHideGate()}
+ catch(e){hjCloudStore(null);hjCloudShowGate('請重新登入。'+e.message)}
+}
+
 render();
+hjCloudCheckOnStart();
 </script></body></html>
