@@ -125,6 +125,31 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(
 .hj-picker-bottom{display:flex;gap:12px;align-items:center;margin:12px 0}.hj-picker-swatch{width:37px;height:37px;flex-shrink:0;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #aaa}.hj-picker-hue{width:100%;min-width:0;accent-color:#777;appearance:none;-webkit-appearance:none;height:14px;border-radius:20px;background:linear-gradient(to right,red,#ff0,#0f0,#0ff,#00f,#f0f,red);touch-action:none}
 .hj-picker-hue::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:#fff;border:2px solid #aaa;border-radius:50%;box-shadow:0 1px 4px #0005}.hj-picker-rgb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hj-picker-rgb label{font-size:12px;text-align:center}.hj-picker-rgb input{width:100%;min-width:0;text-align:center;font-size:16px!important;padding:8px 2px;border-radius:8px}.hj-picker-done{margin-top:12px;width:100%}
 @media(max-width:600px){.theme-custom{grid-template-columns:1fr}.hj-picker-square{height:210px}}
+
+/* V65: mobile color spectrum must never exceed the picker card.
+   Override V64 global input[type=range]{flex-shrink:0}, which forced overflow. */
+.hj-picker,.hj-picker *{box-sizing:border-box}
+.hj-picker{width:100%;max-width:100%;min-width:0;overflow:hidden}
+.hj-picker-bottom{display:grid;grid-template-columns:37px minmax(0,1fr);align-items:center;gap:12px;width:100%;max-width:100%;min-width:0}
+.hj-picker-bottom .hj-picker-swatch{width:37px;min-width:37px}
+.hj-picker-bottom input.hj-picker-hue{display:block;width:100%!important;max-width:100%!important;min-width:0!important;flex:1 1 auto!important;margin:0!important;padding:0!important;box-sizing:border-box;touch-action:pan-y}
+.hj-picker-square{width:100%;max-width:100%;min-width:0}
+.hj-picker-rgb{width:100%;max-width:100%;min-width:0}
+.hj-picker-rgb label{display:block;min-width:0}
+.hj-picker-rgb input{display:block;max-width:100%;box-sizing:border-box}
+@media(max-width:600px){.hj-picker{padding:12px}.hj-picker-bottom{gap:10px}.hj-picker-square{height:clamp(170px,49vw,210px)}}
+
+/* V66: three equal quick-color slots, with optional empty user slots */
+.theme-palette{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:10px}
+.hj-quick-slot{min-width:0;display:flex;flex-direction:column;gap:6px}
+.hj-quick-slot>button{width:100%;min-width:0;min-height:96px;white-space:normal;overflow-wrap:anywhere;display:flex;flex-direction:column;align-items:stretch;justify-content:center}
+.hj-quick-slot .theme-swatch{width:100%;flex-shrink:0}
+.hj-slot-hint{text-align:center;font-size:11px;opacity:.7}
+.hj-slot-actions{display:flex;gap:4px;flex-wrap:wrap}
+.hj-slot-actions button{flex:1;min-width:0;border:1px solid var(--hj-border);border-radius:9px;background:var(--hj-card);color:var(--hj-ink);padding:7px 2px;font-size:11px}
+.hj-empty-slot{border:1px dashed var(--hj-border)!important;background:transparent!important;box-shadow:none!important;color:var(--hj-ink)}
+.hj-empty-plus{font-size:24px;line-height:1.2}
+@media(max-width:400px){.theme-palette{gap:6px}.hj-quick-slot>button{font-size:11px;padding:6px}.hj-slot-actions button{font-size:10px}}
 </style><style id="hj-v11-compact-actions">.hj-other-toggle{display:flex;align-items:center;gap:9px;margin:10px 0 6px;font-size:13px;font-weight:650}.hj-other-toggle input{width:18px;height:18px;flex:0 0 18px}.hj-detail-delete{margin-top:22px;padding-top:14px;border-top:1px solid rgba(125,125,125,.16);display:flex;justify-content:flex-end}.hj-detail-delete .btn{min-width:110px}.sheet .row:has(> .action-large){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sheet .row:has(> .action-large)>.btn{min-width:0;width:100%;margin:0}.sheet .row:has(> .action-large)+.row:has(>.btn.outline){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sheet .row:has(> .action-large)+.row:has(>.btn.outline)>.btn{width:100%;min-width:0;margin:0}@media(max-width:420px){.sheet .row:has(> .action-large)+.row:has(>.btn.outline){grid-template-columns:repeat(2,minmax(0,1fr))}}</style><style id="hj-v15-card-meta">.ticket .hj-card-meta{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;column-gap:7px;row-gap:3px;text-align:left}.ticket .hj-meta-pair{display:inline-flex;align-items:baseline;gap:4px;max-width:100%;min-width:0}.ticket .hj-meta-label{white-space:nowrap;flex-shrink:0}.ticket .hj-meta-value{overflow-wrap:anywhere}.ticket .hj-meta-separator{color:rgba(102,110,120,.55);font-weight:400;flex-shrink:0}.ticket .compact-inst.hj-card-meta{margin-top:4px}@media(max-width:370px){.ticket .hj-card-meta{column-gap:5px}.ticket .hj-meta-pair{gap:3px}}</style><style id="hj-v22-seamless-modal">
 /* V22: seamless modal top area, no contrasting header strip */
 .sheet{position:relative;}
@@ -418,7 +443,122 @@ input[type=date]::-webkit-date-and-time-value,input[type=month]::-webkit-date-an
  .sheet .row:has(>.action-large)>.btn{min-width:0;width:100%}
 }
 </style>
-</head><body><div class="app"><header><button class="hj-h-logo" onclick="hjV26LogoClick()" aria-label="開啟歷史表單" title="歷史表單"><span class="hj-v32-h-letter" aria-hidden="true">H</span></button><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div><span style="font-size:26px">🛠️</span></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script src="jszip.min.js"></script><script>
+<style id="hj-v68-uniform-fields">
+/* V68 — restore V66 raised/glass fields; unify all comparable form controls.
+   Do not affect radio/checkbox/color picker/range sliders or multiline controls. */
+:root{--hj-field-height:50px;--hj-field-pad-x:15px;--hj-field-radius:16px}
+input:not([type=checkbox]):not([type=radio]):not([type=color]):not([type=range]):not([type=hidden]):not(.hj-picker-rgb input),
+select{
+  box-sizing:border-box!important;
+  display:block;
+  width:100%;max-width:100%;min-width:0;
+  height:var(--hj-field-height)!important;
+  min-height:var(--hj-field-height)!important;
+  padding:0 var(--hj-field-pad-x)!important;
+  margin-top:0;margin-bottom:0;
+  border-radius:var(--hj-field-radius)!important;
+  font-size:16px!important;
+  font-weight:inherit;
+  line-height:normal!important;
+  text-align:left!important;
+  text-align-last:left;
+  vertical-align:middle;
+  background-clip:padding-box;
+}
+/* Consistent browser rendering, while keeping native calendar and select controls. */
+input[type=date],input[type=month],input[type=time],input[type=datetime-local]{
+  -webkit-appearance:none;appearance:none;
+  display:block;min-width:0;
+}
+input[type=date]::-webkit-date-and-time-value,
+input[type=month]::-webkit-date-and-time-value,
+input[type=time]::-webkit-date-and-time-value{
+  text-align:left;min-height:1em;
+}
+input[type=date]::-webkit-datetime-edit,
+input[type=month]::-webkit-datetime-edit,
+input[type=time]::-webkit-datetime-edit{padding:0;text-align:left}
+input[type=date]::-webkit-calendar-picker-indicator,
+input[type=month]::-webkit-calendar-picker-indicator{margin-left:auto;flex-shrink:0}
+/* Textareas retain flexible height but match horizontal padding and typography. */
+textarea{box-sizing:border-box!important;width:100%;max-width:100%;min-width:0;
+ padding:12px var(--hj-field-pad-x)!important;border-radius:var(--hj-field-radius)!important;
+ font-size:16px!important;line-height:1.45!important;text-align:left!important}
+/* Native controls in item rows and filters have identical geometry. */
+.sheet .field,.sheet .cols>.field,.hj-sample-double>.field,.hj-sample-triple>.field,
+.hj-project-dates>.field{min-width:0}
+/* The RGB color editor is a specialized numeric control, not a regular form field. */
+.hj-picker-rgb input{height:40px!important;min-height:40px!important;padding:6px 2px!important;
+ text-align:center!important;border-radius:8px!important}
+/* Keep the rainbow slider in its card, with no global form-field geometry. */
+.hj-picker input[type=range]{height:auto!important;min-height:0!important;padding:0!important;
+ border-radius:20px!important;min-width:0!important}
+@media(max-width:600px){
+  :root{--hj-field-height:50px;--hj-field-pad-x:13px;--hj-field-radius:16px}
+  .sheet .cols,.hj-sample-double,.hj-sample-triple,.hj-project-dates{min-width:0}
+}
+</style>
+<style id="hj-v69-advanced-filter-equal-size">
+/* V69: same dimensions for the month and organization fields in both repair and project/sample advanced filters. */
+#hjV23Panel .hj-v23-filter-grid,
+.hj-v39-filters .hj-v39-grid{align-items:stretch}
+#hjV23Panel .hj-v23-filter-grid>label,
+.hj-v39-filters .hj-v39-grid>label{box-sizing:border-box;min-width:0;width:100%;align-self:stretch}
+#hjV23Panel .hj-v23-filter-grid input[type=month],
+#hjV23Panel .hj-v23-filter-grid select,
+.hj-v39-filters .hj-v39-grid input[type=month],
+.hj-v39-filters .hj-v39-grid select,
+.hj-v39-filters .hj-v39-grid input[type=search]{
+ box-sizing:border-box!important;display:block!important;flex:none!important;
+ width:100%!important;min-width:0!important;max-width:100%!important;
+ height:50px!important;min-height:50px!important;max-height:50px!important;
+ padding:0 13px!important;margin:0!important;
+ border-radius:16px!important;font-size:16px!important;line-height:normal!important;
+ text-align:left!important;vertical-align:middle!important;
+}
+#hjV23Panel input[type=month]::-webkit-datetime-edit,
+.hj-v39-filters input[type=month]::-webkit-datetime-edit{padding:0!important;line-height:normal!important}
+#hjV23Panel input[type=month]::-webkit-date-and-time-value,
+.hj-v39-filters input[type=month]::-webkit-date-and-time-value{text-align:left!important;min-width:0!important}
+@media(max-width:600px){
+ #hjV23Panel .hj-v23-filter-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ #hjV23Panel .hj-v23-filter-grid>label{grid-column:auto!important;overflow:visible!important}
+ .hj-v39-filters .hj-v39-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+ .hj-v39-filters .hj-v39-grid>label:has(input[type=month]){grid-column:1/-1!important}
+}
+</style>
+<style id="hj-v71-history-mobile-layout">
+/* V71: history filters on phones use full-width rows so labels and selected text remain readable. */
+@media (max-width:600px){
+ .hj-v39-filters .hj-v39-grid{
+   display:grid!important;
+   grid-template-columns:minmax(0,1fr)!important;
+   gap:14px!important;
+ }
+ .hj-v39-filters .hj-v39-grid>label,
+ .hj-v39-filters .hj-v39-grid>label:has(input[type=month]){
+   grid-column:1/-1!important;
+   min-width:0!important;
+   width:100%!important;
+   max-width:100%!important;
+   overflow:visible!important;
+ }
+ .hj-v39-filters .hj-v39-grid input,
+ .hj-v39-filters .hj-v39-grid select{
+   box-sizing:border-box!important;
+   width:100%!important;
+   min-width:0!important;
+   max-width:100%!important;
+   height:50px!important;
+   min-height:50px!important;
+   padding:0 13px!important;
+   font-size:16px!important;
+   text-align:left!important;
+ }
+ .hj-v39-filters .hj-v39-grid select{padding-right:34px!important;text-overflow:ellipsis}
+}
+</style>
+</head><body><div class="app"><header><button class="hj-h-logo" onclick="hjV26LogoClick()" aria-label="開啟歷史表單" title="歷史表單"><span class="hj-v32-h-letter" aria-hidden="true">H</span></button><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script src="jszip.min.js"></script><script>
 
 function navIcon(id){const paths={
  tickets:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6M8 10h8M8 14h8M8 18h5"/>',
@@ -634,7 +774,7 @@ render=function(){
 
 // Appearance settings are local to this browser; business records remain untouched.
 const HJ_THEME_KEY='huijia-app-theme-v2';
-const HJ_THEMES={warm:{name:'暖米杏（預設）',bg:'#e8dfd4',card:'#f2ebe2',ink:'#493f35',accent:'#9e8872',strong:'#78614d'},mint:{name:'薄荷綠',bg:'#e8f3ee',card:'#f1f8f4',ink:'#2f5050',accent:'#5ab9a4',strong:'#318d7b'},blue:{name:'霧淺藍',bg:'#e8f0f5',card:'#f2f7fa',ink:'#344d61',accent:'#80acc5',strong:'#487c9b'}};
+const HJ_THEMES={warm:{name:'暖米杏（預設）',bg:'#e8dfd4',card:'#f2ebe2',ink:'#493f35',accent:'#9e8872',strong:'#78614d'}};
 let hjTheme;try{hjTheme=JSON.parse(localStorage.getItem(HJ_THEME_KEY))}catch(e){}if(!hjTheme||typeof hjTheme!=='object')hjTheme={...HJ_THEMES.warm};
 function hjHex(v,def){return /^#[0-9a-fA-F]{6}$/.test(v)?v:def}
 function hjRgb(hex){let x=hjHex(hex,'#e8dfd4').slice(1);return [0,2,4].map(i=>parseInt(x.slice(i,i+2),16))}
@@ -647,14 +787,23 @@ let hjThemeDraft=null;
 function hjThemeValues(t){const v={};for(const k of ['bg','card','ink','accent','strong'])v[k]=hjHex(t?.[k],HJ_THEMES.warm[k]);return v}
 function hjFavorites(){try{const a=JSON.parse(localStorage.getItem(HJ_FAVORITES_KEY));return Array.isArray(a)?a.filter(x=>x&&typeof x.name==='string'&&x.colors):[]}catch(e){return []}}
 function hjSaveFavorites(a){localStorage.setItem(HJ_FAVORITES_KEY,JSON.stringify(a))}
+
+const HJ_QUICK_SLOTS_KEY='huijia-theme-quick-slots-v1';
+function hjQuickSlots(){try{const v=JSON.parse(localStorage.getItem(HJ_QUICK_SLOTS_KEY));return Array.isArray(v)?[v[0]||null,v[1]||null]:[null,null]}catch(e){return [null,null]}}
+function hjQuickSlotSave(i){if(i!==0&&i!==1)return;const slots=hjQuickSlots();const old=slots[i];const name=prompt('請輸入快速配色名稱',old?.name||'我的配色 '+(i+1));if(name===null)return;const n=name.trim();if(!n){alert('請輸入配色名稱');return}if(n.length>30){alert('名稱最多 30 個字');return}slots[i]={name:n,colors:hjDraftFromInputs()};localStorage.setItem(HJ_QUICK_SLOTS_KEY,JSON.stringify(slots));drawThemeSettings()}
+function hjQuickSlotPick(i){const slot=hjQuickSlots()[i];if(!slot)return;hjThemeDraft=hjThemeValues(slot.colors);drawThemeSettings()}
+function hjQuickSlotDelete(i){const slots=hjQuickSlots();if(!slots[i]||!confirm('確定清空快速配色「'+slots[i].name+'」？'))return;slots[i]=null;localStorage.setItem(HJ_QUICK_SLOTS_KEY,JSON.stringify(slots));drawThemeSettings()}
+
 function hjDraftFromInputs(){const v={};for(const k of ['bg','card','ink','accent','strong'])v[k]=document.getElementById('hj-color-'+k)?.value||hjThemeDraft?.[k]||hjTheme[k];return hjThemeValues(v)}
 function themeSettings(){hjThemeModalOpen=true;hjThemeDraft=hjThemeValues(hjTheme);drawThemeSettings()}
 function drawThemeSettings(){
  const keys=['bg','card','ink','accent','strong'];
- const palette=Object.entries(HJ_THEMES).map(([id,t])=>`<button type="button" class="${keys.every(k=>hjThemeDraft[k]===t[k])?'selected':''}" onclick="selectThemePreset('${id}')"><div class="theme-swatch" style="background:linear-gradient(130deg,${t.bg} 48%,${t.accent} 49%,${t.strong})"></div>${t.name}</button>`).join('');
+ const slots=hjQuickSlots();
+ const warm=HJ_THEMES.warm;
+ const palette=`<div class="hj-quick-slot"><button type="button" class="${keys.every(k=>hjThemeDraft[k]===warm[k])?'selected':''}" onclick="selectThemePreset('warm')"><div class="theme-swatch" style="background:linear-gradient(130deg,${warm.bg} 48%,${warm.accent} 49%,${warm.strong})"></div>暖米杏（預設）</button><span class="hj-slot-hint">固定預設</span></div>`+slots.map((slot,i)=>`<div class="hj-quick-slot">${slot?`<button type="button" class="${keys.every(k=>hjThemeDraft[k]===slot.colors[k])?'selected':''}" onclick="hjQuickSlotPick(${i})"><div class="theme-swatch" style="background:linear-gradient(130deg,${hjHex(slot.colors.bg,warm.bg)} 48%,${hjHex(slot.colors.accent,warm.accent)} 49%,${hjHex(slot.colors.strong,warm.strong)})"></div>${esc(slot.name)}</button><div class="hj-slot-actions"><button type="button" onclick="hjQuickSlotSave(${i})">覆蓋儲存</button><button type="button" onclick="hjQuickSlotDelete(${i})">清空</button></div>`:`<button type="button" class="hj-empty-slot" onclick="hjQuickSlotSave(${i})"><span class="hj-empty-plus">＋</span>空白配色 ${i+1}</button><span class="hj-slot-hint">可選擇不設定</span>`}</div>`).join('');
  const favs=hjFavorites();
  const favorites=favs.length?favs.map((f,i)=>`<div class="hj-fav-item"><button type="button" class="hj-fav-pick" onclick="hjPickFavorite(${i})"><span class="hj-fav-swatch" style="background:linear-gradient(130deg,${hjHex(f.colors.bg,'#e8dfd4')} 48%,${hjHex(f.colors.accent,'#9e8872')} 49%,${hjHex(f.colors.strong,'#78614d')})"></span><span>${esc(f.name)}</span></button><button type="button" class="btn secondary hj-fav-remove" onclick="hjDeleteFavorite(${i})">刪除</button></div>`).join(''):'<p class="muted">尚未儲存喜好配色</p>';
- modal(`<h2>APP 色調設定</h2><p class="muted">顏色變更僅供暫時預覽。只有按下「儲存並套用」才會變更正式色調；關閉視窗則還原原本設定。</p><h3>快速配色</h3><div class="theme-palette">${palette}</div><h3>自訂顏色</h3><div class="theme-custom">${[['bg','背景底色'],['card','卡片／表單底色'],['ink','文字顏色'],['accent','主要按鍵'],['strong','深色按鍵／選取']].map(([k,name])=>`<div class="hj-color-row"><button type="button" class="hj-color-launch" onclick="hjOpenPicker('${k}')"><span class="hj-color-chip" id="hj-chip-${k}" style="background:${hjThemeDraft[k]}"></span><span class="hj-color-label">${name}</span><span id="hj-hex-${k}">${hjThemeDraft[k].toUpperCase()}</span> ▾</button><input type="hidden" id="hj-color-${k}" value="${hjThemeDraft[k]}"></div>`).join('')}</div><div id="hj-picker-host"></div><div class="theme-preview"><b>配色預覽</b><p>維修與專案樣品管理</p><button type="button" class="btn" onclick="return false">主要按鍵</button> <button type="button" class="btn secondary" onclick="return false">次要按鍵</button></div><div class="row"><button class="btn secondary" onclick="hjAddFavorite()">♡ 儲存目前配色為喜好</button></div><h3>我的喜好配色</h3><div class="hj-favorites">${favorites}</div><div class="row"><button class="btn" onclick="saveHjTheme()">儲存並套用</button><button class="btn secondary" onclick="selectThemePreset('warm')">預覽預設暖米色</button></div>`);
+ modal(`<h2>APP 色調設定</h2><p class="muted">顏色變更僅供暫時預覽。只有按下「儲存並套用」才會變更正式色調；關閉視窗則還原原本設定。</p><h3>快速配色</h3><p class="muted">保留暖米杏預設色，另有兩個自訂欄位。調整好下方顏色後可儲存至空白欄位；快速選色只供預覽，仍須按「儲存並套用」才正式生效。</p><div class="theme-palette">${palette}</div><h3>自訂顏色</h3><div class="theme-custom">${[['bg','背景底色'],['card','卡片／表單底色'],['ink','文字顏色'],['accent','主要按鍵'],['strong','深色按鍵／選取']].map(([k,name])=>`<div class="hj-color-row"><button type="button" class="hj-color-launch" onclick="hjOpenPicker('${k}')"><span class="hj-color-chip" id="hj-chip-${k}" style="background:${hjThemeDraft[k]}"></span><span class="hj-color-label">${name}</span><span id="hj-hex-${k}">${hjThemeDraft[k].toUpperCase()}</span> ▾</button><input type="hidden" id="hj-color-${k}" value="${hjThemeDraft[k]}"></div>`).join('')}</div><div id="hj-picker-host"></div><div class="theme-preview"><b>配色預覽</b><p>維修與專案樣品管理</p><button type="button" class="btn" onclick="return false">主要按鍵</button> <button type="button" class="btn secondary" onclick="return false">次要按鍵</button></div><div class="row"><button class="btn secondary" onclick="hjAddFavorite()">♡ 儲存目前配色為喜好</button></div><h3>我的喜好配色</h3><div class="hj-favorites">${favorites}</div><div class="row"><button class="btn" onclick="saveHjTheme()">儲存並套用</button><button class="btn secondary" onclick="selectThemePreset('warm')">預覽預設暖米色</button></div>`);
  applyHjTheme(hjThemeDraft);
 }
 let hjPickerKey=null;
