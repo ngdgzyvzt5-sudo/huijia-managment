@@ -1851,7 +1851,7 @@ async function hjCloudFetch(path,opts={},auth=true){
 }
 function hjCloudDialog(){
  const sess=hjCloudSession();
- modal(`<h2>☁️ 私人雲端同步（V100 測試版）</h2>
+ modal(`<h2>☁️ 私人雲端同步（V102 測試版）</h2>
  <p class="muted">手機和電腦請登入相同的 APP Email 帳號。此版採手動上傳／下載，不會在背景自動覆蓋資料。</p>
  <div class="panel"><h3>登入狀態</h3><p id="hj-cloud-account" class="muted">${sess?.user?.email?'已登入：'+hjCloudText(sess.user.email):'尚未登入'}</p>
  ${sess?.access_token?`<button class="btn secondary small" onclick="hjCloudLogout()">登出雲端</button>`:
@@ -1861,8 +1861,8 @@ function hjCloudDialog(){
  <div class="panel"><h3>目前本機資料</h3><p class="muted">${hjCloudCount(state)}</p>
  <p class="muted">第一次操作：先在主要裝置按「上傳本機資料」，另一台裝置登入後按「下載雲端資料」。</p>
  <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn" ${sess?.access_token?'':'disabled'} onclick="hjCloudUpload()">⬆ 上傳本機資料</button><button class="btn secondary" ${sess?.access_token?'':'disabled'} onclick="hjCloudDownload()">⬇ 下載雲端資料</button></div>
- <p class="muted">上傳前會詢問是否取代雲端版本；下載前會自動備份本機資料並詢問是否取代。若雲端版本在操作期間已變更，系統會拒絕舊版本上傳。</p>
- <button class="btn secondary small" onclick="hjCloudInspect()" ${sess?.access_token?'':'disabled'}>查看雲端資料狀態</button></div>
+ <p class="muted">上傳不會開啟 JSON 備份檔；下載前會再次確認是否取代本機資料。建議先使用下方獨立備份按鈕儲存資料。若雲端版本在操作期間已變更，系統會拒絕舊版本上傳。</p>
+ <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn secondary small" onclick="hjCloudInspect()" ${sess?.access_token?'':'disabled'}>查看雲端資料狀態</button><button class="btn outline small" onclick="hjCloudBackup()">另存本機 JSON 備份</button></div></div>
  <p id="hj-cloud-status" class="muted" role="status">等待操作</p>
  <p class="muted" style="font-size:12px">注意：這是同步測試版。請不要在兩台裝置同時編輯同一張單據；此版不會自動合併衝突資料。登出僅清除本機登入憑證，不會刪除單據。</p>`);
 }
@@ -1881,9 +1881,22 @@ async function hjCloudRemote(){
  return rows?.[0]||null;
 }
 async function hjCloudInspect(){try{hjCloudSetStatus('讀取中…');const remote=await hjCloudRemote();hjCloudSetStatus(remote?`雲端：${hjCloudCount(remote.app_data)}；版本 ${remote.version}；更新時間 ${new Date(remote.updated_at).toLocaleString('zh-TW')}`:'雲端目前沒有資料，可先上傳本機資料。')}catch(e){hjCloudSetStatus('讀取失敗：'+e.message,true)}}
-function hjCloudBackup(){
+async function hjCloudBackup(){
+ const filename='滙嘉管理APP_本機備份_'+new Date().toISOString().slice(0,10)+'.json';
  const blob=new Blob([JSON.stringify({exported_at:new Date().toISOString(),state},null,2)],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='滙嘉管理APP_同步前本機備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),20000);
+ try{
+  if(navigator.canShare&&navigator.share){
+   const file=new File([blob],filename,{type:'application/json'});
+   if(navigator.canShare({files:[file]})){
+    await navigator.share({files:[file],title:'滙嘉管理 APP 本機備份'});
+    hjCloudSetStatus('已開啟系統分享選單；請選擇「儲存到檔案」完成備份。');return;
+   }
+  }
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  hjCloudSetStatus('已嘗試下載備份。若 iPhone 無法開啟，請使用 Safari 開啟 APP 再備份。');
+ }catch(e){if(e?.name!=='AbortError')hjCloudSetStatus('備份未完成：'+e.message,true)}
 }
 async function hjCloudUpload(){
  if(hjCloudBusy)return;hjCloudBusy=true;hjCloudSetStatus('檢查雲端資料…');
@@ -1891,7 +1904,6 @@ async function hjCloudUpload(){
   const remote=await hjCloudRemote();
   const localCount=hjCloudCount(state);
   if(!confirm(remote?`雲端目前有 ${hjCloudCount(remote.app_data)}（版本 ${remote.version}）。\n你要以這台裝置的 ${localCount} 取代雲端內容嗎？\n\n此動作不會自動合併資料。`:`雲端目前沒有資料。\n要上傳這台裝置的 ${localCount} 嗎？`)){hjCloudSetStatus('已取消上傳');return}
-  hjCloudBackup();
   const sess=hjCloudSession();
   if(remote){
    const rows=await hjCloudFetch('/rest/v1/app_sync?user_id=eq.'+encodeURIComponent(sess.user.id)+'&version=eq.'+remote.version,{method:'PATCH',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({app_data:state,version:Number(remote.version)+1,updated_at:new Date().toISOString()})});
@@ -1909,8 +1921,7 @@ async function hjCloudDownload(){
   const remote=await hjCloudRemote();if(!remote){hjCloudSetStatus('雲端尚無資料，請先在主要裝置上傳。',true);return}
   const d=remote.app_data;
   if(!d||typeof d!=='object'||!Array.isArray(d.tickets)||!Array.isArray(d.projects))throw Error('雲端資料格式不完整，已停止下載');
-  if(!confirm(`雲端目前有 ${hjCloudCount(d)}（版本 ${remote.version}）。\n下載會取代這台裝置的 ${hjCloudCount(state)}。\n系統會先下載本機 JSON 備份。確定繼續嗎？`)){hjCloudSetStatus('已取消下載');return}
-  hjCloudBackup();
+  if(!confirm(`雲端目前有 ${hjCloudCount(d)}（版本 ${remote.version}）。\n下載會取代這台裝置的 ${hjCloudCount(state)}。\n如需保留本機資料，請先取消並按「另存本機 JSON 備份」。確定取代嗎？`)){hjCloudSetStatus('已取消下載');return}
   state=structuredClone(d);save();closeModal();render();
   alert('雲端資料已下載並更新本機單據。');
  }catch(e){hjCloudSetStatus('下載失敗：'+e.message,true)}finally{hjCloudBusy=false}
