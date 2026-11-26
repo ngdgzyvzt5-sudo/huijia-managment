@@ -666,7 +666,7 @@ function navIcon(id){const paths={
 
 const K='huijia-repair-preview-v2';const today=()=>new Date().toLocaleDateString('sv-SE');const uid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random());const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const demo=[{id:'d1',number:'202611-001',date:'2026-11-17',applicant:'王小姐',institution:'新竹示範機構',note:'請協助安排收回維修',items:[{name:'智慧光纖薄墊',qty:1,reason:'監測訊號異常'}],recoveries:[{date:'2026-11-18',note:'客服人員收回',lines:[{index:0,qty:1}]}],shipments:[],deleted:false},{id:'d2',number:'202611-002',date:'2026-11-16',applicant:'陳先生',institution:'台中示範機構',note:'',items:[{name:'智慧光纖薄墊',qty:2,reason:'需檢修'},{name:'智慧光纖監視器',qty:1,reason:''}],recoveries:[],shipments:[{date:'2026-11-17',note:'宅配寄出',lines:[{index:0,qty:1}]}],deleted:false},{id:'d3',number:'202611-003',date:'2026-11-15',applicant:'林小姐',institution:'彰化示範機構',note:'',items:[{name:'智慧光纖坐墊',qty:1,reason:'功能異常'}],recoveries:[{date:'2026-11-15',note:'現場收回',lines:[{index:0,qty:1}]}],shipments:[{date:'2026-11-17',note:'交由客服轉交',lines:[{index:0,qty:1}]}],deleted:false}];
-let state;try{state=JSON.parse(localStorage.getItem(K))}catch{}if(!state){try{state=JSON.parse(localStorage.getItem('huijia-repair-preview-v1'))}catch{}}if(!state)state={tickets:[],products:['智慧光纖薄墊','智慧光纖監視器','智慧光纖坐墊','智慧復健走道','藍牙血壓計','藍牙血氧機','紅外線額溫槍'],title:'維修申請單',syncCode:'',counter:{}};state.counter??={};state.products??=[];state.tickets??=[];let tab='tickets',search={month:'',person:'',institution:'',keyword:''};function save(){localStorage.setItem(K,JSON.stringify(state))}function shipped(t,i){return t.shipments.reduce((s,h)=>s+h.lines.filter(l=>l.index===i).reduce((a,l)=>a+Number(l.qty),0),0)}function recovered(t,i){return t.recoveries.reduce((s,h)=>s+h.lines.filter(l=>l.index===i).reduce((a,l)=>a+Number(l.qty),0),0)}function status(t){let total=t.items.reduce((a,x)=>a+Number(x.qty),0),sent=t.items.reduce((a,x,i)=>a+shipped(t,i),0),rec=t.items.reduce((a,x,i)=>a+recovered(t,i),0);if(sent>=total&&rec>=total)return '已完成';if(sent>=total)return '待回收';if(rec>=total)return '待出貨';return sent>0||rec>0?'處理中':'待回收・待出貨'}function pill(t){let s=status(t);return `<span class="pill ${s==='已完成'?'done':s==='處理中'?'partial':''}">${s}</span>`}function active(){return state.tickets.filter(t=>!t.deleted)}function repairBadgeCount(kind){return active().filter(t=>t.items.some((x,i)=>(kind==='pending'?shipped(t,i):recovered(t,i))<Number(x.qty))).length}function render(){document.getElementById('pageTitle').textContent=({tickets:'維修單',pending:'待出貨',recover:'待回收',settings:'設定'})[tab];document.getElementById('fab').classList.toggle('hidden',tab!=='tickets');document.getElementById('nav').innerHTML=[['tickets','▤','維修單'],['pending','📦','待出貨'],['recover','↩','待回收'],['settings','⚙','設定']].map(([id,ico,name])=>`<button class="${tab===id?'active':''}" onclick="go('${id}')"><span class="ico">${navIcon(id)}${(id==='pending'||id==='recover')&&repairBadgeCount(id)?`<span class="nav-count">${repairBadgeCount(id)>99?'99+':repairBadgeCount(id)}</span>`:''}</span>${name}</button>`).join('');let m=document.getElementById('main');if(tab==='tickets'){let a=active().sort((a,b)=>b.number.localeCompare(a.number));m.innerHTML=`<div class="stats"><div class="stat"><b>${a.length}</b><span>全部單據</span></div><div class="stat"><b>${a.filter(t=>status(t)!=='已完成').length}</b><span>未完成</span></div><div class="stat"><b>${a.filter(t=>status(t)==='已完成').length}</b><span>已完成</span></div></div>${cards(a)}`}
+let state;try{state=JSON.parse(localStorage.getItem(K))}catch{}if(!state){try{state=JSON.parse(localStorage.getItem('huijia-repair-preview-v1'))}catch{}}if(!state)state={tickets:[],products:['智慧光纖薄墊','智慧光纖監視器','智慧光纖坐墊','智慧復健走道','藍牙血壓計','藍牙血氧機','紅外線額溫槍'],title:'維修申請單',syncCode:'',counter:{}};state.counter??={};state.products??=[];state.tickets??=[];let tab='tickets',search={month:'',person:'',institution:'',keyword:''};function save(){localStorage.setItem(K,JSON.stringify(state));if(typeof hjAutoLocalSaved==='function')hjAutoLocalSaved()}function shipped(t,i){return t.shipments.reduce((s,h)=>s+h.lines.filter(l=>l.index===i).reduce((a,l)=>a+Number(l.qty),0),0)}function recovered(t,i){return t.recoveries.reduce((s,h)=>s+h.lines.filter(l=>l.index===i).reduce((a,l)=>a+Number(l.qty),0),0)}function status(t){let total=t.items.reduce((a,x)=>a+Number(x.qty),0),sent=t.items.reduce((a,x,i)=>a+shipped(t,i),0),rec=t.items.reduce((a,x,i)=>a+recovered(t,i),0);if(sent>=total&&rec>=total)return '已完成';if(sent>=total)return '待回收';if(rec>=total)return '待出貨';return sent>0||rec>0?'處理中':'待回收・待出貨'}function pill(t){let s=status(t);return `<span class="pill ${s==='已完成'?'done':s==='處理中'?'partial':''}">${s}</span>`}function active(){return state.tickets.filter(t=>!t.deleted)}function repairBadgeCount(kind){return active().filter(t=>t.items.some((x,i)=>(kind==='pending'?shipped(t,i):recovered(t,i))<Number(x.qty))).length}function render(){document.getElementById('pageTitle').textContent=({tickets:'維修單',pending:'待出貨',recover:'待回收',settings:'設定'})[tab];document.getElementById('fab').classList.toggle('hidden',tab!=='tickets');document.getElementById('nav').innerHTML=[['tickets','▤','維修單'],['pending','📦','待出貨'],['recover','↩','待回收'],['settings','⚙','設定']].map(([id,ico,name])=>`<button class="${tab===id?'active':''}" onclick="go('${id}')"><span class="ico">${navIcon(id)}${(id==='pending'||id==='recover')&&repairBadgeCount(id)?`<span class="nav-count">${repairBadgeCount(id)>99?'99+':repairBadgeCount(id)}</span>`:''}</span>${name}</button>`).join('');let m=document.getElementById('main');if(tab==='tickets'){let a=active().sort((a,b)=>b.number.localeCompare(a.number));m.innerHTML=`<div class="stats"><div class="stat"><b>${a.length}</b><span>全部單據</span></div><div class="stat"><b>${a.filter(t=>status(t)!=='已完成').length}</b><span>未完成</span></div><div class="stat"><b>${a.filter(t=>status(t)==='已完成').length}</b><span>已完成</span></div></div>${cards(a)}`}
 if(tab==='pending')m.innerHTML=`<p class="muted" style="margin-bottom:12px">顯示仍有品項尚待出貨的維修單</p>${hjV38PendingCards(active().filter(t=>t.items.some((x,i)=>shipped(t,i)<x.qty)).sort((a,b)=>b.number.localeCompare(a.number)))}`;
 if(tab==='recover')m.innerHTML=`<p class="muted" style="margin-bottom:12px">顯示仍有品項尚待回收的維修單</p>${hjV38PendingCards(active().filter(t=>t.items.some((x,i)=>recovered(t,i)<Number(x.qty))).sort((a,b)=>b.number.localeCompare(a.number)))}`;
 if(tab==='search')m.innerHTML=`<div class="panel"><div class="cols"><label class="field"><span>申請月份</span><input type="month" id="s-month" value="${esc(search.month)}" oninput="updateSearch()"></label><label class="field"><span>申請人</span><input id="s-person" value="${esc(search.person)}" oninput="updateSearch()" placeholder="輸入姓名"></label></div><label class="field"><span>機構</span><input id="s-institution" value="${esc(search.institution)}" oninput="updateSearch()" placeholder="輸入機構名稱"></label><label class="field"><span>相關關鍵字</span><input id="s-keyword" value="${esc(search.keyword)}" oninput="updateSearch()" placeholder="單號、品項、原因、備註"></label><button class="btn secondary small" onclick="search={month:'',person:'',institution:'',keyword:''};render()">清除條件</button></div><div id="searchResults"></div>` ,showSearch();
@@ -1851,15 +1851,15 @@ async function hjCloudFetch(path,opts={},auth=true){
 }
 function hjCloudDialog(){
  const sess=hjCloudSession();
- modal(`<h2>☁️ 私人雲端同步（V102 測試版）</h2>
- <p class="muted">手機和電腦請登入相同的 APP Email 帳號。此版採手動上傳／下載，不會在背景自動覆蓋資料。</p>
+ modal(`<h2>☁️ 私人雲端同步（V103 自動測試版）</h2>
+ <p class="muted">手機和電腦請登入相同帳號。儲存後自動嘗試同步；另一台裝置約每 30 秒檢查更新。遇到衝突會暫停，不會直接覆蓋。</p>
  <div class="panel"><h3>登入狀態</h3><p id="hj-cloud-account" class="muted">${sess?.user?.email?'已登入：'+hjCloudText(sess.user.email):'尚未登入'}</p>
  ${sess?.access_token?`<button class="btn secondary small" onclick="hjCloudLogout()">登出雲端</button>`:
  `<label class="field"><span>Email</span><input type="email" id="hj-cloud-email" autocomplete="username" placeholder="你的 APP 登入 Email"></label>
  <label class="field"><span>密碼</span><input type="password" id="hj-cloud-password" autocomplete="current-password" placeholder="APP 登入密碼"></label>
  <button class="btn" onclick="hjCloudLogin()">登入雲端</button>`}</div>
  <div class="panel"><h3>目前本機資料</h3><p class="muted">${hjCloudCount(state)}</p>
- <p class="muted">第一次操作：先在主要裝置按「上傳本機資料」，另一台裝置登入後按「下載雲端資料」。</p>
+ <p class="muted">自動同步已啟用。第一次啟動若兩端資料不同，請先選擇手動上傳或下載，確認同步基準。</p>
  <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn" ${sess?.access_token?'':'disabled'} onclick="hjCloudUpload()">⬆ 上傳本機資料</button><button class="btn secondary" ${sess?.access_token?'':'disabled'} onclick="hjCloudDownload()">⬇ 下載雲端資料</button></div>
  <p class="muted">上傳不會開啟 JSON 備份檔；下載前會再次確認是否取代本機資料。建議先使用下方獨立備份按鈕儲存資料。若雲端版本在操作期間已變更，系統會拒絕舊版本上傳。</p>
  <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn secondary small" onclick="hjCloudInspect()" ${sess?.access_token?'':'disabled'}>查看雲端資料狀態</button><button class="btn outline small" onclick="hjCloudBackup()">另存本機 JSON 備份</button></div></div>
@@ -1871,10 +1871,10 @@ async function hjCloudLogin(){
  if(!email||!password)return hjCloudSetStatus('請輸入 Email 與密碼',true);
  hjCloudBusy=true;hjCloudSetStatus('登入中…');
  try{const data=await hjCloudFetch('/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})},false);
-  if(!data.access_token)throw Error('登入未成功');hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudDialog();hjCloudSetStatus('登入成功。請先查看雲端資料狀態。');
+  if(!data.access_token)throw Error('登入未成功');hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudDialog();hjCloudSetStatus('登入成功，正在檢查雲端資料。');hjAutoSyncSoon();
  }catch(e){hjCloudSetStatus('登入失敗：'+e.message,true)}finally{hjCloudBusy=false}
 }
-function hjCloudLogout(){hjCloudStore(null);hjCloudShowGate("已登出，請重新登入才能使用 APP。");}
+function hjCloudLogout(){hjAutoStatus('已登出');hjCloudStore(null);hjCloudShowGate("已登出，請重新登入才能使用 APP。");}
 async function hjCloudRemote(){
  const sess=hjCloudSession();if(!sess?.user?.id)throw Error('請先登入');
  const rows=await hjCloudFetch('/rest/v1/app_sync?select=user_id,app_data,version,updated_at&user_id=eq.'+encodeURIComponent(sess.user.id)+'&limit=1');
@@ -1912,7 +1912,7 @@ async function hjCloudUpload(){
    try{await hjCloudFetch('/rest/v1/app_sync',{method:'POST',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({user_id:sess.user.id,app_data:state})})}
    catch(e){throw Error('雲端可能已有其他裝置建立的資料，請先查看雲端狀態。'+e.message)}
   }
-  hjCloudSetStatus('上傳成功！另一台裝置登入後，按「下載雲端資料」。');
+  hjAutoRemember(state,remote?Number(remote.version)+1:1);hjAutoStatus('已同步');hjCloudSetStatus('上傳成功！其他裝置會自動檢查更新。');
  }catch(e){hjCloudSetStatus('上傳失敗：'+e.message,true)}finally{hjCloudBusy=false}
 }
 async function hjCloudDownload(){
@@ -1922,7 +1922,7 @@ async function hjCloudDownload(){
   const d=remote.app_data;
   if(!d||typeof d!=='object'||!Array.isArray(d.tickets)||!Array.isArray(d.projects))throw Error('雲端資料格式不完整，已停止下載');
   if(!confirm(`雲端目前有 ${hjCloudCount(d)}（版本 ${remote.version}）。\n下載會取代這台裝置的 ${hjCloudCount(state)}。\n如需保留本機資料，請先取消並按「另存本機 JSON 備份」。確定取代嗎？`)){hjCloudSetStatus('已取消下載');return}
-  state=structuredClone(d);save();closeModal();render();
+  state=structuredClone(d);hjAutoApplying=true;try{save()}finally{hjAutoApplying=false}hjAutoRemember(state,Number(remote.version));hjAutoStatus('已同步');closeModal();render();
   alert('雲端資料已下載並更新本機單據。');
  }catch(e){hjCloudSetStatus('下載失敗：'+e.message,true)}finally{hjCloudBusy=false}
 }
@@ -1948,7 +1948,7 @@ function hjCloudShowGate(message=''){
  <form onsubmit="hjCloudGateLogin(event)"><label>Email<input id="hj-gate-email" type="email" autocomplete="username" required placeholder="請輸入登入 Email"></label>
  <label>密碼<input id="hj-gate-password" type="password" autocomplete="current-password" required placeholder="請輸入密碼"></label>
  <button id="hj-gate-submit" type="submit">登入並進入 APP</button></form>
- <p id="hj-gate-status" role="status">${hjCloudText(message)}</p><p>V101 仍採手動上傳／下載同步，登入不代表資料已自動同步。</p></div>`;
+ <p id="hj-gate-status" role="status">${hjCloudText(message)}</p><p>V103 自動同步測試版。若資料不同或發生衝突，會暫停並提示處理。</p></div>`;
 }
 function hjCloudHideGate(){const el=document.getElementById('hj-cloud-gate');if(el)el.hidden=true}
 async function hjCloudGateLogin(event){
@@ -1958,16 +1958,65 @@ async function hjCloudGateLogin(event){
  hjCloudBusy=true;if(btn)btn.disabled=true;if(msg)msg.textContent='正在驗證登入…';
  try{const data=await hjCloudFetch('/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})},false);
  if(!data?.access_token||!data?.user?.id)throw Error('未取得有效的登入憑證');
- hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudHideGate();
+ hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudHideGate();hjAutoSyncSoon();
  }catch(e){if(msg)msg.textContent='登入失敗：'+e.message}
  finally{hjCloudBusy=false;if(btn)btn.disabled=false}
 }
 async function hjCloudCheckOnStart(){
  hjCloudShowGate('正在確認登入狀態…');const sess=hjCloudSession();
  if(!sess?.access_token||!sess?.refresh_token||!sess?.user?.id){hjCloudShowGate();return}
- try{const user=await hjCloudFetch('/auth/v1/user');if(!user?.id||user.id!==sess.user.id)throw Error('登入帳號驗證失敗');hjCloudHideGate()}
+ try{const user=await hjCloudFetch('/auth/v1/user');if(!user?.id||user.id!==sess.user.id)throw Error('登入帳號驗證失敗');hjCloudHideGate();hjAutoSyncSoon()}
  catch(e){hjCloudStore(null);hjCloudShowGate('請重新登入。'+e.message)}
 }
+
+
+/* V103: cautious snapshot sync. No silent overwrite when the baseline is unknown or stale. */
+const HJ_AUTO_BASE='hj-v103-sync-baseline:';
+let hjAutoApplying=false,hjAutoTimer=0,hjAutoRunning=false,hjAutoLastMessage='',hjAutoRetry=0;
+function hjAutoKey(){return HJ_AUTO_BASE+(hjCloudSession()?.user?.id||'none')}
+function hjAutoBaseline(){try{return JSON.parse(localStorage.getItem(hjAutoKey())||'null')}catch{return null}}
+function hjAutoRemember(data,version){localStorage.setItem(hjAutoKey(),JSON.stringify({version:Number(version),snapshot:JSON.stringify(data)}))}
+function hjAutoStatus(message){hjAutoLastMessage=message;let e=document.getElementById('hj-auto-indicator');if(!e){e=document.createElement('div');e.id='hj-auto-indicator';e.setAttribute('role','status');e.style.cssText='position:fixed;top:env(safe-area-inset-top,0px);right:12px;z-index:10000;max-width:65vw;background:rgba(245,247,250,.96);color:#4e5d70;border:1px solid #cdd5dc;border-radius:18px;padding:5px 12px;font-size:11px;box-shadow:0 2px 10px #0002;pointer-events:none';document.body.appendChild(e)}e.textContent='☁ '+message;hjCloudSetStatus(message,/失敗|衝突|暫停/.test(message))}
+function hjAutoLocalSaved(){if(hjAutoApplying)return;hjAutoStatus('本機已儲存・等待同步');hjAutoSyncSoon()}
+function hjAutoSyncSoon(){clearTimeout(hjAutoTimer);hjAutoTimer=setTimeout(()=>hjAutoSync(),1200)}
+function hjAutoValid(d){return d&&typeof d==='object'&&Array.isArray(d.tickets)&&Array.isArray(d.projects)}
+async function hjAutoSync(){
+ if(hjAutoRunning||hjCloudBusy||!hjCloudSession()?.user?.id)return;
+ if(!navigator.onLine){hjAutoStatus('離線・本機資料已保留');return}
+ // Never replace the state while a form/modal is open, to avoid losing unsaved edits.
+ if(document.body.classList.contains('modal-open'))return;
+ hjAutoRunning=true;
+ try{
+  const baseline=hjAutoBaseline(),local=JSON.stringify(state);
+  hjAutoStatus('同步檢查中…');
+  const remote=await hjCloudRemote();
+  if(remote&&!hjAutoValid(remote.app_data))throw Error('雲端資料格式不完整');
+  const remoteSnapshot=remote?JSON.stringify(remote.app_data):null;
+  if(!baseline){
+   if(remote&&local===remoteSnapshot){hjAutoRemember(state,remote.version);hjAutoStatus('已同步');return}
+   // On first install, never assume the local snapshot is safe to replace.
+   hjAutoStatus('首次同步待確認：請在設定中手動上傳或下載');return;
+  }
+  const changed=local!==baseline.snapshot;
+  if(!remote){hjAutoStatus('雲端資料缺失・已暫停，請手動確認');return}
+  if(Number(remote.version)!==Number(baseline.version)){
+   if(changed){hjAutoStatus('版本衝突・已暫停，請先備份並手動處理');return}
+   if(remoteSnapshot===local){hjAutoRemember(state,remote.version);hjAutoStatus('已同步');return}
+   // Avoid changing the screen while another editor is active.
+   state=structuredClone(remote.app_data);hjAutoApplying=true;try{save()}finally{hjAutoApplying=false}
+   hjAutoRemember(state,remote.version);render();hjAutoStatus('已下載最新資料');return;
+  }
+  if(!changed){hjAutoStatus('已同步');return}
+  const sess=hjCloudSession(),payload=structuredClone(state);
+  const rows=await hjCloudFetch('/rest/v1/app_sync?user_id=eq.'+encodeURIComponent(sess.user.id)+'&version=eq.'+baseline.version,{method:'PATCH',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({app_data:payload,version:Number(baseline.version)+1,updated_at:new Date().toISOString()})});
+  if(!Array.isArray(rows)||rows.length!==1){hjAutoStatus('版本衝突・已暫停，請手動處理');return}
+  hjAutoRemember(payload,Number(baseline.version)+1);hjAutoStatus(JSON.stringify(state)===JSON.stringify(payload)?'已自動上傳':'已上傳前一版・新變更等待同步');if(JSON.stringify(state)!==JSON.stringify(payload))hjAutoSyncSoon();
+ }catch(e){hjAutoStatus('同步失敗・本機資料已保留：'+e.message)}finally{hjAutoRunning=false}
+}
+window.addEventListener('online',hjAutoSyncSoon);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)hjAutoSyncSoon()});
+window.addEventListener('focus',hjAutoSyncSoon);
+setInterval(()=>{if(!document.hidden)hjAutoSync()},30000);
 
 render();
 hjCloudCheckOnStart();
