@@ -158,6 +158,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in srgb,var(
 @media(max-width:360px){.hj-v39-header{justify-content:center}.hj-v39-header h2{font-size:18px}.hj-v39-back{font-size:10px;padding:8px 7px}}
 .hj-v94-form-icon{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;color:inherit}
 .hj-v94-form-icon .nav-svg{display:block;width:34px;height:34px;flex:none}
+.hj-settings-group{margin-bottom:16px;overflow:hidden}.hj-settings-group-head{padding:13px 14px 9px;border-bottom:1px solid rgba(135,125,115,.18)}.hj-settings-group-head h3{margin:0 0 5px;font-size:17px}.hj-settings-group-head p{margin:0;font-size:12px;line-height:1.6;opacity:.72}.hj-settings-group-list{padding:3px 6px 6px}.hj-return-condition{display:flex;flex-direction:column;gap:5px;font-size:12px;min-width:95px}.hj-return-condition select{border-radius:9px;border:1px solid #c9cfd7;background:#fff;padding:8px 4px;max-width:120px}.checkrow:has(.hj-return-condition){gap:8px;flex-wrap:wrap}.checkrow:has(.hj-return-condition)>input[type=number]{width:72px;flex:0 0 72px}.hj-return-item label.field[hidden]{display:none!important}
 </style><style id="hj-v11-compact-actions">.hj-other-toggle{display:flex;align-items:center;gap:9px;margin:10px 0 6px;font-size:13px;font-weight:650}.hj-other-toggle input{width:18px;height:18px;flex:0 0 18px}.hj-detail-delete{margin-top:22px;padding-top:14px;border-top:1px solid rgba(125,125,125,.16);display:flex;justify-content:flex-end}.hj-detail-delete .btn{min-width:110px}.sheet .row:has(> .action-large){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sheet .row:has(> .action-large)>.btn{min-width:0;width:100%;margin:0}.sheet .row:has(> .action-large)+.row:has(>.btn.outline){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.sheet .row:has(> .action-large)+.row:has(>.btn.outline)>.btn{width:100%;min-width:0;margin:0}@media(max-width:420px){.sheet .row:has(> .action-large)+.row:has(>.btn.outline){grid-template-columns:repeat(2,minmax(0,1fr))}}</style><style id="hj-v82-other-switch">.hj-other-switch-row{justify-content:space-between;gap:14px;padding:8px 0}.hj-other-switch-row>.hj-switch{width:54px;height:32px;flex:0 0 54px}.hj-other-switch-row .hj-switch input{width:100%;height:100%;margin:0}.hj-other-switch-row .hj-switch input:disabled{cursor:not-allowed}.hj-other-switch-row .hj-switch:has(input:disabled){opacity:.48;cursor:not-allowed}</style><style id="hj-v15-card-meta">.ticket .hj-card-meta{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;column-gap:7px;row-gap:3px;text-align:left}.ticket .hj-meta-pair{display:inline-flex;align-items:baseline;gap:4px;max-width:100%;min-width:0}.ticket .hj-meta-label{white-space:nowrap;flex-shrink:0}.ticket .hj-meta-value{overflow-wrap:anywhere}.ticket .hj-meta-separator{color:rgba(102,110,120,.55);font-weight:400;flex-shrink:0}.ticket .compact-inst.hj-card-meta{margin-top:4px}@media(max-width:370px){.ticket .hj-card-meta{column-gap:5px}.ticket .hj-meta-pair{gap:3px}}</style><style id="hj-v22-seamless-modal">
 /* V22: seamless modal top area, no contrasting header strip */
 .sheet{position:relative;}
@@ -653,7 +654,8 @@ textarea{text-align:left!important;vertical-align:top!important;}
  #overlay .sheet:has(.sheet-head .hj-v85-back) > .sheet-head.hj-close-only{margin-bottom:22px!important;}
  #overlay .sheet:has(.sheet-head .hj-v85-back) > h2:first-of-type{margin-bottom:18px!important;}
 }
-</style></head><body><div class="app"><header><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script src="jszip.min.js"></script><script>
+</style><style id="hj-v112-return-style">.hj-return-item{padding:14px 0;border-bottom:1px solid rgba(125,130,140,.18);min-width:0}.hj-return-item:last-of-type{border-bottom:0}.hj-return-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}.hj-return-item-head>div{flex:1;min-width:135px}.hj-return-item-head b{font-size:14px;overflow-wrap:anywhere}.hj-return-item-head p{margin:5px 0 8px}.hj-return-item .field{margin-top:8px}.hj-return-item input[type=number]{width:100%;min-width:0;box-sizing:border-box}.hj-return-switch{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-size:12px;font-weight:600;cursor:pointer;position:relative;flex-shrink:0}.hj-return-switch input{position:absolute;opacity:0;width:1px;height:1px}.hj-return-track{width:42px;height:24px;border-radius:24px;background:#a9aeb7;display:inline-block;position:relative;transition:background .15s}.hj-return-track:before{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:white;top:3px;left:3px;transition:transform .15s}.hj-return-switch input:checked+.hj-return-track{background:#797eb2}.hj-return-switch input:checked+.hj-return-track:before{transform:translateX(18px)}.hj-return-switch input:focus-visible+.hj-return-track{outline:3px solid #2b65ac;outline-offset:2px}.hj-return-switch input:disabled+.hj-return-track{opacity:.45}.hj-return-split[hidden]{display:none!important}.hj-return-split{padding:8px 10px;margin-top:6px;background:rgba(140,145,175,.07);border-radius:12px}.hj-return-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hj-return-two .field{min-width:0}.hj-return-two .field span{font-size:12px}.hj-return-split>p{margin:5px 0 0;font-size:12px}@media(max-width:380px){.hj-return-two{gap:8px}.hj-return-item-head{gap:6px}}</style>
+</head><body><div class="app"><header><div class="hj-head-titles"><h1 id="pageTitle">維修單</h1><p class="muted">滙嘉健康生活科技｜維修申請管理</p></div></header><div class="top-search"><input id="quickSearch" placeholder="⌕ 搜尋單號、機構、申請人、申請品項…" oninput="quickFind(this.value)"></div><main class="content" id="main"></main><button id="fab" class="fab" onclick="editTicket()" aria-label="新增維修單">+</button><nav class="nav" id="nav"></nav></div><div id="overlay"></div><script src="jszip.min.js"></script><script>
 
 function navIcon(id){const paths={
  tickets:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5h6M8 10h8M8 14h8M8 18h5"/>',
@@ -673,12 +675,16 @@ if(tab==='search')m.innerHTML=`<div class="panel"><div class="cols"><label class
 if(tab==='settings')m.innerHTML=`<div class="panel"><div class="setting" onclick="settingsProducts()"><div><b>📋 維修申請項目管理</b><p>新增、停用品項供下拉選單使用</p></div>›</div><div class="setting" onclick="settingsFormat()"><div><b>🔢 單據格式設定</b><p>設定維修單號的前綴、年月及流水號</p></div>›</div><div class="setting" onclick="settingsSync()"><div><b>🔑 專屬同步碼</b><p>尚未啟用雲端同步</p></div>›</div><div class="setting" onclick="settingsDeleted()"><div><b>🗂️ 指定單號封存／已刪除單據</b><p>軟刪除保留歷史，可查詢</p></div>›</div><div class="setting" onclick="exportBackup()"><div><b>💾 匯出資料備份</b><p>將所有維修單與出貨、回收紀錄下載為 JSON</p></div>›</div></div><div class="notice">目前資料保存在本裝置瀏覽器。專屬同步碼尚未啟用雲端同步；請定期匯出備份。</div>`;
 }function go(t){tab=t;render()}function cards(arr){return arr.length?arr.map(t=>`<article tabindex="0" role="button" aria-label="查看維修單 ${esc(t.number)}" onclick="detail('${t.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();detail('${t.id}')}" class="ticket compact ${status(t)==='已完成'?'done':''}"><div class="ticket-top"><strong>${esc(t.number)}</strong>${statusBadges(t)}</div><div class="compact-info hj-card-meta"><span class="hj-meta-pair"><span class="hj-meta-label">申請日期：</span><span class="hj-meta-value">${esc(t.date)}</span></span><span class="hj-meta-separator" aria-hidden="true">|</span><span class="hj-meta-pair"><span class="hj-meta-label">申請人：</span><span class="hj-meta-value">${esc(t.applicant)}</span></span></div><div class="compact-inst hj-card-meta"><span class="hj-meta-pair"><span class="hj-meta-label">${t.kind==='sample'?'使用單位：':'機構：'}</span><span class="hj-meta-value">${esc(t.institution)}</span></span></div></article>`).join(''):'<div class="empty">目前沒有符合條件的維修單</div>'}function updateSearch(){search={month:document.getElementById('s-month').value,person:document.getElementById('s-person').value,institution:document.getElementById('s-institution').value,keyword:document.getElementById('s-keyword').value};showSearch()}function showSearch(){let a=active().filter(t=>(!search.month||t.date.startsWith(search.month))&&t.applicant.includes(search.person)&&t.institution.includes(search.institution)&&[t.number,t.note,...t.items.flatMap(i=>[i.name,i.reason]),...t.shipments.map(x=>x.note),...t.recoveries.map(x=>x.note)].join(' ').toLowerCase().includes(search.keyword.toLowerCase()));document.getElementById('searchResults').innerHTML=cards(a.sort((a,b)=>b.number.localeCompare(a.number)))}let lockedScrollY=0;function modal(html){if(!document.body.classList.contains('modal-open')){lockedScrollY=window.scrollY;document.body.style.top=`-${lockedScrollY}px`;document.body.classList.add('modal-open')}document.getElementById('overlay').innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><section class="sheet"><div class="sheet-head hj-close-only"><button class="close" onclick="closeModal()" aria-label="關閉">×</button></div>${html}</section></div>`}function closeModal(){document.getElementById('overlay').innerHTML='';if(document.body.classList.contains('modal-open')){document.body.classList.remove('modal-open');document.body.style.top='';window.scrollTo(0,lockedScrollY)}}function get(id){return state.tickets.find(t=>t.id===id)}function nextNumber(date){return allocateNumber('repair',date)}const DRAFT_KEY='huijia-repair-unsaved-v2',DRAFT_TTL=2*60*1000;let editingId=null,reservedNumber='';let repairOtherEnabled=false,repairOtherRows=[];function readDraft(){try{let d=JSON.parse(localStorage.getItem(DRAFT_KEY));if(d&&Date.now()-d.updated<DRAFT_TTL)return d}catch{}localStorage.removeItem(DRAFT_KEY);return null}function clearDraft(){localStorage.removeItem(DRAFT_KEY)}function persistDraft(){if(editingId||!document.getElementById('f-date'))return;let d={updated:Date.now(),number:reservedNumber,date:document.getElementById('f-date').value,applicant:document.getElementById('f-person').value,institution:document.getElementById('f-inst').value,note:document.getElementById('f-note').value,items:draft,otherItem:repairOtherEnabled,otherItems:repairOtherRows};localStorage.setItem(DRAFT_KEY,JSON.stringify(d))}function refreshReserved(){let el=document.getElementById('f-date');if(!el||editingId)return;let prefix=numberBase('repair',el.value);if(!reservedNumber.startsWith(prefix)){reservedNumber=nextNumber(el.value);document.getElementById('reservedNumber').textContent=reservedNumber}persistDraft()}
 function optionList(value){return `<option value="">請選擇品項</option>${state.products.map(x=>`<option value="${esc(x)}" ${value===x?'selected':''}>${esc(x)}</option>`).join('')}`}
-let draft=[];function editTicket(id){let t=id?get(id):null;if(t&&(t.shipments.length||t.recoveries.length))return alert('已有出貨或回收紀錄，申請內容已鎖定。');editingId=id||null;let old=!t?readDraft():null;draft=t?t.items.filter(x=>!x.otherPlaceholder).map(x=>({...x})):old?.items?.length?old.items.filter(x=>!x.otherPlaceholder):[{name:'',qty:'',reason:''}];repairOtherRows=t?t.items.filter(x=>x.otherPlaceholder).map(x=>({name:x.name.replace(/^其他品項：/,''),qty:x.qty,reason:x.reason||''})):old?.otherItems?.length?old.otherItems:[{name:'',qty:1,reason:''}];repairOtherEnabled=!!(t?t.items.some(x=>x.otherPlaceholder):old?.otherItem);reservedNumber=t?.number||old?.number||nextNumber(today());if(!t&&old?.date&&!reservedNumber.startsWith(numberBase('repair',old.date)))reservedNumber=nextNumber(old.date);modal(`<div class="row between"><h2>${t?'編輯維修單':'新增維修單'}</h2><div class="detail-number" id="reservedNumber">${esc(reservedNumber)}</div></div>${old?'<div class="notice">已恢復 2 分鐘內尚未儲存的內容。</div>':''}<div class="cols"><label class="field"><span>申請日期 *</span><input id="f-date" type="date" value="${esc(t?.date||old?.date||today())}" onchange="refreshReserved()"></label><label class="field"><span>申請人 *</span><input id="f-person" value="${esc(t?.applicant||old?.applicant||'')}"></label></div><label class="field"><span>機構名稱 *</span><input id="f-inst" value="${esc(t?.institution||old?.institution||'')}"></label><div class="line"></div><h3>維修申請</h3><div id="draftRows"></div><button class="btn secondary" onclick="addRow()">＋ 增加申請格</button><div class="hj-other-toggle hj-other-switch-row"><span>其他品項（可不選上方品項）</span><label class="hj-switch" aria-label="維修其他品項開關"><input id="f-other" type="checkbox" ${repairOtherEnabled?'checked':''} onchange="repairOtherEnabled=this.checked;renderRepairOtherRows();persistDraft()"><span class="hj-switch-track"></span></label></div><div id="f-other-field"><div id="f-other-rows"></div><button type="button" class="btn secondary small" onclick="repairOtherRows.push({name:'',qty:1,reason:''});renderRepairOtherRows();persistDraft()">＋ 新增其他品項</button></div><label class="field"><span>備註（自由輸入）</span><textarea id="f-note">${esc(t?.note||old?.note||'')}</textarea></label><button class="btn" style="width:100%" onclick="saveTicket('${id||''}')">儲存維修單</button>`);renderRows();renderRepairOtherRows();if(!t){document.querySelector('.sheet').addEventListener('input',persistDraft);document.querySelector('.sheet').addEventListener('change',persistDraft);persistDraft()}}
+let draft=[];function editTicket(id){let t=id?get(id):null;editingId=id||null;let old=!t?readDraft():null;draft=t?t.items.map((x,i)=>({...x,__sourceIndex:i})).filter(x=>!x.otherPlaceholder):old?.items?.length?old.items.filter(x=>!x.otherPlaceholder):[{name:'',qty:'',reason:''}];repairOtherRows=t?t.items.map((x,i)=>({...x,__sourceIndex:i})).filter(x=>x.otherPlaceholder).map(x=>({name:x.name.replace(/^其他品項：/,''),qty:x.qty,reason:x.reason||'',__sourceIndex:x.__sourceIndex})):old?.otherItems?.length?old.otherItems:[{name:'',qty:1,reason:''}];repairOtherEnabled=!!(t?t.items.some(x=>x.otherPlaceholder):old?.otherItem);reservedNumber=t?.number||old?.number||nextNumber(today());if(!t&&old?.date&&!reservedNumber.startsWith(numberBase('repair',old.date)))reservedNumber=nextNumber(old.date);modal(`<div class="row between"><h2>${t?'編輯維修單':'新增維修單'}</h2><div class="detail-number" id="reservedNumber">${esc(reservedNumber)}</div></div>${old?'<div class="notice">已恢復 2 分鐘內尚未儲存的內容。</div>':''}<div class="cols"><label class="field"><span>申請日期 *</span><input id="f-date" type="date" value="${esc(t?.date||old?.date||today())}" onchange="refreshReserved()"></label><label class="field"><span>申請人 *</span><input id="f-person" value="${esc(t?.applicant||old?.applicant||'')}"></label></div><label class="field"><span>機構名稱 *</span><input id="f-inst" value="${esc(t?.institution||old?.institution||'')}"></label><div class="line"></div><h3>維修申請</h3><div id="draftRows"></div><button class="btn secondary" onclick="addRow()">＋ 增加申請格</button><div class="hj-other-toggle hj-other-switch-row"><span>其他品項（可不選上方品項）</span><label class="hj-switch" aria-label="維修其他品項開關"><input id="f-other" type="checkbox" ${repairOtherEnabled?'checked':''} onchange="repairOtherEnabled=this.checked;renderRepairOtherRows();persistDraft()"><span class="hj-switch-track"></span></label></div><div id="f-other-field"><div id="f-other-rows"></div><button type="button" class="btn secondary small" onclick="repairOtherRows.push({name:'',qty:1,reason:''});renderRepairOtherRows();persistDraft()">＋ 新增其他品項</button></div><label class="field"><span>備註（自由輸入）</span><textarea id="f-note">${esc(t?.note||old?.note||'')}</textarea></label><button class="btn" style="width:100%" onclick="saveTicket('${id||''}')">儲存維修單</button>`);renderRows();renderRepairOtherRows();if(!t){document.querySelector('.sheet').addEventListener('input',persistDraft);document.querySelector('.sheet').addEventListener('change',persistDraft);persistDraft()}}
 function renderRows(){document.getElementById('draftRows').innerHTML=draft.map((x,i)=>`<div class="item-row"><div class="row between"><span class="item-title">${i+1}.</span>${draft.length>1?`<button class="btn secondary small" onclick="removeRow(${i})">移除</button>`:''}</div><label class="field"><span>維修品項</span><select onchange="draft[${i}].name=this.value;persistDraft()">${optionList(x.name)}</select></label><div class="cols"><label class="field"><span>數量（選品項後必填）</span><input type="number" min="1" step="1" value="${esc(x.qty)}" oninput="draft[${i}].qty=this.value;persistDraft()"></label><label class="field"><span>維修原因（選填）</span><input value="${esc(x.reason)}" oninput="draft[${i}].reason=this.value;persistDraft()" placeholder="故障原因"></label></div></div>`).join('')}function renderRepairOtherRows(){let field=document.getElementById('f-other-field'),el=document.getElementById('f-other-rows');if(!field||!el)return;field.style.display=repairOtherEnabled?'block':'none';el.innerHTML=repairOtherRows.map((x,i)=>`<div class="item-row hj-other-row"><div class="row between"><b>其他品項 ${i+1}.</b><button type="button" class="btn secondary small" onclick="repairOtherRows.splice(${i},1);if(!repairOtherRows.length){repairOtherEnabled=false;document.getElementById('f-other').checked=false}renderRepairOtherRows();persistDraft()">移除</button></div><label class="field"><span>名稱 *</span><input value="${esc(x.name||'')}" placeholder="請填寫名稱" oninput="repairOtherRows[${i}].name=this.value;persistDraft()"></label><div class="cols"><label class="field"><span>數量 *</span><input type="number" min="1" step="1" value="${esc(x.qty??1)}" oninput="repairOtherRows[${i}].qty=this.value;persistDraft()"></label><label class="field"><span>維修原因（選填）</span><input value="${esc(x.reason||'')}" placeholder="故障原因" oninput="repairOtherRows[${i}].reason=this.value;persistDraft()"></label></div></div>`).join('')}
-function addRow(){draft.push({name:'',qty:'',reason:''});renderRows();persistDraft()}function removeRow(i){draft.splice(i,1);renderRows();persistDraft()}function saveTicket(id){let date=document.getElementById('f-date').value,applicant=document.getElementById('f-person').value.trim(),institution=document.getElementById('f-inst').value.trim(),note=document.getElementById('f-note').value.trim();let items=draft.filter(x=>x.name);let others=repairOtherEnabled?repairOtherRows:[];if(!date||!applicant||!institution||(!items.length&&!others.length))return alert('請填寫申請日期、申請人、機構及至少一項維修品項。');if(items.some(x=>!Number.isInteger(Number(x.qty))||Number(x.qty)<=0))return alert('每個已選維修品項都必須填寫大於 0 的整數數量。');if(others.some(x=>!String(x.name||'').trim()||!Number.isInteger(Number(x.qty))||Number(x.qty)<=0))return alert('請正確填寫其他品項名稱與數量。');items=[...items.map(x=>({name:x.name,qty:Number(x.qty),reason:x.reason||''})),...others.map(x=>({name:'其他品項：'+String(x.name).trim(),qty:Number(x.qty),reason:x.reason||'',otherPlaceholder:true}))];if(id){let t=get(id);if(t.shipments.length||t.recoveries.length)return alert('已有出貨或回收紀錄，不可修改');Object.assign(t,{date,applicant,institution,note,items})}else{if(state.tickets.some(x=>x.number===reservedNumber&&(!x.deleted||x.shipments?.length||x.recoveries?.length)))reservedNumber=nextNumber(date);state.tickets.push({id:uid(),number:reservedNumber,date,applicant,institution,note,items,shipments:[],recoveries:[],deleted:false})}save();if(!id)clearDraft();closeModal();tab='tickets';render()}
-function detail(id){let t=get(id),locked=t.shipments.length>0||t.recoveries.length>0;modal(`<div class="row between"><h2>${esc(state.title)}</h2>${statusBadges(t)}</div><div class="detail-number">${esc(t.number)}</div><p class="muted">申請日期：${esc(t.date)}｜申請人：${esc(t.applicant)}</p><p><b>機構：</b>${esc(t.institution)}</p><div class="line"></div><h3>維修申請</h3>${t.items.map((x,i)=>`<div class="item-row hj-detail-item"><span class="hj-detail-index">${i+1}.</span><div class="hj-detail-item-body"><div><b>${esc(x.name)}</b><span class="hj-detail-qty">× ${x.qty}</span></div><p class="muted">維修原因：${esc(x.reason||'—')}</p><p class="muted">已回收 ${recovered(t,i)}／已出貨 ${shipped(t,i)}</p></div></div>`).join('')}<p><b>備註：</b>${esc(t.note||'—')}</p><div class="notice">${locked?'此單已有出貨或回收紀錄，申請內容已鎖定。':'尚未出貨／回收，申請內容可修改。'} 回收與出貨歷史獨立保存。</div><div class="hj-detail-actions"><div class="hj-detail-action-grid"><button class="btn action-large" onclick="actionForm('${id}','ship')" ${t.items.every((x,i)=>shipped(t,i)>=x.qty)?'disabled':''}>出貨</button><button class="btn secondary action-large" onclick="actionForm('${id}','recover')" ${t.items.every((x,i)=>recovered(t,i)>=x.qty)?'disabled':''}>回收</button>${!locked?`<button class="btn outline" onclick="editTicket('${id}')">編輯</button>`:''}<button class="btn outline" onclick="exportMenu('${id}')">匯出圖檔</button>${state.receiptEnabled?`<button class="btn outline" onclick="receiptEditor('${id}')">簽收單</button>`:``}</div></div><div class="line"></div><h3>回收紀錄</h3>${history(t.recoveries,t,'回收')}<div class="line"></div><h3>編輯紀錄</h3>${(t.editHistory||[]).map(h=>`<div class="history"><b>${esc(new Date(h.at).toLocaleString('zh-TW'))}</b>${h.changes.map(c=>c.field==='新增品項'?`<p>新增：${c.items.map(x=>esc(x.name)+' × '+x.qty).join('、')}</p>`:`<p>${esc(({note:'備註',applicant:'申請人',institution:'機構／使用單位',expectedReturn:'預計回收日期',expectedShip:'預計出貨日期'})[c.field]||c.field)}：${esc(c.from||'—')} → ${esc(c.to||'—')}</p>`).join('')}</div>`).join('')||'<p class="muted">尚無編輯紀錄</p>'}<div class="line"></div><h3>出貨紀錄</h3>${history(t.shipments,t,'出貨')}${!locked&&!t.deleted?`<div class="hj-detail-delete"><button class="btn danger" onclick="repairDeleteUnprocessed('${id}')">刪除單據</button></div>`:''}`)}function history(arr,t,word){return arr.length?arr.map((h,i)=>`<div class="history"><b>第 ${i+1} 次${word}｜${esc(h.date)}</b><p style="font-size:13px">${h.lines.map(l=>`${esc(t.items[l.index]?.name||'品項')} × ${l.qty}`).join('、')}</p><p class="muted">${esc(h.note||'無備註')}</p></div>`).join(''):`<p class="muted">尚無${word}紀錄</p>`}
-function actionForm(id,type){let t=get(id),isShip=type==='ship',word=isShip?'出貨':'回收';if(isShip&&t.items.every((x,i)=>shipped(t,i)>=x.qty))return alert('此單已全部出貨');if(!isShip&&t.items.every((x,i)=>recovered(t,i)>=x.qty))return alert('此單已全部回收');let available=t.items.map((x,i)=>x.qty-(isShip?shipped(t,i):recovered(t,i)));modal(`<h2>新增${word}紀錄</h2><p class="muted">維修單號：${esc(t.number)}</p><div class="notice">${isShip?'可一次出貨全部剩餘品項，也可只出貨部分數量。第一次出貨後，原始維修申請將鎖定。':'可在申請當天或日後回收；回收日期與申請日期可不同。'}</div><div class="panel"><h3>選擇${word}品項與數量</h3>${t.items.map((x,i)=>`<div class="checkrow"><div><b style="font-size:13px">${esc(x.name)}</b><p class="muted">申請 ${x.qty}｜${isShip?'尚待出貨':'尚待回收'} ${available[i]}</p></div><input id="a-${i}" type="number" min="0" max="${available[i]}" step="1" value="0" ${available[i]<=0?'disabled':''}></div>`).join('')}<button class="btn secondary small" onclick="fillAll()">整批${word}（填入全部剩餘數量）</button></div><label class="field"><span>${word}日期 *</span><input type="date" id="a-date" value="${today()}"></label><label class="field"><span>${word}備註（選填）</span><textarea id="a-note" placeholder="例如：宅配寄出／交由某位客服／現場收回"></textarea></label><button class="btn" style="width:100%" onclick="saveAction('${id}','${type}')">確認${word}</button>`)}function fillAll(){document.querySelectorAll('input[type=number][id^="a-"]').forEach(x=>{if(!x.disabled)x.value=x.max})}function saveAction(id,type){let t=get(id),isShip=type==='ship',arr=isShip?t.shipments:t.recoveries,date=document.getElementById('a-date').value,note=document.getElementById('a-note').value.trim(),lines=[];for(let i=0;i<t.items.length;i++){let el=document.getElementById('a-'+i),qty=Number(el.value),available=t.items[i].qty-(isShip?shipped(t,i):recovered(t,i));if(!Number.isInteger(qty)||qty<0||qty>available)return alert('數量必須為 0 到剩餘數量之間的整數');if(qty>0)lines.push({index:i,qty})}if(!date||!lines.length)return alert('請填寫日期，並至少選擇一個數量大於 0 的品項');arr.push({date,note,lines});save();closeModal();render();detail(id)}
-function settingsProducts(){modal(`<h2>維修申請項目管理</h2><div id="productList">${state.products.map((x,i)=>`<div class="row between item-row"><span>${esc(x)}</span><button class="btn secondary small" onclick="removeProduct(${i})">停用</button></div>`).join('')}</div><label class="field"><span>新增維修品項</span><input id="newProduct" placeholder="例如：智慧光纖薄墊感測線"></label><button class="btn" onclick="addProduct()">新增品項</button><div class="notice">停用只會從未來新增維修單的下拉選單移除，不影響既有紀錄。</div>`)}function addProduct(){let v=document.getElementById('newProduct').value.trim();if(!v)return;if(state.products.includes(v))return alert('此品項已存在');state.products.push(v);save();settingsProducts()}function removeProduct(i){if(!confirm('停用此品項？舊維修單不受影響。'))return;state.products.splice(i,1);save();settingsProducts()}function settingsFormat(){modal(`<h2>維修單格式設定</h2><label class="field"><span>單據標題</span><input id="formatTitle" value="${esc(state.title)}"></label><div class="notice">單號固定顯示在右上角；每列申請格含維修品項、數量與維修原因。未出貨可編輯，出貨後鎖定。</div><button class="btn" onclick="state.title=document.getElementById('formatTitle').value.trim()||'維修申請單';save();closeModal()">儲存格式</button>`)}function settingsSync(){modal(`<h2>專屬同步碼</h2><div class="notice"><b>雲端同步尚未啟用。</b> 此畫面是正式版配對流程預覽，下面的代碼不會同步資料，請勿當作真實同步憑證。</div><p>正式版預計：第一台裝置產生高強度配對密鑰，其他手機或電腦輸入密鑰後，連接同一份雲端資料。</p><div class="code">尚未連接雲端</div><p class="muted">正式版需部署雲端資料庫、安全權限與配對機制。</p>`)}function repairDeleteUnprocessed(id){let t=get(id);if(!t||t.deleted)return;if(t.shipments.length||t.recoveries.length)return alert('已有處理紀錄，請在設定封存');if(!confirm('確定刪除 '+t.number+'？此單號可再次使用。'))return;state.tickets=state.tickets.filter(x=>x.id!==id);save();closeModal();render()}function settingsDeleted(){modal(`<h2>已處理維修單封存／查詢</h2><p class="notice">未出貨且未回收可在單據內直接刪除；已處理單據僅能在此封存，單號不回收。</p><label class="field"><span>指定維修單號</span><input id="deleteNumber" placeholder="例如：202611-001"></label><label class="field"><span>封存原因（必填）</span><input id="deleteReason" placeholder="輸入原因"></label><button class="btn danger" onclick="softDelete()">依單號封存</button><div class="line"></div><h3>已刪除單據</h3>${state.tickets.filter(t=>t.deleted).map(t=>`<div class="item-row"><b>${esc(t.number)}</b><p class="muted">${esc(t.institution)}｜${esc(t.deletedAt||'')}</p><p class="muted">原因：${esc(t.deleteReason||'')}</p><button class="btn outline small" onclick="detail('${t.id}')">查閱原始紀錄</button></div>`).join('')||'<p class="muted">尚無已刪除單據</p>'}`)}function softDelete(){let number=document.getElementById('deleteNumber').value.trim(),reason=document.getElementById('deleteReason').value.trim(),t=state.tickets.find(x=>x.number===number&&!x.deleted);if(!t)return alert('找不到此有效單號');if(!reason)return alert('請填寫封存原因');if(!t.shipments.length&&!t.recoveries.length)return alert('尚未處理的單據請從單據詳情刪除');if(!confirm('確認將 '+number+' 移至已刪除單據？資料仍會保留。'))return;t.deleted=true;t.deletedAt=new Date().toLocaleString('zh-TW');t.deleteReason=reason;save();settingsDeleted();render()}function exportBackup(){let blob=new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});downloadBlob(blob,'滙嘉維修資料備份-'+today()+'.json')}
+function addRow(){draft.push({name:'',qty:'',reason:''});renderRows();persistDraft()}function removeRow(i){draft.splice(i,1);renderRows();persistDraft()}function saveTicket(id){let date=document.getElementById('f-date').value,applicant=document.getElementById('f-person').value.trim(),institution=document.getElementById('f-inst').value.trim(),note=document.getElementById('f-note').value.trim();let items=draft.filter(x=>x.name);let others=repairOtherEnabled?repairOtherRows:[];if(!date||!applicant||!institution||(!items.length&&!others.length))return alert('請填寫申請日期、申請人、機構及至少一項維修品項。');if(items.some(x=>!Number.isInteger(Number(x.qty))||Number(x.qty)<=0))return alert('每個已選維修品項都必須填寫大於 0 的整數數量。');if(others.some(x=>!String(x.name||'').trim()||!Number.isInteger(Number(x.qty))||Number(x.qty)<=0))return alert('請正確填寫其他品項名稱與數量。');items=[...items.map(x=>({name:x.name,qty:Number(x.qty),reason:x.reason||''})),...others.map(x=>({name:'其他品項：'+String(x.name).trim(),qty:Number(x.qty),reason:x.reason||'',otherPlaceholder:true}))];if(id){let t=get(id);if(t.shipments.length||t.recoveries.length)return alert('已有出貨或回收紀錄，不可修改');Object.assign(t,{date,applicant,institution,note,items})}else{if(state.tickets.some(x=>x.number===reservedNumber&&(!x.numberReusable)))reservedNumber=nextNumber(date);state.tickets.push({id:uid(),number:reservedNumber,date,applicant,institution,note,items,shipments:[],recoveries:[],deleted:false})}save();if(!id)clearDraft();closeModal();tab='tickets';render()}
+function detail(id){let t=get(id),locked=t.shipments.length>0||t.recoveries.length>0;modal(`<div class="row between"><h2>${esc(state.title)}</h2>${statusBadges(t)}</div><div class="detail-number">${esc(t.number)}</div><p class="muted">申請日期：${esc(t.date)}｜申請人：${esc(t.applicant)}</p><p><b>機構：</b>${esc(t.institution)}</p><div class="line"></div><h3>維修申請</h3>${t.items.map((x,i)=>`<div class="item-row hj-detail-item"><span class="hj-detail-index">${i+1}.</span><div class="hj-detail-item-body"><div><b>${esc(x.name)}</b><span class="hj-detail-qty">× ${x.qty}</span></div><p class="muted">維修原因：${esc(x.reason||'—')}</p><p class="muted">已回收 ${recovered(t,i)}／已出貨 ${shipped(t,i)}</p></div></div>`).join('')}<p><b>備註：</b>${esc(t.note||'—')}</p><div class="notice">${locked?'此單已有出貨或回收紀錄，申請內容已鎖定。':'尚未出貨／回收，申請內容可修改。'} 回收與出貨歷史獨立保存。</div><div class="hj-detail-actions"><div class="hj-detail-action-grid"><button class="btn action-large" onclick="actionForm('${id}','ship')" ${t.items.every((x,i)=>shipped(t,i)>=x.qty)?'disabled':''}>出貨</button><button class="btn secondary action-large" onclick="actionForm('${id}','recover')" ${t.items.every((x,i)=>recovered(t,i)>=x.qty)?'disabled':''}>回收</button>${!locked?`<button class="btn outline" onclick="editTicket('${id}')">編輯</button>`:''}<button class="btn outline" onclick="exportMenu('${id}')">匯出圖檔</button>${state.receiptEnabled?`<button class="btn outline" onclick="receiptEditor('${id}')">簽收單</button>`:``}</div></div><div class="line"></div><h3>回收紀錄</h3>${history(t.recoveries,t,'回收')}<div class="line"></div><h3>編輯紀錄</h3>${(t.editHistory||[]).map(h=>`<div class="history"><b>${esc(new Date(h.at).toLocaleString('zh-TW'))}</b>${h.changes.map(c=>c.field==='新增品項'?`<p>新增：${c.items.map(x=>esc(x.name)+' × '+x.qty).join('、')}</p>`:`<p>${esc(({note:'備註',applicant:'申請人',institution:'機構／使用單位',expectedReturn:'預計回收日期',expectedShip:'預計出貨日期'})[c.field]||c.field)}：${esc(c.from||'—')} → ${esc(c.to||'—')}</p>`).join('')}</div>`).join('')||'<p class="muted">尚無編輯紀錄</p>'}<div class="line"></div><h3>出貨紀錄</h3>${history(t.shipments,t,'出貨')}${!locked&&!t.deleted?`<div class="hj-detail-delete"><button class="btn danger" onclick="repairDeleteUnprocessed('${id}')">刪除單據</button></div>`:''}`)}function history(arr,t,word){return arr.length?arr.map((h,i)=>`<div class="history"><b>第 ${i+1} 次${word}｜${esc(h.date)}</b><p style="font-size:13px">${h.lines.map(l=>`${esc(t.items[l.index]?.name||'品項')} × ${l.qty}${word==='回收'?'（'+(l.condition==='good'?'良品':l.condition==='bad'?'不良品':'未註明品況')+'）':''}`).join('、')}</p><p class="muted">${h.staff?esc(word==='出貨'?'維修客服：':'回收客服：')+esc(h.staff)+'｜':''}${esc(h.note||'無備註')}</p></div>`).join(''):`<p class="muted">尚無${word}紀錄</p>`}
+function hjReturnToggle(i){const toggle=document.getElementById('a-good-toggle-'+i),panel=document.getElementById('a-split-'+i),single=document.getElementById('a-'+i);if(!toggle||!panel||!single)return;panel.hidden=!toggle.checked;single.closest('label.field').hidden=toggle.checked;single.disabled=toggle.checked||Number(single.max)===0;if(toggle.checked){const bad=document.getElementById('a-bad-'+i),good=document.getElementById('a-good-'+i);bad.value=single.value||'0';good.value='0';hjReturnUpdate(i)}else{single.value=document.getElementById('a-bad-'+i).value||'0'}}
+function hjReturnUpdate(i){const bad=document.getElementById('a-bad-'+i),good=document.getElementById('a-good-'+i),msg=document.getElementById('a-total-'+i);if(!bad||!good||!msg)return;const max=Number(bad.max),n=Number(bad.value)+Number(good.value);msg.textContent=`已填 ${n}／可回收 ${max}`;msg.style.color=Number.isInteger(n)&&n<=max&&n>=0?'':'#b42318'}
+function actionForm(id,type){const t=get(id),isShip=type==='ship',word=isShip?'出貨':'回收';if(isShip&&t.items.every((x,i)=>shipped(t,i)>=x.qty))return alert('此單已全部出貨');if(!isShip&&t.items.every((x,i)=>recovered(t,i)>=x.qty))return alert('此單已全部回收');const available=t.items.map((x,i)=>x.qty-(isShip?shipped(t,i):recovered(t,i)));modal(`<h2>新增${word}紀錄</h2><p class="muted">維修單號：${esc(t.number)}</p><div class="notice">${isShip?'可一次出貨全部剩餘品項，也可只出貨部分數量。':'預設全部為不良品；若同一品項有良品，開啟「有良品回收」即可一次填寫兩種數量。'}</div><div class="panel"><h3>選擇${word}品項與數量</h3>${t.items.map((x,i)=>`<div class="hj-return-item"><div class="hj-return-item-head"><div><b>${esc(x.name)}</b><p class="muted">申請 ${x.qty}｜${isShip?'尚待出貨':'尚待回收'} ${available[i]}</p></div>${!isShip?`<label class="hj-return-switch"><span>有良品回收</span><input id="a-good-toggle-${i}" type="checkbox" role="switch" aria-label="${esc(x.name)} 啟用有良品回收" ${available[i]<=0?'disabled':''} onchange="hjReturnToggle(${i})"><span class="hj-return-track" aria-hidden="true"></span></label>`:''}</div><label class="field"><span>${isShip?'出貨數量':'不良品回收數量'}</span><input id="a-${i}" type="number" min="0" max="${available[i]}" step="1" value="0" ${available[i]<=0?'disabled':''}></label>${!isShip?`<div class="hj-return-split" id="a-split-${i}" hidden><div class="hj-return-two"><label class="field"><span>不良品數量</span><input id="a-bad-${i}" type="number" min="0" max="${available[i]}" step="1" value="0" oninput="hjReturnUpdate(${i})"></label><label class="field"><span>良品數量</span><input id="a-good-${i}" type="number" min="0" max="${available[i]}" step="1" value="0" oninput="hjReturnUpdate(${i})"></label></div><p class="muted" id="a-total-${i}">已填 0／可回收 ${available[i]}</p></div>`:''}</div>`).join('')}<button class="btn secondary small" onclick="fillAll()">整批${word}（填入全部剩餘數量）</button></div><label class="field"><span>${word}日期 *</span><input type="date" id="a-date" value="${today()}"></label><label class="field"><span>${isShip?'維修客服':'回收客服'}</span><input id="a-staff" placeholder="請輸入客服姓名"></label><label class="field"><span>${word}備註（選填）</span><textarea id="a-note" placeholder="例如：宅配寄出／交由某位客服／現場收回"></textarea></label><button class="btn" style="width:100%" onclick="saveAction('${id}','${type}')">確認${word}</button>`)}
+function fillAll(){document.querySelectorAll('input[type=number][id^="a-"]').forEach(x=>{if(!x.disabled&&!x.id.startsWith('a-good-')&&!x.id.startsWith('a-bad-'))x.value=x.max});document.querySelectorAll('[id^="a-good-toggle-"]').forEach(toggle=>{if(toggle.checked){const i=toggle.id.slice('a-good-toggle-'.length);document.getElementById('a-bad-'+i).value=document.getElementById('a-bad-'+i).max;document.getElementById('a-good-'+i).value='0';hjReturnUpdate(i)}})}
+function saveAction(id,type){const t=get(id),isShip=type==='ship',arr=isShip?t.shipments:t.recoveries,date=document.getElementById('a-date').value,note=document.getElementById('a-note').value.trim(),lines=[];for(let i=0;i<t.items.length;i++){const available=t.items[i].qty-(isShip?shipped(t,i):recovered(t,i)),toggle=!isShip&&document.getElementById('a-good-toggle-'+i)?.checked;let entries;if(toggle){entries=[['bad',Number(document.getElementById('a-bad-'+i).value)],['good',Number(document.getElementById('a-good-'+i).value)]]}else{entries=[[isShip?null:'bad',Number(document.getElementById('a-'+i).value)]]}const total=entries.reduce((sum,e)=>sum+e[1],0);if(entries.some(e=>!Number.isInteger(e[1])||e[1]<0)||total>available)return alert(`${t.items[i].name}：良品與不良品數量合計不可超過尚待${isShip?'出貨':'回收'}數量 ${available}，且必須是非負整數。`);for(const [condition,qty] of entries)if(qty>0)lines.push(isShip?{index:i,qty}:{index:i,qty,condition})}if(!date||!lines.length)return alert('請填寫日期，並至少選擇一個數量大於 0 的品項');arr.push({date,note,staff:document.getElementById('a-staff').value.trim(),lines});save();closeModal();render();detail(id)}
+function settingsProducts(){modal(`<h2>維修申請項目管理</h2><div id="productList">${state.products.map((x,i)=>`<div class="row between item-row"><span>${esc(x)}</span><button class="btn secondary small" onclick="removeProduct(${i})">停用</button></div>`).join('')}</div><label class="field"><span>新增維修品項</span><input id="newProduct" placeholder="例如：智慧光纖薄墊感測線"></label><button class="btn" onclick="addProduct()">新增品項</button><div class="notice">停用只會從未來新增維修單的下拉選單移除，不影響既有紀錄。</div>`)}function addProduct(){let v=document.getElementById('newProduct').value.trim();if(!v)return;if(state.products.includes(v))return alert('此品項已存在');state.products.push(v);save();settingsProducts()}function removeProduct(i){if(!confirm('停用此品項？舊維修單不受影響。'))return;state.products.splice(i,1);save();settingsProducts()}function settingsFormat(){modal(`<h2>維修單格式設定</h2><label class="field"><span>單據標題</span><input id="formatTitle" value="${esc(state.title)}"></label><div class="notice">單號固定顯示在右上角；每列申請格含維修品項、數量與維修原因。未出貨可編輯，出貨後鎖定。</div><button class="btn" onclick="state.title=document.getElementById('formatTitle').value.trim()||'維修申請單';save();closeModal()">儲存格式</button>`)}function settingsSync(){modal(`<h2>專屬同步碼</h2><div class="notice"><b>雲端同步尚未啟用。</b> 此畫面是正式版配對流程預覽，下面的代碼不會同步資料，請勿當作真實同步憑證。</div><p>正式版預計：第一台裝置產生高強度配對密鑰，其他手機或電腦輸入密鑰後，連接同一份雲端資料。</p><div class="code">尚未連接雲端</div><p class="muted">正式版需部署雲端資料庫、安全權限與配對機制。</p>`)}function repairDeleteUnprocessed(id){let t=get(id);if(!t||t.deleted)return;if(t.shipments.length||t.recoveries.length)return alert('已有處理紀錄，請在設定封存');if(!confirm('確定刪除 '+t.number+'？此單號可再次使用。'))return;state.tickets=state.tickets.filter(x=>x.id!==id);save();closeModal();render()}function settingsDeleted(){modal(`<h2>已處理維修單封存／查詢</h2><p class="notice">未出貨且未回收可在單據內直接刪除；已處理單據僅能在此封存，單號不回收。</p><label class="field"><span>指定維修單號</span><input id="deleteNumber" placeholder="例如：202611-001"></label><label class="field"><span>封存原因（必填）</span><input id="deleteReason" placeholder="輸入原因"></label><button class="btn danger" onclick="softDelete()">依單號封存</button><div class="line"></div><h3>已刪除單據</h3>${state.tickets.filter(t=>t.deleted).map(t=>`<div class="item-row"><b>${esc(t.number)}</b><p class="muted">${esc(t.institution)}｜${esc(t.deletedAt||'')}</p><p class="muted">原因：${esc(t.deleteReason||'')}</p><button class="btn outline small" onclick="detail('${t.id}')">查閱原始紀錄</button></div>`).join('')||'<p class="muted">尚無已刪除單據</p>'}`)}function softDelete(){let number=document.getElementById('deleteNumber').value.trim(),reason=document.getElementById('deleteReason').value.trim(),t=state.tickets.find(x=>x.number===number&&!x.deleted);if(!t)return alert('找不到此有效單號');if(!reason)return alert('請填寫封存原因');if(!t.shipments.length&&!t.recoveries.length)return alert('尚未處理的單據請從單據詳情刪除');if(!confirm('確認將 '+number+' 移至已刪除單據？資料仍會保留。'))return;t.deleted=true;t.deletedAt=new Date().toLocaleString('zh-TW');t.deleteReason=reason;save();settingsDeleted();render()}function exportBackup(){hjBackupDialog()}
 let currentJpgBlob=null,currentJpgName='',currentJpgUrl='';
 function showJpgPreview(blob,name){
  if(currentJpgUrl)URL.revokeObjectURL(currentJpgUrl);
@@ -690,7 +696,34 @@ async function saveJpg(){if(!currentJpgBlob)return;let file=new File([currentJpg
 function openJpgImage(){if(!currentJpgUrl)return;let win=window.open(currentJpgUrl,'_blank');if(!win){let img=document.querySelector('.jpg-preview-image');if(img){img.scrollIntoView({behavior:'smooth'});alert('瀏覽器阻擋新分頁。請長按預覽圖片並選擇儲存影像。')}}}
 function downloadBlob(blob,name){let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}function exportMenu(id){modal(`<h2>選擇圖檔格式</h2><p class="muted">申請單適合傳給客服；完整紀錄供內部追蹤。</p><div style="display:grid;gap:12px;margin-top:18px"><button class="btn action-large" onclick="downloadPng('${id}','request')">維修申請單 JPG</button><button class="btn secondary action-large" onclick="downloadPng('${id}','full')">完整維修紀錄 JPG</button>${state.receiptEnabled?`<button class="btn outline action-large" onclick="receiptEditor('${id}')">產品送貨／簽收單</button>`:``}</div>`)}
 function canvasTable(title,number,sections,filename,foot='滙嘉健康生活科技股份有限公司',landscapeWidth=1120){let W=landscapeWidth,margin=56,usable=W-margin*2,rowH=48;let measure=document.createElement('canvas').getContext('2d');measure.font='22px sans-serif';function wrap(txt,width){let words=Array.from(String(txt??''));let out=[],line='';for(let c of words){if(measure.measureText(line+c).width>width&&line){out.push(line);line=c}else line+=c}out.push(line);return out}let rows=[];for(let sec of sections){rows.push({gap:true});rows.push({head:sec.title});let widths=sec.widths||sec.columns.map(()=>1/sec.columns.length);let total=widths.reduce((a,b)=>a+b,0);if(!sec.hideHeader)rows.push({cols:sec.columns,widths:widths.map(x=>x/total),header:true});for(let values of sec.rows){let lines=values.map((v,i)=>wrap(v,usable*widths[i]/total-24));rows.push({cols:values,widths:widths.map(x=>x/total),lines,height:Math.max(rowH,...lines.map(x=>x.length*29+18))})}}let H=195+rows.reduce((a,r)=>a+(r.gap?34:r.head?42:r.header?46:r.height),0)+100;let c=document.createElement('canvas');c.width=W;c.height=H;let ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.fillStyle='#143955';ctx.font='bold 35px sans-serif';ctx.fillText(title,margin,70);ctx.textAlign='right';ctx.font='bold 30px sans-serif';ctx.fillText(number,W-margin,70);ctx.textAlign='left';ctx.fillStyle='#64748b';ctx.font='18px sans-serif';ctx.fillText('滙嘉健康生活科技股份有限公司',margin,105);ctx.strokeStyle='#173f62';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(margin,123);ctx.lineTo(W-margin,123);ctx.stroke();let y=155;for(let r of rows){if(r.gap){y+=34;continue}if(r.head){ctx.fillStyle='#e9f1f8';ctx.fillRect(margin,y,usable,42);ctx.fillStyle='#173f62';ctx.font='bold 22px sans-serif';ctx.fillText(r.head,margin+13,y+29);ctx.strokeStyle='#b6c7d5';ctx.lineWidth=1;ctx.strokeRect(margin,y,usable,42);y+=42;continue}let h=r.header?46:r.height;ctx.fillStyle=r.header?'#edf3f8':'#fff';ctx.fillRect(margin,y,usable,h);ctx.strokeStyle='#aabaca';ctx.lineWidth=1;ctx.strokeRect(margin,y,usable,h);let x=margin;for(let i=0;i<r.cols.length;i++){let w=usable*r.widths[i];if(i){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+h);ctx.stroke()}ctx.fillStyle='#20384c';ctx.font=r.header?'bold 20px sans-serif':'20px sans-serif';let lines=r.header?[String(r.cols[i])]:r.lines[i];lines.forEach((line,j)=>ctx.fillText(line,x+12,y+29+j*29));x+=w}y+=h}ctx.fillStyle='#7a8795';ctx.font='16px sans-serif';ctx.fillText(foot,margin,H-35);c.toBlob(blob=>{if(blob)showJpgPreview(blob,filename.replace(/\.png$/i,'.jpg'))},'image/jpeg',.93)}
-function downloadPng(id,mode='full'){let t=get(id);let sections=[{title:'基本資料',columns:['申請日期','申請人','機構名稱'],widths:[1,1,2],rows:[[t.date,t.applicant,t.institution]]},{title:'維修申請',columns:['序號','維修申請品項','數量','維修原因'],widths:[.4,2.1,.55,2],rows:t.items.map((x,i)=>[i+1,x.name,x.qty,x.reason||''])},{title:'申請備註',columns:['備註'],rows:[[t.note||'無']]}];if(mode==='full'){sections.push({title:'各品項回收與出貨統計',columns:['品項','申請','已回收','已出貨'],widths:[2,1,1,1],rows:t.items.map((x,i)=>[x.name,x.qty,recovered(t,i),shipped(t,i)])});for(let [key,title] of [['recoveries','回收紀錄'],['shipments','出貨紀錄']])sections.push({title,columns:['日期','品項及數量','備註'],widths:[1,2,2],rows:t[key].length?t[key].map(h=>[h.date,h.lines.map(l=>`${t.items[l.index]?.name||'品項'} × ${l.qty}`).join('、'),h.note||'']):[['—','尚無紀錄','']]})}canvasTable(mode==='full'?'完整維修紀錄':'維修申請單',t.number,sections,`${t.number}-${mode==='full'?'完整維修紀錄':'維修申請單'}.jpg`)}
+function hjRecoveryReportNote(h,t){
+ const good=(h.lines||[]).filter(l=>l.condition==='good'&&Number(l.qty)>0);
+ const summary=good.map(l=>`${t.items[l.index]?.name||'品項'} × ${l.qty}（良品回收）`).join('；');
+ return [h.note||'',summary].filter(Boolean).join('；');
+}
+function hjRepairEditHistoryReportRows(t){
+ const entries=Array.isArray(t.editHistory)?t.editHistory:[];
+ if(!entries.length)return [['—','尚無編輯紀錄','']];
+ const names={date:'申請日期',applicant:'申請人',institution:'機構名稱',note:'申請備註',reason:'維修原因'};
+ const rows=[];
+ for(const h of entries){
+  const when=h.at?new Date(h.at).toLocaleString('zh-TW',{hour12:false}):(h.date||'—');
+  const changes=Array.isArray(h.changes)?h.changes:[];
+  if(!changes.length){rows.push([when,'修改紀錄','']);continue}
+  for(const c of changes){
+   if(c.field==='新增品項'){
+    const added=(c.items||[]).map(x=>`${x.name||'品項'} × ${x.qty??''}`).join('、');
+    rows.push([when,'新增品項',added]);
+   }else if(c.field&&c.field.startsWith('刪除品項')){
+    rows.push([when,c.field,`${c.from??'—'} → ${c.to??'已刪除'}`]);
+   }else{
+    rows.push([when,names[c.field]||c.field||'修改',`${c.from===undefined||c.from===''?'—':c.from} → ${c.to===undefined||c.to===''?'—':c.to}`]);
+   }
+  }
+ }
+ return rows;
+}
+function downloadPng(id,mode='full'){let t=get(id);let sections=[{title:'基本資料',columns:['申請日期','申請人','機構名稱'],widths:[1,1,2],rows:[[t.date,t.applicant,t.institution]]},{title:'維修申請',columns:['序號','維修申請品項','數量','維修原因'],widths:[.4,2.1,.55,2],rows:t.items.map((x,i)=>[i+1,x.name,x.qty,x.reason||''])},{title:'申請備註',columns:['備註'],rows:[[t.note||'無']]}];if(mode==='full'){sections.push({title:'各品項回收與出貨統計',columns:['品項','申請','已回收','已出貨'],widths:[2,1,1,1],rows:t.items.map((x,i)=>[x.name,x.qty,recovered(t,i),shipped(t,i)])});for(let [key,title] of [['recoveries','回收紀錄'],['shipments','出貨紀錄']])sections.push({title,columns:['日期','品項及數量','備註'],widths:[1,2,2],rows:t[key].length?t[key].map(h=>[h.date,h.lines.map(l=>`${t.items[l.index]?.name||'品項'} × ${l.qty}`).join('、'),[h.staff?(key==='recoveries'?'回收客服：':'維修客服：')+h.staff:'',key==='recoveries'?hjRecoveryReportNote(h,t):h.note||''].filter(Boolean).join('；')]):[['—','尚無紀錄','']]});sections.push({title:'編輯紀錄',columns:['修改時間','修改項目','修改內容（修改前 → 修改後）'],widths:[1.4,1.4,3],rows:hjRepairEditHistoryReportRows(t)})}canvasTable(mode==='full'?'完整維修紀錄':'維修申請單',t.number,sections,`${t.number}-${mode==='full'?'完整維修紀錄':'維修申請單'}.jpg`)}
 let receiptRows=[];function receiptEditor(id){let t=get(id);receiptRows=t.items.map(x=>({name:x.name,qty:x.qty,note:''}));receiptForm(id,{staff:t.applicant,unit:t.institution,phone:'',address:'',quote:'',sales:'',date:today(),note:''})}
 function receiptForm(id,v){modal(`<h2>產品送貨／簽收單</h2><p class="muted">依附件「產品送貨簽收單」設計，生成公司聯與客戶聯。內容可先修改再匯出。</p><div class="cols"><label class="field"><span>服務人員</span><input id="r-staff" value="${esc(v.staff)}"></label><label class="field"><span>日期</span><input id="r-date" type="date" value="${esc(v.date)}"></label></div><label class="field"><span>收貨單位</span><input id="r-unit" value="${esc(v.unit)}"></label><div class="cols"><label class="field"><span>聯絡電話</span><input id="r-phone" value="${esc(v.phone)}"></label><label class="field"><span>報價單號</span><input id="r-quote" value="${esc(v.quote)}"></label></div><label class="field"><span>收貨地址</span><input id="r-address" value="${esc(v.address)}"></label><label class="field"><span>銷貨單號</span><input id="r-sales" value="${esc(v.sales)}"></label><h3>品號／品名・數量・備註</h3><div id="receiptRows"></div><button class="btn secondary" onclick="receiptAdd()">＋ 新增品項</button><label class="field"><span>其他備註</span><textarea id="r-note">${esc(v.note)}</textarea></label><button class="btn" style="width:100%" onclick="receiptExport('${id}')">生成雙聯簽收單 JPG</button>`);receiptRender()}
 function receiptRender(){document.getElementById('receiptRows').innerHTML=receiptRows.map((x,i)=>`<div class="item-row"><b>${i+1}.</b><label class="field"><span>品號／品名</span><input value="${esc(x.name)}" oninput="receiptRows[${i}].name=this.value"></label><div class="cols"><label class="field"><span>數量</span><input type="number" min="1" value="${esc(x.qty)}" oninput="receiptRows[${i}].qty=this.value"></label><label class="field"><span>備註</span><input value="${esc(x.note)}" oninput="receiptRows[${i}].note=this.value"></label></div><button class="btn secondary small" onclick="receiptRows.splice(${i},1);receiptRender()">移除此列</button></div>`).join('')}
@@ -707,7 +740,7 @@ state.projectOrderTypes??=['租賃','買斷','捐贈','借用'].map(name=>({name
 state.numberFormats.repair??={prefix:'',year:'YYYYMM',separator:'-',digits:3};state.numberFormats.repair.year ||= 'YYYYMM';
 state.reminderDays??=30;state.projectTitle??='專案／樣品申請單';
 function numberBase(kind,date){let f=state.numberFormats[kind],ym=date.slice(0,7).replace('-','');let ymText=f.year==='YYMM'?ym.slice(2):f.year==='YYYYMM'?ym:ym.slice(0,4);return (f.prefix?f.prefix+f.separator:'')+ymText+f.separator}
-function allocateNumber(kind,date){let base=numberBase(kind,date),f=state.numberFormats[kind],all=[...state.tickets,...state.projects];let used=new Set(all.filter(x=>x.number.startsWith(base)&&(!x.deleted||x.shipments?.length||x.recoveries?.length)).map(x=>Number(x.number.slice(base.length))).filter(x=>Number.isInteger(x)&&x>0));let n=Math.max(0,...used)+1;return base+String(n).padStart(f.digits,'0')}
+function allocateNumber(kind,date){let base=numberBase(kind,date),f=state.numberFormats[kind],all=[...state.tickets,...state.projects];let used=new Set([...all.filter(x=>x.number.startsWith(base)&&!x.numberReusable).map(x=>Number(x.number.slice(base.length))),...(state.hjPurgedNumbers||[]).filter(x=>x.kind===kind&&x.number.startsWith(base)).map(x=>Number(x.number.slice(base.length)))].filter(x=>Number.isInteger(x)&&x>0));let n=Math.max(0,...used)+1;return base+String(n).padStart(f.digits,'0')}
 function topSwitch(){let h=document.querySelector('header');let el=document.getElementById('modeSwitch');if(!el){el=document.createElement('div');el.id='modeSwitch';h.parentNode.insertBefore(el,h)}el.innerHTML=`<div class="mode-switch"><button class="${mode==='repair'?'chosen':''}" onclick="switchMode('repair')">🛠 維修</button><button class="${mode==='project'?'chosen':''}" onclick="switchMode('project')">📦 專案樣品</button></div>`}
 function switchMode(m){mode=m;projectTab='project';tab='tickets';render()}
 render=function(){topSwitch();if(mode==='repair'){repairRender();if(quickKeyword){document.querySelectorAll('#main .ticket.compact').forEach(el=>{let ticket=state.tickets.find(t=>t.number===el.querySelector('strong')?.textContent);el.style.display=ticket&&matchesQuick(ticket)?'':'none'})}return}renderProjects()};
@@ -791,7 +824,7 @@ function projectSave(id,kind){
   if(changes.length){t.editHistory=t.editHistory||[];t.editHistory.push({at:new Date().toISOString(),date:today(),changes})}
   Object.assign(t,fields);
  }else{
-  if(state.projects.some(x=>x.number===projectReserved&&(!x.deleted||x.shipments?.length||x.recoveries?.length)))projectReserved=allocateNumber(kind,date);
+  if(state.projects.some(x=>x.number===projectReserved&&(!x.numberReusable)))projectReserved=allocateNumber(kind,date);
   state.projects.push({id:uid(),kind,number:projectReserved,...fields,items:items.map(({__sourceIndex,...x})=>x),shipments:[],recoveries:[],deleted:false});
   localStorage.removeItem('hj-proj-draft-'+kind);
  }
@@ -818,9 +851,9 @@ function projectEditNote(id){let t=state.projects.find(x=>x.id===id);if(!t)retur
 function projectSaveNote(id){let t=state.projects.find(x=>x.id===id),el=document.getElementById('p-note-after');if(!t||!el)return;t.note=el.value;save();render();projectDetail(id)}
 function editReturnDate(id){let t=state.projects.find(x=>x.id===id);let sample=t.kind==='sample',mode=returnChoice(t);modal(`<h2>編輯｜預計回收</h2><p>${esc(t.number)}</p><div class="notice">此單已有出貨或回收紀錄，申請品項及數量仍鎖定；可繼續修改預計回收資訊與申請單備註。</div>${sample?`<div class="radio-choices"><label><input type="radio" name="returnMode" value="date" ${mode==='date'?'checked':''} onchange="toggleReturnInput()">選擇日期</label><label><input type="radio" name="returnMode" value="note" ${mode==='note'?'checked':''} onchange="toggleReturnInput()">自行填寫備註</label></div>`:''}<label class="field" id="return-date-field"><span>預計回收日期</span><input id="p-expected" type="date" value="${esc(t.expectedReturn||'')}"></label>${sample?`<label class="field" id="return-note-field"><span>預計回收備註</span><textarea id="p-return-note">${esc(t.returnNote||'')}</textarea></label>`:''}<label class="field"><span>申請單備註（出貨、回收後仍可修改）</span><textarea id="p-locked-note" rows="4" placeholder="補充申請單備註">${esc(t.note||'')}</textarea></label><button class="btn" onclick="saveReturnDate('${id}')">儲存</button>`);toggleReturnInput()}
 function saveReturnDate(id){let t=state.projects.find(x=>x.id===id),mode=t.kind==='project'?'date':document.querySelector('input[name=returnMode]:checked')?.value||'date';t.returnMode=mode;t.expectedReturn=mode==='date'?document.getElementById('p-expected').value:'';t.returnNote=mode==='note'?document.getElementById('p-return-note').value:'';t.note=document.getElementById('p-locked-note').value;save();render();projectDetail(id)}
-function projectAction(id,type){let t=state.projects.find(x=>x.id===id);if(type==='recover'&&t.kind==='sample'&&!t.shipments.length)return alert('樣品申請須先出貨，才能登記回收');let isShip=type==='ship',word=isShip?'出貨':'回收';modal(`<h2>${word}登記</h2><p class="muted">${esc(t.number)}</p>${t.items.map((x,i)=>{let left=x.qty-(isShip?shipped(t,i):recovered(t,i));if(!isShip&&t.kind==='sample')left=Math.min(left,shipped(t,i)-recovered(t,i));return `<div class="checkrow"><div><b>${esc(x.name)}</b><p class="muted">尚待${word} ${left}</p></div><input id="pa-${i}" type="number" min="0" max="${left}" value="0" ${left===0?'disabled':''}></div>`}).join('')}<button class="btn secondary small" onclick="fillProjectAll()">整批${word}</button><label class="field"><span>${word}日期</span><input id="pa-date" type="date" value="${today()}"></label><label class="field"><span>${word}人員</span><input id="pa-staff" placeholder="例如：客服王先生／物流人員"></label><label class="field"><span>備註</span><textarea id="pa-note" placeholder="例如：交由客服／宅配寄送"></textarea></label><button class="btn" style="width:100%" onclick="projectActionSave('${id}','${type}')">確認${word}</button>`)}
+function projectAction(id,type){let t=state.projects.find(x=>x.id===id);if(type==='recover'&&t.kind==='sample'&&!t.shipments.length)return alert('樣品申請須先出貨，才能登記回收');let isShip=type==='ship',word=isShip?'出貨':'回收';modal(`<h2>${word}登記</h2><p class="muted">${esc(t.number)}</p>${t.items.map((x,i)=>{let left=x.qty-(isShip?shipped(t,i):recovered(t,i));if(!isShip&&t.kind==='sample')left=Math.min(left,shipped(t,i)-recovered(t,i));return `<div class="checkrow"><div><b>${esc(x.name)}</b><p class="muted">尚待${word} ${left}</p></div><input id="pa-${i}" type="number" min="0" max="${left}" value="0" ${left===0?'disabled':''}></div>`}).join('')}<button class="btn secondary small" onclick="fillProjectAll()">整批${word}</button><label class="field"><span>${word}日期</span><input id="pa-date" type="date" value="${today()}"></label><label class="field"><span>${isShip?'安裝客服':'回收客服'}</span><input id="pa-staff" placeholder="例如：客服王先生／物流人員"></label><label class="field"><span>備註</span><textarea id="pa-note" placeholder="例如：交由客服／宅配寄送"></textarea></label><button class="btn" style="width:100%" onclick="projectActionSave('${id}','${type}')">確認${word}</button>`)}
 function fillProjectAll(){document.querySelectorAll('input[type=number][id^="pa-"]').forEach(e=>{if(!e.disabled)e.value=e.max})}function projectActionSave(id,type){let t=state.projects.find(x=>x.id===id);if(type==='recover'&&t.kind==='sample'&&!t.shipments.length)return alert('樣品須先出貨');let isShip=type==='ship',lines=[];for(let i=0;i<t.items.length;i++){let e=document.getElementById('pa-'+i),qty=Number(e.value),max=Number(e.max);if(!Number.isInteger(qty)||qty<0||qty>max)return alert('請確認出貨／回收數量');if(!isShip&&t.kind==='sample'&&qty>shipped(t,i)-recovered(t,i))return alert('樣品回收數量不可超過已出貨且尚未回收數量');if(qty)lines.push({index:i,qty})}let date=document.getElementById('pa-date').value;if(!date||!lines.length)return alert('請選擇日期及至少一項數量');(isShip?t.shipments:t.recoveries).push({date,staff:document.getElementById('pa-staff').value,note:document.getElementById('pa-note').value,lines});save();render();projectDetail(id)}
-function projectPng(id){let t=state.projects.find(x=>x.id===id),isP=t.kind==='project';let shipDates=t.shipments.map(h=>h.date).join('、')||'—',shipStaff=[...new Set(t.shipments.map(h=>h.staff).filter(Boolean))].join('、')||'—',recDates=t.recoveries.map(h=>h.date).join('、')||'—',recStaff=[...new Set(t.recoveries.map(h=>h.staff).filter(Boolean))].join('、')||'—';let basics=[['申請日期',t.date],['申請人',t.applicant],[isP?'機構':'使用單位',t.institution],...(isP?[['訂單類型',t.orderType||'—'],['訂單編號',t.order||'—'],['ERP 訂單編號',t.erpOrder||'—']]:[['申請部門',t.department||'—']]),['預計出貨日期',t.expectedShip||'—'],['實際出貨日期',shipDates],['送貨人員',shipStaff],['回收人員',recStaff]];let sections=[{title:'一、基本資料',columns:['欄位','內容'],hideHeader:true,widths:[1,3],rows:basics},{title:'二、出貨明細',columns:['出貨日期','品項','數量','備註'],widths:[1.1,2,0.65,2],rows:t.shipments.length?t.shipments.flatMap(h=>h.lines.map(l=>[h.date,t.items[l.index]?.name||'其他品項',l.qty,[h.staff?'送貨人員：'+h.staff:'',h.note].filter(Boolean).join('；')])):t.items.map(x=>['尚未出貨',x.name,x.qty,x.reason||'申請數量，尚未出貨'])},{title:'三、回收明細（預計回收：'+returnLabel(t)+'）',columns:['回收日期','品項','數量','備註'],widths:[1.1,2,0.65,2],rows:t.recoveries.length?t.recoveries.flatMap(h=>h.lines.map(l=>[h.date,t.items[l.index]?.name||'其他品項',l.qty,h.note||'—'])):[['尚未回收','—','—','—']]}];canvasTable(isP?'專案申請與處理紀錄':'樣品申請與處理紀錄',t.number,sections,t.number+'-專案樣品紀錄.jpg')}
+function projectPng(id){let t=state.projects.find(x=>x.id===id),isP=t.kind==='project';let shipDates=t.shipments.map(h=>h.date).join('、')||'—',shipStaff=[...new Set(t.shipments.map(h=>h.staff).filter(Boolean))].join('、')||'—',recDates=t.recoveries.map(h=>h.date).join('、')||'—',recStaff=[...new Set(t.recoveries.map(h=>h.staff).filter(Boolean))].join('、')||'—';let basics=[['申請日期',t.date],['申請人',t.applicant],[isP?'機構':'使用單位',t.institution],...(isP?[['訂單類型',t.orderType||'—'],['訂單編號',t.order||'—'],['ERP 訂單編號',t.erpOrder||'—']]:[['申請部門',t.department||'—']]),['預計出貨日期',t.expectedShip||'—'],['實際出貨日期',shipDates],['安裝客服',shipStaff],['回收客服',recStaff]];let sections=[{title:'一、基本資料',columns:['欄位','內容'],hideHeader:true,widths:[1,3],rows:basics},{title:'二、出貨明細',columns:['出貨日期','品項','數量','備註'],widths:[1.1,2,0.65,2],rows:t.shipments.length?t.shipments.flatMap(h=>h.lines.map(l=>[h.date,t.items[l.index]?.name||'其他品項',l.qty,[h.staff?'安裝客服：'+h.staff:'',h.note].filter(Boolean).join('；')])):t.items.map(x=>['尚未出貨',x.name,x.qty,x.reason||'申請數量，尚未出貨'])},{title:'三、回收明細（預計回收：'+returnLabel(t)+'）',columns:['回收日期','品項','數量','備註'],widths:[1.1,2,0.65,2],rows:t.recoveries.length?t.recoveries.flatMap(h=>h.lines.map(l=>[h.date,t.items[l.index]?.name||'其他品項',l.qty,h.note||'—'])):[['尚未回收','—','—','—']]}];canvasTable(isP?'專案申請與處理紀錄':'樣品申請與處理紀錄',t.number,sections,t.number+'-專案樣品紀錄.jpg')}
 function projectOrderTypesSettings(){
  const types=state.projectOrderTypes||[];
  const ordered=types.map((x,i)=>({x,i})).sort((a,b)=>Number(b.x.enabled)-Number(a.x.enabled));
@@ -1137,6 +1170,96 @@ body.hj-sort-active{user-select:none;-webkit-user-select:none}
 </style><script id="hj-v17-settings-script">
 /* V17: keep settings arrangement independent of ticket data. */
 const HJ_SETTING_ORDER_KEY='hj-settings-order-v17';
+
+/* V110: editable unshipped repair lines, immutable shipped lines, indexed history remap. */
+function hjRepairLockedLine(t,i){return shipped(t,i)>0}
+function hjRepairLineEditable(t,x){return !t||!Number.isInteger(x.__sourceIndex)||!hjRepairLockedLine(t,x.__sourceIndex)}
+function hjRepairOldLine(t,x){return t&&Number.isInteger(x.__sourceIndex)?t.items[x.__sourceIndex]:null}
+renderRows=function(){
+ const t=editingId?get(editingId):null;
+ document.getElementById('draftRows').innerHTML=draft.map((x,i)=>{
+  const locked=!hjRepairLineEditable(t,x),old=hjRepairOldLine(t,x);
+  return `<div class="item-row"><div class="row between"><span class="item-title">${i+1}. ${locked?'<small>（已出貨，鎖定）</small>':''}</span>${!locked?`<button type="button" class="btn secondary small" onclick="removeRow(${i})">移除</button>`:''}</div>
+  <label class="field"><span>維修品項</span><select ${locked?'disabled':''} onchange="draft[${i}].name=this.value;persistDraft()">${optionList(x.name)}</select></label>
+  <div class="cols"><label class="field"><span>數量（選品項後必填）</span><input type="number" min="1" step="1" value="${esc(x.qty)}" ${locked?'readonly':''} oninput="draft[${i}].qty=this.value;persistDraft()"></label>
+  <label class="field"><span>維修原因（選填）</span><input value="${esc(x.reason)}" ${locked?'readonly':''} oninput="draft[${i}].reason=this.value;persistDraft()"></label></div></div>`;
+ }).join('');
+};
+renderRepairOtherRows=function(){
+ const field=document.getElementById('f-other-field'),el=document.getElementById('f-other-rows');
+ if(!field||!el)return;
+ const t=editingId?get(editingId):null;
+ field.style.display=repairOtherEnabled?'block':'none';
+ el.innerHTML=repairOtherRows.map((x,i)=>{
+  const locked=!hjRepairLineEditable(t,x);
+  return `<div class="item-row hj-other-row"><div class="row between"><b>其他品項 ${i+1}. ${locked?'（已出貨，鎖定）':''}</b>${locked?'':`<button type="button" class="btn secondary small" onclick="repairOtherRows.splice(${i},1);renderRepairOtherRows();persistDraft()">移除</button>`}</div>
+  <label class="field"><span>名稱 *</span><input value="${esc(x.name||'')}" ${locked?'readonly':''} oninput="repairOtherRows[${i}].name=this.value;persistDraft()"></label>
+  <div class="cols"><label class="field"><span>數量 *</span><input type="number" min="1" step="1" value="${esc(x.qty??1)}" ${locked?'readonly':''} oninput="repairOtherRows[${i}].qty=this.value;persistDraft()"></label>
+  <label class="field"><span>維修原因（選填）</span><input value="${esc(x.reason||'')}" ${locked?'readonly':''} oninput="repairOtherRows[${i}].reason=this.value;persistDraft()"></label></div></div>`;
+ }).join('');
+};
+saveTicket=function(id){
+ const date=document.getElementById('f-date').value,applicant=document.getElementById('f-person').value.trim(),institution=document.getElementById('f-inst').value.trim(),note=document.getElementById('f-note').value.trim();
+ const regular=draft.filter(x=>x.name),others=repairOtherEnabled?repairOtherRows:[];
+ if(!date||!applicant||!institution||(!regular.length&&!others.length))return alert('請填寫申請日期、申請人、機構及至少一項維修品項。');
+ if([...regular,...others].some(x=>!Number.isInteger(Number(x.qty))||Number(x.qty)<1)||others.some(x=>!String(x.name||'').trim()))return alert('請正確填寫品項名稱及大於 0 的整數數量。');
+ const proposed=[...regular.map(x=>({...x,name:x.name,qty:Number(x.qty),reason:x.reason||''})),...others.map(x=>({...x,name:'其他品項：'+String(x.name).trim(),qty:Number(x.qty),reason:x.reason||'',otherPlaceholder:true}))];
+ const clean=x=>({name:x.name,qty:x.qty,reason:x.reason||'',...(x.otherPlaceholder?{otherPlaceholder:true}:{})});
+ if(id){
+  const t=get(id);if(!t)return alert('找不到維修單');
+  const oldItems=t.items,seen=new Set(),changes=[],newItems=[];
+  for(const x of proposed){
+   if(Number.isInteger(x.__sourceIndex)){
+    const i=x.__sourceIndex,old=oldItems[i];if(!old||seen.has(i))return alert('品項對應異常，請重新開啟編輯');
+    seen.add(i);
+    if(hjRepairLockedLine(t,i)&&(old.name!==x.name||old.qty!==x.qty||(old.reason||'')!==(x.reason||'')))return alert('已出貨的品項不可修改');
+    if(x.qty<Math.max(shipped(t,i),recovered(t,i)))return alert('數量不可小於已出貨或已回收數量');
+    for(const [key,label] of [['name','品名'],['qty','數量'],['reason','維修原因']]){
+     if(String(old[key]||'')!==String(x[key]||''))changes.push({field:`品項 ${i+1} ${label}`,from:String(old[key]??''),to:String(x[key]??'')});
+    }
+   }else changes.push({field:'新增品項',items:[clean(x)]});
+   newItems.push(clean(x));
+  }
+  for(let i=0;i<oldItems.length;i++)if(!seen.has(i)){
+   if(shipped(t,i)>0||recovered(t,i)>0)return alert('已有出貨或回收紀錄的品項不能刪除');
+   changes.push({field:`刪除品項 ${i+1}`,from:`${oldItems[i].name} × ${oldItems[i].qty}`,to:'已刪除'});
+  }
+  const indexMap=new Map();proposed.forEach((x,i)=>{if(Number.isInteger(x.__sourceIndex))indexMap.set(x.__sourceIndex,i)});
+  for(const h of [...t.shipments,...t.recoveries])for(const l of h.lines||[]){
+   if(!indexMap.has(l.index))return alert('此品項已有歷史紀錄，不可刪除');
+  }
+  for(const [field,from,to] of [['date',t.date,date],['applicant',t.applicant,applicant],['institution',t.institution,institution],['note',t.note||'',note]]){
+   if(from!==to)changes.push({field,from,to});
+  }
+  if(!changes.length){closeModal();detail(id);return}
+  for(const h of [...t.shipments,...t.recoveries])for(const l of h.lines||[])l.index=indexMap.get(l.index);
+  Object.assign(t,{date,applicant,institution,note,items:newItems});
+  (t.editHistory||(t.editHistory=[])).push({at:new Date().toISOString(),changes});
+ }else{
+  if(state.tickets.some(x=>x.number===reservedNumber&&(!x.deleted||x.shipments?.length||x.recoveries?.length)))reservedNumber=nextNumber(date);
+  state.tickets.push({id:uid(),number:reservedNumber,date,applicant,institution,note,items:proposed.map(clean),shipments:[],recoveries:[],deleted:false});
+ }
+ save();if(!id)clearDraft();closeModal();tab='tickets';render();
+};
+const hjV110OriginalDetail=detail;
+detail=function(id){
+ hjV110OriginalDetail(id);
+ const t=get(id);if(!t)return;
+ const sheet=document.querySelector('#overlay .sheet');if(!sheet)return;
+ const hasEdit=sheet.querySelector('button[onclick^="editTicket("]');
+ if(!hasEdit){
+  const grid=sheet.querySelector('.hj-detail-action-grid');
+  if(grid){const b=document.createElement('button');b.className='btn outline';b.textContent='編輯';b.onclick=()=>editTicket(id);grid.appendChild(b)}
+ }
+ const actionGrid=sheet.querySelector('.hj-detail-action-grid');
+ if(actionGrid){
+  const exportBtn=actionGrid.querySelector('button[onclick^="exportMenu("]');
+  const editBtn=[...actionGrid.querySelectorAll('button')].find(b=>b.textContent.trim()==='編輯');
+  if(exportBtn&&editBtn)exportBtn.after(editBtn);
+ }
+ const notice=sheet.querySelector('.notice');
+ if(notice)notice.textContent='未出貨品項可修改品名、數量、原因或刪除；已出貨品項鎖定。所有儲存的修改會留下編輯紀錄。';
+};
 function hjSettingsMode(){return mode==='repair'?'repair':'project'}
 function hjReadSettingOrder(kind){try{let v=JSON.parse(localStorage.getItem(HJ_SETTING_ORDER_KEY)||'{}');return Array.isArray(v[kind])?v[kind]:[]}catch{return []}}
 function hjSaveSettingOrder(kind,ids){let v={};try{v=JSON.parse(localStorage.getItem(HJ_SETTING_ORDER_KEY)||'{}')}catch{}v[kind]=ids;localStorage.setItem(HJ_SETTING_ORDER_KEY,JSON.stringify(v))}
@@ -1153,9 +1276,9 @@ function hjSettingsArrange(){
   ['theme','🎨 APP 色調設定','暖米杏預設色與自訂顏色','themeSettings()'],
   ['number','🔢 單據格式設定','維修單號編碼規則','numberSettings(\'repair\')'],
   ['products','📋 品項管理','新增、編輯、停用與重新啟用品項','settingsProducts()'],
+  ['deleted','🗂️ 已刪除單據查詢','查看取消出貨與刪除的維修單據','hjDeletedRecords(\'repair\')'],
   ['sync','☁️ 私人雲端同步','登入 Supabase 並手動上傳／下載單據','hjCloudDialog()'],
-  ['archive','🗂️ 封存／已刪除單據','查看與管理封存單據','settingsDeleted()'],
-  ['backup','💾 匯出資料備份','下載 JSON 備份','exportBackup()'],
+  ['backup','💾 匯出資料備份','完整 JSON 備份與安全還原','hjBackupDialog()'],
   ['features','🧹 格式化測試資料','清除所有測試資料','hjFeatureSettings()']
  ]:[
   ['project-report','📊 專案/樣品資料報表','依申請日期匯出專案、樣品統計與待出貨／待回收報表','hjProjectReportDialog()'],
@@ -1163,17 +1286,21 @@ function hjSettingsArrange(){
   ['theme','🎨 APP 色調設定','暖米杏預設色與自訂顏色','themeSettings()'],
   ['number','🔢 單據格式設定','專案與樣品單號分別設定','combinedNumberSettings()'],
   ['products','📋 品項管理','專案／樣品品項','projectProductsSettings()'],
+  ['deleted','🗂️ 已刪除單據查詢','查看取消出貨與刪除的專案／樣品單據','hjDeletedRecords(\'project\')'],
   ['reminder','🔔 預計回收提醒','調整回收提醒天數','reminderSettings()'],
   ['sync','☁️ 私人雲端同步','登入 Supabase 並手動上傳／下載單據','hjCloudDialog()'],
-  ['archive','🗂️ 封存／已刪除單據','查看與管理封存單據','projectArchive()'],
-  ['backup','💾 匯出資料備份','下載 JSON 備份','exportBackup()'],
+  ['backup','💾 匯出資料備份','完整 JSON 備份與安全還原','hjBackupDialog()'],
   ['features','🧹 格式化測試資料','清除所有測試資料','hjFeatureSettings()']
  ];
- const order=hjReadSettingOrder(hjSettingsMode());
- definitions.sort((a,b)=>{const x=order.indexOf(a[0]),y=order.indexOf(b[0]);return (x<0?999:x)-(y<0?999:y)});
- window.hjCurrentSettingsOrder=definitions.map(x=>x[0]);
- main.innerHTML='<section class="panel" id="hj-sortable-settings"><p class="hj-settings-guide">長按項目前方的空心圓點，即可拖曳調整順序；放開後自動儲存。</p>'+definitions.map((item,i)=>`<div class="hj-setting-sort" data-setting-id="${item[0]}"><button type="button" class="hj-drag-handle" aria-label="長按拖曳排序：${item[0] === 'history' ? '歷史表單' : item[1].replace(/<[^>]*>/g, '')}" title="長按拖曳排序" data-hj-handle="1"></button><div class="setting" onclick="${item[3]}"><div><b>${item[1]}</b><p>${item[2]}</p></div><span>›</span></div></div>`).join('')+'</section>';
- hjBindSettingsDrag(main.querySelector('#hj-sortable-settings'));
+ const sharedIds=new Set(['history','theme','sync','backup','features']);
+ const shared=definitions.filter(x=>sharedIds.has(x[0])),specific=definitions.filter(x=>!sharedIds.has(x[0]));
+ function sortGroup(items,kind){const order=hjReadSettingOrder(kind);items.sort((a,b)=>{const x=order.indexOf(a[0]),y=order.indexOf(b[0]);return (x<0?999:x)-(y<0?999:y)})}
+ sortGroup(shared,'shared');sortGroup(specific,hjSettingsMode());
+ const rowHtml=item=>`<div class="hj-setting-sort" data-setting-id="${item[0]}"><button type="button" class="hj-drag-handle" aria-label="長按拖曳排序：${item[0]==='history'?'歷史表單':item[1].replace(/<[^>]*>/g,'')}" title="長按拖曳排序" data-hj-handle="1"></button><div class="setting" onclick="${item[3]}"><div><b>${item[1]}</b><p>${item[2]}</p></div><span>›</span></div></div>`;
+ const groupHtml=(title,description,kind,items)=>`<section class="panel hj-settings-group"><div class="hj-settings-group-head"><h3>${title}</h3><p>${description}</p></div><div class="hj-settings-group-list" data-order-kind="${kind}"><p class="hj-settings-guide">長按左側圓點，可在此區內調整順序。</p>${items.map(rowHtml).join('')}</div></section>`;
+ main.innerHTML=groupHtml('共用設定','維修與專案／樣品共用相同功能；在任一頁調整順序，另一頁也會一致。','shared',shared)+groupHtml(repair?'維修專屬設定':'專案／樣品專屬設定',repair?'僅供維修單使用的報表、單號、品項與封存管理。':'僅供專案／樣品使用的報表、單號、品項、回收提醒與封存管理。',hjSettingsMode(),specific);
+ window.hjCurrentSettingsOrder=[...shared,...specific].map(x=>x[0]);
+ main.querySelectorAll('.hj-settings-group-list').forEach(hjBindSettingsDrag);
 }
 /* Pointer long-press reorder: works with iPhone touch, mouse and stylus. */
 function hjBindSettingsDrag(list){
@@ -1188,7 +1315,7 @@ function hjBindSettingsDrag(list){
   document.body.classList.remove('hj-sort-active');
   active.row.classList.remove('hj-dragging');
   active.handle.style.touchAction='pan-y';
-  if(commit){const ids=rows().map(x=>x.dataset.settingId);hjSaveSettingOrder(hjSettingsMode(),ids);window.hjCurrentSettingsOrder=ids;}
+  if(commit){const ids=rows().map(x=>x.dataset.settingId);hjSaveSettingOrder(list.dataset.orderKind||hjSettingsMode(),ids);window.hjCurrentSettingsOrder=ids;}
   preventClick=true;
   setTimeout(()=>{preventClick=false},250);
  }
@@ -1538,7 +1665,7 @@ async function hjPendingExcel(data){
  const sheets=[
  [['滙嘉健康生活科技｜維修待出貨／待回收報表'],['報表生成日期',data.generated],['未完成維修單數',data.ticketCount],['待出貨總件數',data.ship],['待回收總件數',data.recover],['說明','待回收數量＝申請－已回收；待出貨數量＝申請－已出貨']],
  [['品項名稱','待出貨數量','待回收數量'],...data.summary.map(x=>[x.name,x.ship,x.recover]),['總計',data.ship,data.recover]],
- [['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','預計出貨日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],...data.rows.map((r,i)=>i&&r[0]===data.rows[i-1][0]?['',...r.slice(1)]:r)]
+ [['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],...data.rows.map((r,i)=>i&&r[0]===data.rows[i-1][0]?['',...r.slice(1)]:r)]
  ];
  z.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${names.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`);
  z.file('_rels/.rels',`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`);
@@ -1546,7 +1673,7 @@ async function hjPendingExcel(data){
  z.file('xl/_rels/workbook.xml.rels',`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${names.map((_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}<Relationship Id="rId${names.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
  z.file('xl/styles.xml',`<?xml version="1.0"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="1"><font><sz val="12"/><name val="標楷體"/></font></fonts><fills count="1"><fill><patternFill patternType="none"/></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf xfId="0"/><xf xfId="0" fontId="0" applyFont="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf></cellXfs></styleSheet>`);
  sheets.forEach((rows,i)=>{
-  let xml=hjPendingSheet(rows,i===2?[23,16,25,25,15,19,20,20,17,17]:i===1?[30,22,22]:[30,22]);
+  let xml=hjPendingSheet(rows,i===2?[23,16,25,25,15,19,18,18,18,18]:i===1?[30,22,22]:[30,22]);
   if(i===2){
    // 合併相鄰且同單號的維修單號儲存格（第 2 列開始是資料）。
    const ranges=[];let from=1;
@@ -1567,7 +1694,7 @@ function hjPendingJpg(data){
  const W=2200,margin=55,inner=W-2*margin,ratio=2;
  const sections=[
   {title:'待處理品項統計',headers:['產品名稱','待出貨數量','待回收數量'],weights:[3.5,1,1],rows:data.summary.map(x=>[x.name,x.ship,x.recover])},
-  {title:'待處理維修明細',headers:['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','預計出貨日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],weights:[1.4,1,1.7,2.2,.9,1.3,1.15,1.15,1,1],rows:data.rows,mergeFirst:true}
+  {title:'待處理維修明細',headers:['維修單號','申請人','客戶機構名稱','產品名稱','申請數量','申請日期','回收狀態','出貨狀態','待出貨數量','待回收數量'],weights:[1.35,1,1.65,2.1,.85,1.25,1.05,1.05,1.05,1.05],rows:data.rows,mergeFirst:true}
  ];
  const cv=document.createElement('canvas'),ctx=cv.getContext('2d');
  const font='"BiauKai", "DFKai-SB", "Noto Sans TC", sans-serif';
@@ -1831,8 +1958,8 @@ const HJ_CLOUD_URL='https://nvrxyhfxnmyfuyvymzbp.supabase.co';
 const HJ_CLOUD_KEY='sb_publishable_6KqNzA6oik_RV1mXEUrrSQ_GwS5Ann6';
 const HJ_CLOUD_SESSION='hj-v100-cloud-session';
 let hjCloudBusy=false;
-function hjCloudSession(){try{return JSON.parse(localStorage.getItem(HJ_CLOUD_SESSION)||'null')}catch{return null}}
-function hjCloudStore(session){if(session)localStorage.setItem(HJ_CLOUD_SESSION,JSON.stringify(session));else localStorage.removeItem(HJ_CLOUD_SESSION)}
+function hjCloudSession(){try{return JSON.parse(sessionStorage.getItem(HJ_CLOUD_SESSION)||localStorage.getItem(HJ_CLOUD_SESSION)||'null')}catch{return null}}
+function hjCloudStore(session){if(session){if(localStorage.getItem('hj-v105-remember')==='0'){sessionStorage.setItem(HJ_CLOUD_SESSION,JSON.stringify(session));localStorage.removeItem(HJ_CLOUD_SESSION)}else{localStorage.setItem(HJ_CLOUD_SESSION,JSON.stringify(session));sessionStorage.removeItem(HJ_CLOUD_SESSION)}}else{localStorage.removeItem(HJ_CLOUD_SESSION);sessionStorage.removeItem(HJ_CLOUD_SESSION)}}
 function hjCloudText(v){return esc(String(v??''))}
 function hjCloudCount(d){return (d?.tickets||[]).filter(x=>!x.deleted).length+' 張維修單、'+(d?.projects||[]).filter(x=>!x.deleted).length+' 張專案／樣品單'}
 function hjCloudSetStatus(message,error=false){const el=document.getElementById('hj-cloud-status');if(el){el.textContent=message;el.style.color=error?'#a94442':''}}
@@ -1868,6 +1995,7 @@ function hjCloudDialog(){
  <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn" ${sess?.access_token?'':'disabled'} onclick="hjCloudUpload()">⬆ 上傳本機資料</button><button class="btn secondary" ${sess?.access_token?'':'disabled'} onclick="hjCloudDownload()">⬇ 下載雲端資料</button></div>
  <p class="muted">上傳不會開啟 JSON 備份檔；下載前會再次確認是否取代本機資料。建議先使用下方獨立備份按鈕儲存資料。若雲端版本在操作期間已變更，系統會拒絕舊版本上傳。</p>
  <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn secondary small" onclick="hjCloudInspect()" ${sess?.access_token?'':'disabled'}>查看雲端資料狀態</button><button class="btn outline small" onclick="hjCloudBackup()">另存本機 JSON 備份</button></div></div>
+ ${hjAccountSettings()}
  <p id="hj-cloud-status" class="muted" role="status">等待操作</p>
  <p class="muted" style="font-size:12px">注意：這是同步測試版。請不要在兩台裝置同時編輯同一張單據；此版不會自動合併衝突資料。登出僅清除本機登入憑證，不會刪除單據。</p>`);
 }
@@ -1917,7 +2045,7 @@ async function hjCloudUpload(){
    try{await hjCloudFetch('/rest/v1/app_sync',{method:'POST',headers:{'Content-Type':'application/json',Prefer:'return=representation'},body:JSON.stringify({user_id:sess.user.id,app_data:state})})}
    catch(e){throw Error('雲端可能已有其他裝置建立的資料，請先查看雲端狀態。'+e.message)}
   }
-  hjAutoRemember(state,remote?Number(remote.version)+1:1);hjAutoStatus('已同步');hjCloudSetStatus('上傳成功！其他裝置會自動檢查更新。');
+  hjAutoRemember(state,remote?Number(remote.version)+1:1);hjAutoStatus('已同步');localStorage.removeItem('hj-v108-restore-paused');hjCloudSetStatus('上傳成功！其他裝置會自動檢查更新。');
  }catch(e){hjCloudSetStatus('上傳失敗：'+e.message,true)}finally{hjCloudBusy=false}
 }
 async function hjCloudDownload(){
@@ -1950,10 +2078,10 @@ function hjCloudShowGate(message=''){
  let el=document.getElementById('hj-cloud-gate');if(!el){el=document.createElement('div');el.id='hj-cloud-gate';document.body.appendChild(el)}
  el.hidden=false;el.innerHTML=`<div class="hj-login-card" role="dialog" aria-modal="true" aria-labelledby="hj-gate-title">
  <h2 id="hj-gate-title">滙嘉管理 APP</h2><p>請先登入私人雲端帳號，再開始建立或編輯單據。</p>
- <form onsubmit="hjCloudGateLogin(event)"><label>Email<input id="hj-gate-email" type="email" autocomplete="username" required placeholder="請輸入登入 Email"></label>
+ <form onsubmit="hjCloudGateLogin(event)"><label>Email<input id="hj-gate-email" type="email" autocomplete="username" required placeholder="請輸入登入 Email" value="${hjCloudText(localStorage.getItem('hj-v105-email')||'')}"></label>
  <label>密碼<input id="hj-gate-password" type="password" autocomplete="current-password" required placeholder="請輸入密碼"></label>
- <button id="hj-gate-submit" type="submit">登入並進入 APP</button></form>
- <p id="hj-gate-status" role="status">${hjCloudText(message)}</p><p>V103 自動同步測試版。若資料不同或發生衝突，會暫停並提示處理。</p></div>`;
+ <label class="hj-remember-row"><input type="checkbox" id="hj-gate-remember" ${localStorage.getItem('hj-v105-remember')!=='0'?'checked':''}>記住登入狀態</label><p style="text-align:left;font-size:12px">可透過裝置密碼管理員記住密碼；APP 不儲存明文密碼。</p><button id="hj-gate-submit" type="submit">登入並進入 APP</button><button type="button" class="hj-forgot-link" onclick="hjGateForgot()">忘記密碼？Email 找回</button><div id="hj-gate-forgot-panel" hidden></div></form>
+ <p id="hj-gate-status" role="status">${hjCloudText(message)}</p><p>V105 快速同步版。若資料不同或發生衝突，會暫停並提示處理。</p></div>`;
 }
 function hjCloudHideGate(){const el=document.getElementById('hj-cloud-gate');if(el)el.hidden=true}
 async function hjCloudGateLogin(event){
@@ -1963,12 +2091,12 @@ async function hjCloudGateLogin(event){
  hjCloudBusy=true;if(btn)btn.disabled=true;if(msg)msg.textContent='正在驗證登入…';
  try{const data=await hjCloudFetch('/auth/v1/token?grant_type=password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})},false);
  if(!data?.access_token||!data?.user?.id)throw Error('未取得有效的登入憑證');
- hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudHideGate();hjAutoSyncSoon();
+ hjRememberChoice(email);hjCloudStore({...data,expires_at:Math.floor(Date.now()/1000)+(data.expires_in||3600)});hjCloudHideGate();hjAutoSyncSoon();
  }catch(e){if(msg)msg.textContent='登入失敗：'+e.message}
  finally{hjCloudBusy=false;if(btn)btn.disabled=false}
 }
 async function hjCloudCheckOnStart(){
- hjCloudShowGate('正在確認登入狀態…');const sess=hjCloudSession();
+ if(hjRecoveryStart())return;hjCloudShowGate('正在確認登入狀態…');const sess=hjCloudSession();
  if(!sess?.access_token||!sess?.refresh_token||!sess?.user?.id){hjCloudShowGate();return}
  try{const user=await hjCloudFetch('/auth/v1/user');if(!user?.id||user.id!==sess.user.id)throw Error('登入帳號驗證失敗');hjCloudHideGate();hjAutoSyncSoon()}
  catch(e){hjCloudStore(null);hjCloudShowGate('請重新登入。'+e.message)}
@@ -1976,6 +2104,73 @@ async function hjCloudCheckOnStart(){
 
 
 /* V103: cautious snapshot sync. No silent overwrite when the baseline is unknown or stale. */
+
+/* V108: complete local snapshot backup and deliberately gated restore. */
+let hjRestoreCandidate=null,hjRestoreBusy=false;
+function hjBackupCounts(d){return {repair:d.tickets.length,projects:d.projects.filter(x=>x.kind==='project').length,samples:d.projects.filter(x=>x.kind==='sample').length,archived:d.tickets.filter(x=>x.deleted).length+d.projects.filter(x=>x.deleted).length}}
+function hjBackupDialog(){
+ const c=hjBackupCounts(state);
+ modal(`<h2>完整資料備份與安全還原</h2><p class="muted">備份包含全部維修、專案、樣品單據（含封存、出貨、回收歷史）、品項、單號及 APP 設定。</p>
+ <div class="notice">目前本機：維修 ${c.repair} 張、專案 ${c.projects} 張、樣品 ${c.samples} 張（含封存 ${c.archived} 張）。<br>更新 APP 後資料正常時，不需要還原。</div>
+ <button class="btn" style="width:100%" onclick="hjDownloadFullBackup()">⬇ 完整資料備份（JSON）</button>
+ <div class="line"></div><h3>上傳備份檔／還原資料</h3>
+ <p class="muted">請選擇本 APP 匯出的 JSON 備份檔。系統先檢查及預覽，不會立即覆蓋資料。</p>
+ <input id="hj-restore-file" type="file" accept=".json,application/json" onchange="hjRestorePreview(event)" style="max-width:100%;margin:10px 0">
+ <div id="hj-restore-preview" role="status"></div>
+ <p class="muted">安全提醒：還原會取代此裝置目前的全部資料。為避免自動同步誤覆蓋雲端，還原後將暫停自動同步，須由你在「私人雲端同步」確認後手動上傳或下載。</p>`);
+}
+async function hjDownloadFullBackup(){
+ const timestamp=new Date().toISOString();
+ const payload={format:'huijia-full-backup',schemaVersion:1,appVersion:'V108',exportedAt:timestamp,counts:hjBackupCounts(state),state:structuredClone(state)};
+ const filename='滙嘉管理APP_完整備份_'+timestamp.slice(0,10)+'_'+timestamp.slice(11,19).replace(/:/g,'')+'.json';
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+ try{
+  const file=new File([blob],filename,{type:'application/json'});
+  if(navigator.canShare?.({files:[file]})&&navigator.share){await navigator.share({files:[file],title:'滙嘉管理 APP 完整資料備份'});return}
+  downloadBlob(blob,filename);
+ }catch(e){if(e?.name!=='AbortError')alert('備份未完成：'+e.message)}
+}
+function hjRestoreValidate(d){
+ if(!d||typeof d!=='object'||Array.isArray(d))throw Error('備份檔內容無效');
+ const v=d.format==='huijia-full-backup'?d.state:(d.state&&d.exported_at?d.state:d);
+ if(!v||typeof v!=='object'||!Array.isArray(v.tickets)||!Array.isArray(v.projects)||!Array.isArray(v.products))throw Error('檔案不是完整的滙嘉管理 APP 備份，缺少必要資料');
+ if(v.counter!==undefined&&(typeof v.counter!=='object'||v.counter===null))throw Error('單號計數器格式錯誤');
+ if(v.tickets.some(t=>!t||typeof t!=='object'||!Array.isArray(t.items)||!Array.isArray(t.shipments)||!Array.isArray(t.recoveries)))throw Error('維修單格式不完整');
+ if(v.projects.some(t=>!t||typeof t!=='object'||!Array.isArray(t.items)||!Array.isArray(t.shipments)||!Array.isArray(t.recoveries)))throw Error('專案／樣品單格式不完整');
+ if(JSON.stringify(v).length>15*1024*1024)throw Error('備份資料超過 15 MB，請聯繫管理員處理');
+ return structuredClone(v);
+}
+async function hjRestorePreview(ev){
+ hjRestoreCandidate=null;
+ const el=document.getElementById('hj-restore-preview'),file=ev.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>20*1024*1024)throw Error('檔案超過 20 MB');
+  const obj=JSON.parse(await file.text()),data=hjRestoreValidate(obj),c=hjBackupCounts(data),now=hjBackupCounts(state);
+  hjRestoreCandidate={data,name:file.name};
+  const date=obj.exportedAt||obj.exported_at||obj.exportedAt||'舊版備份（未記錄日期）';
+  el.innerHTML=`<div class="notice"><b>備份檔檢查通過</b><p>檔案：${esc(file.name)}</p><p>備份時間：${esc(String(date))}</p><p>備份內容：維修 ${c.repair} 張、專案 ${c.projects} 張、樣品 ${c.samples} 張（含封存 ${c.archived} 張）</p><p>目前本機：維修 ${now.repair} 張、專案 ${now.projects} 張、樣品 ${now.samples} 張（含封存 ${now.archived} 張）</p></div>
+  <label style="display:flex;align-items:center;gap:8px;margin:14px 0"><input type="checkbox" id="hj-restore-ack"> 我了解還原將取代本機全部資料，並且會暫停自動同步</label>
+  <button class="btn danger" onclick="hjRestoreCommit()">確認還原本機資料</button>`;
+ }catch(e){el.textContent='無法還原：'+e.message}
+}
+function hjRestoreCommit(){
+ if(hjRestoreBusy||!hjRestoreCandidate)return;
+ if(!document.getElementById('hj-restore-ack')?.checked)return alert('請先勾選確認');
+ if(!confirm('最後確認：以備份檔取代本機全部維修、專案、樣品及設定資料？\n此操作不會自動覆蓋 Supabase 雲端。'))return;
+ hjRestoreBusy=true;
+ try{
+  // Preserve current local snapshot before replacing, independently of download handling.
+  const key='hj-v108-before-restore-'+Date.now();
+  localStorage.setItem(key,JSON.stringify(state));
+  const restored=hjRestoreValidate({format:'huijia-full-backup',state:hjRestoreCandidate.data});
+  localStorage.setItem('hj-v108-restore-paused','1');
+  localStorage.setItem(K,JSON.stringify(restored));
+  state=restored;
+  closeModal();render();hjAutoStatus('備份已還原至本機・自動同步已暫停');
+  alert('本機資料還原完成。自動同步已暫停，請檢查單據後，再到「私人雲端同步」選擇是否將本機資料上傳雲端。');
+ }catch(e){alert('還原未完成：'+e.message)}finally{hjRestoreBusy=false;hjRestoreCandidate=null}
+}
+
 const HJ_AUTO_BASE='hj-v103-sync-baseline:';
 let hjAutoApplying=false,hjAutoTimer=0,hjAutoRunning=false,hjAutoLastMessage='',hjAutoRetry=0;
 function hjAutoKey(){return HJ_AUTO_BASE+(hjCloudSession()?.user?.id||'none')}
@@ -1987,6 +2182,7 @@ function hjAutoSyncSoon(){clearTimeout(hjAutoTimer);hjAutoTimer=setTimeout(()=>h
 function hjAutoValid(d){return d&&typeof d==='object'&&Array.isArray(d.tickets)&&Array.isArray(d.projects)}
 async function hjAutoSync(){
  if(hjAutoRunning||hjCloudBusy||!hjCloudSession()?.user?.id)return;
+ if(localStorage.getItem('hj-v108-restore-paused')==='1'){hjAutoStatus('還原後暫停同步・請到私人雲端同步確認');return}
  if(!navigator.onLine){hjAutoStatus('離線・本機資料已保留');return}
  // Never replace the state while a form/modal is open, to avoid losing unsaved edits.
  if(document.body.classList.contains('modal-open'))return;
@@ -2021,6 +2217,31 @@ async function hjAutoSync(){
 window.addEventListener('online',hjAutoSyncSoon);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)hjAutoSyncSoon()});
 window.addEventListener('focus',hjAutoSyncSoon);
+
+/* V105 desktop sync and secure password recovery */
+function hjRememberChoice(email){
+ const yes=!!document.getElementById('hj-gate-remember')?.checked;
+ localStorage.setItem('hj-v105-remember',yes?'1':'0');localStorage.setItem('hj-v105-email',email);
+}
+function hjForgotSend(email,id){
+ const el=document.getElementById(id);if(!email||!email.includes('@')){if(el)el.textContent='請輸入有效 Email';return}
+ if(el)el.textContent='正在寄送重設郵件…';
+ const redirect=location.origin+location.pathname;
+ hjCloudFetch('/auth/v1/recover?redirect_to='+encodeURIComponent(redirect),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})},false)
+ .then(()=>{if(el)el.textContent='如帳號存在，系統將寄出重設連結。請檢查收件匣或垃圾郵件。'})
+ .catch(e=>{if(el)el.textContent='寄送失敗：'+e.message});
+}
+function hjGateForgot(){const box=document.getElementById('hj-gate-forgot-panel');if(!box)return;if(!box.hidden){box.hidden=true;return}box.hidden=false;
+ const email=document.getElementById('hj-gate-email')?.value||localStorage.getItem('hj-v105-email')||'';
+ box.innerHTML=`<label>找回密碼 Email<input id="hj-forgot-email" type="email" value="${hjCloudText(email)}"></label><button type="button" onclick="hjForgotSend(document.getElementById('hj-forgot-email').value.trim(),'hj-forgot-msg')">寄送重設密碼郵件</button><p id="hj-forgot-msg" role="status"></p><button type="button" class="hj-collapse-forgot" onclick="document.getElementById('hj-gate-forgot-panel').hidden=true" aria-label="收起找回密碼欄位" title="收起找回密碼欄位">︽<span>收起找回密碼</span></button>`}
+function hjAccountSettings(){return `<div class="panel"><h3>帳號與密碼管理</h3><label class="field"><span>新密碼（至少 8 字元）</span><input type="password" autocomplete="new-password" id="hj-new-password"></label><label class="field"><span>確認新密碼</span><input type="password" autocomplete="new-password" id="hj-new-password2"></label><div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn secondary" onclick="hjChangePassword()">修改密碼</button><button class="btn outline" onclick="hjForgotInSettings()">忘記密碼／Email 找回</button></div><p class="muted">重設郵件的跳轉網址需先加入 Supabase Authentication → URL Configuration → Redirect URLs。</p></div>`}
+async function hjChangePassword(){const a=document.getElementById('hj-new-password')?.value,b=document.getElementById('hj-new-password2')?.value;if(!a||a.length<8)return hjCloudSetStatus('密碼至少需要 8 個字元',true);if(a!==b)return hjCloudSetStatus('兩次密碼不一致',true);if(!confirm('確定修改密碼？'))return;try{await hjCloudFetch('/auth/v1/user',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:a})});document.getElementById('hj-new-password').value='';document.getElementById('hj-new-password2').value='';hjCloudSetStatus('密碼已更新')}catch(e){hjCloudSetStatus('修改失敗：'+e.message,true)}}
+function hjForgotInSettings(){const email=prompt('請輸入找回密碼的 Email',hjCloudSession()?.user?.email||localStorage.getItem('hj-v105-email')||'');if(email!==null)hjForgotSend(email.trim(),'hj-cloud-status')}
+function hjRecoveryStart(){const q=new URLSearchParams(location.hash.replace(/^#/,''));if(q.get('type')!=='recovery')return false;const token=q.get('access_token');hjCloudShowGate();const card=document.querySelector('#hj-cloud-gate .hj-login-card');if(!token){card.innerHTML='<h2>重設連結無效</h2><p>請重新寄送密碼重設郵件。</p>';return true}window.hjRecoveryToken=token;card.innerHTML=`<h2>設定新密碼</h2><form onsubmit="hjRecoveryFinish(event)"><label>新密碼<input id="hj-reset-a" type="password" autocomplete="new-password" minlength="8" required></label><label>確認新密碼<input id="hj-reset-b" type="password" autocomplete="new-password" minlength="8" required></label><button type="submit">儲存新密碼</button></form><p id="hj-reset-msg" role="status"></p>`;return true}
+async function hjRecoveryFinish(e){e.preventDefault();const a=document.getElementById('hj-reset-a').value,b=document.getElementById('hj-reset-b').value,msg=document.getElementById('hj-reset-msg');if(a.length<8||a!==b){msg.textContent='兩次密碼必須相同且至少 8 字元';return}try{const r=await fetch(HJ_CLOUD_URL+'/auth/v1/user',{method:'PUT',headers:{apikey:HJ_CLOUD_KEY,Authorization:'Bearer '+window.hjRecoveryToken,'Content-Type':'application/json'},body:JSON.stringify({password:a})});if(!r.ok)throw Error((await r.json()).message||('HTTP '+r.status));history.replaceState(null,'',location.pathname+location.search);window.hjRecoveryToken=null;hjCloudStore(null);hjCloudShowGate('密碼重設成功，請用新密碼登入。')}catch(e){msg.textContent='重設失敗：'+e.message}}
+function hjDesktopSyncButton(){if(document.getElementById('hj-desktop-sync'))return;const header=document.querySelector('.app > header');if(!header)return;const b=document.createElement('button');b.id='hj-desktop-sync';b.type='button';b.textContent='⟳ 一鍵同步';b.onclick=async()=>{b.disabled=true;b.textContent='☁ 同步中…';try{await hjAutoSync()}finally{b.disabled=false;b.textContent='⟳ 一鍵同步'}};header.appendChild(b)}
+(function(){const st=document.createElement('style');st.textContent=`#hj-desktop-sync{margin-left:auto;align-self:center;border:1px solid #c7d1d8;background:rgba(255,255,255,.85);color:#42566a;border-radius:14px;padding:11px 15px;font-weight:700;white-space:nowrap;cursor:pointer}#hj-desktop-sync:disabled{opacity:.6}#hj-cloud-gate .hj-remember-row{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:13px}#hj-cloud-gate .hj-remember-row input{appearance:none;width:42px;height:24px;margin:0;border:0;border-radius:20px;background:#b7c1cc;position:relative;flex-shrink:0}#hj-cloud-gate .hj-remember-row input:checked{background:#777ca7}#hj-cloud-gate .hj-remember-row input:before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:white;transition:transform .15s}#hj-cloud-gate .hj-remember-row input:checked:before{transform:translateX(18px)}#hj-cloud-gate .hj-forgot-link{background:transparent;color:#526e9b;text-decoration:underline;padding:8px;margin:0;text-align:right;font-size:13px}#hj-cloud-gate #hj-gate-forgot-panel[hidden]{display:none}#hj-cloud-gate .hj-collapse-forgot{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px auto 0;padding:9px 16px;width:auto;min-height:40px;border:0;border-radius:10px;background:transparent;color:#526e9b;font-size:20px;cursor:pointer}#hj-cloud-gate .hj-collapse-forgot span{font-size:13px;font-weight:600}@media(pointer:coarse),(max-width:700px){#hj-desktop-sync{display:none!important}}`;document.head.appendChild(st);hjDesktopSyncButton()})();
+
 /* V104: adjustable polling and pull-to-refresh. */
 const HJ_SYNC_FREQ_KEY='hj-cloud-sync-seconds-v104';
 let hjSyncPollTimer=null;
@@ -2043,4 +2264,134 @@ hjSyncStartPolling();
 
 render();
 hjCloudCheckOnStart();
+
+/* V117: only newest issued document may release its number. Earlier cancellations retain number. */
+function hjDocCollection(t){return t.kind==='project'||t.kind==='sample'?state.projects:state.tickets}
+function hjLatestIssued(t){
+ // A document is latest only if it is the final issued document of the same kind
+ // across ALL months. Array order is creation order; do not compare monthly serials.
+ const list=hjDocCollection(t);
+ const ledger=(state.hjIssuedLedger||[]).filter(x=>x.kind===(t.kind||'repair'));
+ if(ledger.length)return ledger[ledger.length-1].id===t.id;
+ const sameKind=list.filter(x=>(x.kind||'repair')===(t.kind||'repair'));
+ return sameKind.length>0&&sameKind[sameKind.length-1].id===t.id;
+}
+function hjRepairOldReusableNumbers(){
+ // Safety migration: V117 could mark the last number of an older month reusable.
+ // Such records must not release their numbers once a later document exists.
+ let changed=false;
+ for(const list of [state.tickets,state.projects]){
+  for(let i=0;i<list.length;i++){
+   const t=list[i];if(!t.deleted||!t.numberReusable)continue;
+   const kind=t.kind||'repair';
+   const ledger=(state.hjIssuedLedger||[]).filter(x=>x.kind===kind);const pos=ledger.findIndex(x=>x.id===t.id);const hasLater=pos>=0?pos<ledger.length-1:list.slice(i+1).some(x=>(x.kind||'repair')===kind);
+   if(hasLater){t.numberReusable=false;t.deleteReason='已刪除（單號保留，不可沿用）';changed=true;}
+  }
+ }
+ if(changed)save();
+}
+
+function hjMayReuseNumber(t){return !t.deleted&&!t.shipments?.length&&!t.recoveries?.length&&hjLatestIssued(t)}
+function hjDeleteOrCancel(id,kind){
+ const list=kind==='repair'?state.tickets:state.projects,t=list.find(x=>x.id===id);
+ if(!t||t.deleted)return;
+ if(t.shipments?.length||t.recoveries?.length)return alert('已有出貨或回收紀錄，無法取消此單據');
+ const reuse=hjMayReuseNumber(t);
+ const label=reuse?'刪除單據':'作廢此單據';
+ if(!confirm(`${label}：${t.number}？\n${reuse?'此為最新單據，刪除後單號可再次使用。':'此為較早建立的單據，將保留取消紀錄，單號永久不可沿用。'}`))return;
+ t.deleted=true;t.deletedAt=new Date().toISOString();t.deleteReason=reuse?'最新單據刪除':'不出貨';t.numberReusable=reuse;
+ save();closeModal();render();
+}
+repairDeleteUnprocessed=function(id){hjDeleteOrCancel(id,'repair')};
+projectDeleteUnprocessed=function(id){hjDeleteOrCancel(id,'project')};
+/* V119: recycle bin with optional automatic retention. Tombstones protect numbering after purge. */
+function hjTrashInit(){
+ state.hjTrashMonths=Number.isInteger(state.hjTrashMonths)&&[0,1,3,6,12,24].includes(state.hjTrashMonths)?state.hjTrashMonths:6;
+ state.hjIssuedLedger??=[];state.hjPurgedNumbers??=[];
+ const ids=new Set(state.hjIssuedLedger.map(x=>x.id));
+ for(const t of [...state.tickets,...state.projects])if(!ids.has(t.id)){
+  state.hjIssuedLedger.push({id:t.id,kind:t.kind||'repair',number:t.number});ids.add(t.id);
+ }
+}
+function hjTrashPurgeOne(t,kind){
+ const list=kind==='repair'?state.tickets:state.projects;
+ if(!t||!t.deleted)return false;
+ // Keep a permanent number reservation for every non-reusable document.
+ if(!t.numberReusable&&!state.hjPurgedNumbers.some(x=>x.kind===(t.kind||'repair')&&x.number===t.number))
+  state.hjPurgedNumbers.push({kind:t.kind||'repair',number:t.number});
+ const idx=list.findIndex(x=>x.id===t.id);if(idx<0)return false;
+ list.splice(idx,1);return true;
+}
+function hjTrashExpiry(t){
+ const d=new Date(t.deletedAt||'');if(!Number.isFinite(d.getTime()))return null;
+ const result=new Date(d.getTime());result.setMonth(result.getMonth()+state.hjTrashMonths);return result;
+}
+function hjTrashAutoPurge(){
+ hjTrashInit();if(state.hjTrashMonths===0)return 0;
+ let count=0;
+ for(const [kind,list] of [['repair',state.tickets],['project',state.projects]]){
+  for(const t of [...list]){
+   const expiry=t.deleted&&hjTrashExpiry(t);
+   if(expiry&&expiry.getTime()<=Date.now()&&hjTrashPurgeOne(t,kind))count++;
+  }
+ }
+ if(count)save();return count;
+}
+function hjTrashSetMonths(){
+ const v=Number(document.getElementById('hj-trash-months')?.value);
+ if(![0,1,3,6,12,24].includes(v))return alert('請選擇保留期限');
+ if(v!==0&&!confirm('設定後，已超過保留期限的單據將在下次清理時永久刪除，且無法從 APP 復原。確定儲存？'))return;
+ state.hjTrashMonths=v;save();hjDeletedRecords(hjTrashViewKind||'repair');
+}
+let hjTrashViewKind='repair';
+function hjTrashManualPurge(id,kind){
+ const list=kind==='repair'?state.tickets:state.projects,t=list.find(x=>x.id===id&&x.deleted);if(!t)return alert('找不到此已刪除單據');
+ if(!confirm('確定永久刪除「'+t.number+'」？\n原始單據、出貨、回收與編輯紀錄都會移除，無法復原。單號保留規則不變。'))return;
+ if(!confirm('再次確認：永久刪除後只能透過先前的 JSON 備份復原。確定繼續？'))return;
+ hjTrashInit();hjTrashPurgeOne(t,kind);save();hjDeletedRecords(kind);
+}
+function hjTrashPurgeExpiredNow(kind){
+ if(state.hjTrashMonths===0)return alert('目前設定為永久保留，請先設定期限');
+ if(!confirm('立即清除所有已超過保留期限的回收桶單據？此操作無法復原。'))return;
+ const n=hjTrashAutoPurge();hjDeletedRecords(kind);alert(n?'已永久刪除 '+n+' 筆過期單據':'目前沒有過期單據');
+}
+function hjDeletedRecords(kind){
+ hjTrashViewKind=kind;hjTrashInit();
+ const list=kind==='repair'?state.tickets:state.projects;
+ const rows=list.filter(x=>x.deleted).slice().reverse();
+ const opts=[[0,'永久保留'],[1,'1 個月'],[3,'3 個月'],[6,'6 個月（預設）'],[12,'1 年'],[24,'2 年']].map(([n,l])=>`<option value="${n}" ${state.hjTrashMonths===n?'selected':''}>${l}</option>`).join('');
+ modal(`<h2>已刪除單據查詢｜回收桶｜${kind==='repair'?'維修':'專案／樣品'}</h2>
+ <p class="notice">只清除已刪除／不出貨的單據。永久刪除後無法從 APP 復原；不可沿用的單號仍永久保留占號紀錄。請先匯出 JSON 備份。</p>
+ <label class="field"><span>回收桶自動刪除保留期限（依刪除日期計算）</span><select id="hj-trash-months">${opts}</select></label>
+ <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn secondary small" onclick="hjTrashSetMonths()">儲存保留期限</button><button class="btn outline small" onclick="hjTrashPurgeExpiredNow('${kind}')">立即清理過期單據</button></div>
+ <p class="muted">自動清理於開啟 APP、切回 APP 或雲端同步後執行；APP 關閉時不會背景執行。維修、專案與樣品共用保留期限。</p>
+ <div class="line"></div><h3>回收桶（${rows.length} 筆）</h3>
+ ${rows.map(t=>`<div class="item-row"><b>${esc(t.number)}</b> <span class="muted">${esc(t.deleteReason||'已刪除')}</span><p class="muted">${esc(t.institution||'')}｜刪除：${esc(t.deletedAt||'日期不明')}</p><p class="muted">${t.numberReusable?'此單號可重新使用':'此單號不可沿用'}${state.hjTrashMonths&&hjTrashExpiry(t)?'｜預計清理：'+hjTrashExpiry(t).toLocaleDateString('zh-TW'):''}</p><div class="row" style="gap:8px;flex-wrap:wrap"><button type="button" class="btn outline small" onclick="${kind==='repair'?'detail':'projectDetail'}('${t.id}')">查看原單據</button><button type="button" class="btn danger small" onclick="hjTrashManualPurge('${t.id}','${kind}')">永久刪除</button></div></div>`).join('')||'<p class="muted">回收桶目前沒有單據</p>'}`);
+}
+// Wrap save to preserve issuance history whenever new documents are created.
+const hjTrashOriginalSave=save;
+save=function(){hjTrashInit();hjTrashOriginalSave()};
+hjTrashInit();hjTrashAutoPurge();
+// Cloud downloads replace state; keep the ledger and enforce retention after replacement.
+const hjTrashOriginalRender=render;
+let hjTrashChecking=false;
+render=function(){
+ if(!hjTrashChecking){hjTrashChecking=true;try{hjTrashAutoPurge()}finally{hjTrashChecking=false}}
+ return hjTrashOriginalRender();
+};
+window.addEventListener('focus',()=>{if(!document.body.classList.contains('modal-open'))hjTrashAutoPurge()});
+
+hjRepairOldReusableNumbers();
+const hjV117RepairDetail=detail;
+detail=function(id){
+ hjV117RepairDetail(id);const t=get(id);if(!t||t.deleted||t.shipments?.length||t.recoveries?.length)return;
+ const btn=document.querySelector('.hj-detail-delete button');if(btn)btn.textContent=hjMayReuseNumber(t)?'刪除單據':'作廢此單據';
+};
+const hjV117ProjectDetail=projectDetail;
+projectDetail=function(id){
+ hjV117ProjectDetail(id);const t=state.projects.find(x=>x.id===id);
+ if(!t||t.deleted||t.shipments?.length||t.recoveries?.length)return;
+ const btn=document.querySelector('.hj-detail-delete button');if(btn)btn.textContent=hjMayReuseNumber(t)?'刪除單據':'作廢此單據';
+};
+
 </script></body></html>
