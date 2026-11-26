@@ -1852,12 +1852,17 @@ async function hjCloudFetch(path,opts={},auth=true){
 function hjCloudDialog(){
  const sess=hjCloudSession();
  modal(`<h2>☁️ 私人雲端同步（V103 自動測試版）</h2>
- <p class="muted">手機和電腦請登入相同帳號。儲存後自動嘗試同步；另一台裝置約每 30 秒檢查更新。遇到衝突會暫停，不會直接覆蓋。</p>
+ <p class="muted">手機和電腦請登入相同帳號。儲存後自動嘗試同步；另一台裝置依設定間隔檢查更新，也可在主頁下拉立即同步。遇到衝突會暫停，不會直接覆蓋。</p>
  <div class="panel"><h3>登入狀態</h3><p id="hj-cloud-account" class="muted">${sess?.user?.email?'已登入：'+hjCloudText(sess.user.email):'尚未登入'}</p>
  ${sess?.access_token?`<button class="btn secondary small" onclick="hjCloudLogout()">登出雲端</button>`:
  `<label class="field"><span>Email</span><input type="email" id="hj-cloud-email" autocomplete="username" placeholder="你的 APP 登入 Email"></label>
  <label class="field"><span>密碼</span><input type="password" id="hj-cloud-password" autocomplete="current-password" placeholder="APP 登入密碼"></label>
  <button class="btn" onclick="hjCloudLogin()">登入雲端</button>`}</div>
+ <div class="panel"><h3>自動同步頻率</h3>
+ <label class="field"><span>檢查雲端更新的間隔</span><select id="hj-sync-frequency" onchange="hjSyncSetInterval(this.value)">
+ ${[5,10,15,30,60].map(n=>`<option value="${n}" ${hjSyncGetInterval()===n?'selected':''}>每 ${n} 秒</option>`).join('')}
+ </select></label><p class="muted">預設每 10 秒檢查一次。主頁向下拉動也可立即檢查；有編輯視窗開啟時，會延後下載，避免覆蓋未儲存內容。</p>
+ <button class="btn secondary small" onclick="hjAutoSync()">立即檢查同步</button></div>
  <div class="panel"><h3>目前本機資料</h3><p class="muted">${hjCloudCount(state)}</p>
  <p class="muted">自動同步已啟用。第一次啟動若兩端資料不同，請先選擇手動上傳或下載，確認同步基準。</p>
  <div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn" ${sess?.access_token?'':'disabled'} onclick="hjCloudUpload()">⬆ 上傳本機資料</button><button class="btn secondary" ${sess?.access_token?'':'disabled'} onclick="hjCloudDownload()">⬇ 下載雲端資料</button></div>
@@ -2016,7 +2021,25 @@ async function hjAutoSync(){
 window.addEventListener('online',hjAutoSyncSoon);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)hjAutoSyncSoon()});
 window.addEventListener('focus',hjAutoSyncSoon);
-setInterval(()=>{if(!document.hidden)hjAutoSync()},30000);
+/* V104: adjustable polling and pull-to-refresh. */
+const HJ_SYNC_FREQ_KEY='hj-cloud-sync-seconds-v104';
+let hjSyncPollTimer=null;
+function hjSyncGetInterval(){const n=Number(localStorage.getItem(HJ_SYNC_FREQ_KEY));return [5,10,15,30,60].includes(n)?n:10}
+function hjSyncStartPolling(){clearInterval(hjSyncPollTimer);hjSyncPollTimer=setInterval(()=>{if(!document.hidden)hjAutoSync()},hjSyncGetInterval()*1000)}
+function hjSyncSetInterval(v){const n=Number(v);if(![5,10,15,30,60].includes(n))return;localStorage.setItem(HJ_SYNC_FREQ_KEY,String(n));hjSyncStartPolling();hjAutoStatus('同步頻率已設為每 '+n+' 秒');hjAutoSyncSoon()}
+hjSyncStartPolling();
+(function hjPullSync(){
+ const style=document.createElement('style');style.textContent=`#hj-pull-sync{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translate(-50%,-140px);transition:transform .18s ease;z-index:10001;pointer-events:none;border-radius:30px;background:rgba(245,247,250,.97);border:1px solid #c9d5df;color:#45576c;padding:9px 18px;font-size:13px;box-shadow:0 3px 16px #0002}#hj-pull-sync.hj-visible{transform:translate(-50%,0)}`;document.head.appendChild(style);
+ const tip=document.createElement('div');tip.id='hj-pull-sync';tip.setAttribute('role','status');tip.textContent='↓ 下拉以同步';document.body.appendChild(tip);
+ let startY=0,startX=0,tracking=false,ready=false;
+ function eligible(target){return !document.hidden&&(document.getElementById('hj-cloud-gate')?.hidden!==false)&&!document.body.classList.contains('modal-open')&&!target.closest('input,textarea,select,button,a,[contenteditable],.nav,.top-search')}
+ // Main content scrolls on some layouts; both the page and content must be at the top.
+ function atTop(){const main=document.getElementById('main');return window.scrollY<=2&&(!main||main.scrollTop<=2)}
+ document.addEventListener('touchstart',e=>{tracking=false;ready=false;if(e.touches.length!==1||!eligible(e.target)||!atTop())return;startY=e.touches[0].clientY;startX=e.touches[0].clientX;tracking=true},{passive:true});
+ document.addEventListener('touchmove',e=>{if(!tracking||e.touches.length!==1)return;const dy=e.touches[0].clientY-startY,dx=e.touches[0].clientX-startX;if(dy<0||Math.abs(dx)>Math.abs(dy)*.7){tracking=false;tip.classList.remove('hj-visible');return}if(dy>35){ready=dy>=95;tip.textContent=ready?'↻ 放開立即同步':'↓ 繼續下拉以同步';tip.classList.add('hj-visible')}},{passive:true});
+ document.addEventListener('touchend',()=>{const trigger=tracking&&ready;tracking=false;ready=false;tip.classList.remove('hj-visible');if(trigger){tip.textContent='☁ 同步檢查中…';tip.classList.add('hj-visible');hjAutoSync();setTimeout(()=>tip.classList.remove('hj-visible'),1200)}},{passive:true});
+ document.addEventListener('touchcancel',()=>{tracking=false;ready=false;tip.classList.remove('hj-visible')},{passive:true});
+})();
 
 render();
 hjCloudCheckOnStart();
