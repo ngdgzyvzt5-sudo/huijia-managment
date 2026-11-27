@@ -752,9 +752,10 @@ function statusBadges(t){let total=t.items.reduce((a,x)=>a+Number(x.qty),0),sh=t
 function projStatus(t){let qty=t.items.reduce((s,x)=>s+Number(x.qty),0),ship=t.items.reduce((s,x,i)=>s+shipped(t,i),0),rec=t.items.reduce((s,x,i)=>s+recovered(t,i),0);if(ship>=qty&&rec>=qty)return '已完成';if(ship>=qty)return '待回收';if(rec>=qty)return '待出貨';if(ship||rec)return '處理中';return '待出貨・待回收'}
 function returnDays(t){if(returnChoice(t)!=='date'||!t.expectedReturn)return null;return Math.ceil((new Date(t.expectedReturn+'T12:00:00')-new Date(today()+'T12:00:00'))/86400000)}
 function pendingRecovery(t){return t.items.some((x,i)=>recovered(t,i)<x.qty)}
-function reminder(t){if(!pendingRecovery(t))return '';let days=returnDays(t);if(days===null||days>state.reminderDays)return '';let level=days<0?'level-overdue':days===0?'level-urgent':days<=7?'level-near':days<=14?'level-mid':'';let label=days<0?'已逾期 '+(-days)+' 天':days===0?'今天到期':'回收倒數 '+days+' 天';return `<span class="reminder-mini ${level}">⏰ ${label}</span>`}
+function isRecoveryReminderDue(t){if(!pendingRecovery(t))return false;const days=returnDays(t);return days!==null&&days<=Number(state.reminderDays??30)}
+function reminder(t){if(!isRecoveryReminderDue(t))return '';let days=returnDays(t);let level=days<0?'level-overdue':days===0?'level-urgent':days<=7?'level-near':days<=14?'level-mid':'';let label=days<0?'已逾期 '+(-days)+' 天':days===0?'今天到期':'回收倒數 '+days+' 天';return `<span class="reminder-mini ${level}">⏰ ${label}</span>`}
 function projectCards(arr,showReminder=false){return arr.length?arr.map(t=>`<article class="ticket compact ${projStatus(t)==='已完成'?'done':''}" tabindex="0" role="button" onclick="projectDetail('${t.id}')" onkeydown="if(event.key==='Enter')projectDetail('${t.id}')"><div class="ticket-top"><strong>${esc(t.number)}</strong>${statusBadges(t)}</div><div class="compact-info hj-card-meta"><span class="hj-meta-pair"><span class="hj-meta-label">申請日期：</span><span class="hj-meta-value">${esc(t.date)}</span></span><span class="hj-meta-separator" aria-hidden="true">|</span><span class="hj-meta-pair"><span class="hj-meta-label">申請人：</span><span class="hj-meta-value">${esc(t.applicant)}</span></span></div><div class="compact-inst hj-card-meta"><span class="hj-meta-pair"><span class="hj-meta-label">${t.kind==='sample'?'使用單位：':'機構：'}</span><span class="hj-meta-value">${esc(t.institution)}</span></span></div>${showReminder?reminder(t):''}</article>`).join(''):'<div class="empty">目前沒有符合條件的單據</div>'}
-function renderProjects(){const labels={project:'專案申請單',sample:'樣品申請單',ship:'待出貨',recover:'待回收',settings:'設定'};document.getElementById('pageTitle').textContent=labels[projectTab];document.querySelector('header .muted').textContent='滙嘉健康生活科技｜專案與樣品管理';document.getElementById('fab').classList.toggle('hidden',!['project','sample'].includes(projectTab));document.getElementById('fab').onclick=()=>chooseProjectForm();document.getElementById('nav').style.gridTemplateColumns='repeat(5,1fr)';let recoveryUnits=new Set(state.projects.filter(t=>!t.deleted&&pendingRecovery(t)).map(t=>t.institution.trim()).filter(Boolean)).size;let shipCount=state.projects.filter(t=>!t.deleted&&t.items.some((x,i)=>shipped(t,i)<Number(x.qty))).length;document.getElementById('nav').innerHTML=[['project','▤','專案'],['sample','▤','樣品'],['ship','📦','待出貨'],['recover','↩','待回收'],['settings','⚙','設定']].map(([id,ico,label])=>`<button class="${projectTab===id?'active':''}" onclick="go('${id}')"><span class="ico">${navIcon(id)}${id==='ship'&&shipCount?`<span class="nav-count">${shipCount>99?'99+':shipCount}</span>`:''}${id==='recover'&&recoveryUnits?`<span class="nav-count">${recoveryUnits>99?'99+':recoveryUnits}</span>`:''}</span>${label}</button>`).join('');let arr=state.projects.filter(t=>!t.deleted&&matchesQuick(t)),m=document.getElementById('main');if(projectTab==='settings'){m.innerHTML=`<div class="panel"><div class="setting" onclick="combinedNumberSettings()"><div><b>🔢 單據格式設定</b><p>統一入口，分別編輯專案與樣品單號</p></div>›</div><div class="setting" onclick="reminderSettings()"><div><b>🔔 預計回收提醒</b><p>目前提前 ${state.reminderDays} 天提醒</p></div>›</div><div class="setting" onclick="projectProductsSettings()"><div><b>📋 專案／樣品品項</b><p>維護可選品項</p></div>›</div><div class="setting" onclick="settingsSync()"><div><b>🔑 專屬同步碼</b><p>雲端功能尚未啟用</p></div>›</div><div class="setting" onclick="projectArchive()"><div><b>🗂️ 指定單號封存／查詢</b></div>›</div><div class="setting" onclick="exportBackup()"><div><b>💾 匯出備份</b></div>›</div></div><div class="notice">回收提醒在開啟 APP 時顯示，尚不支援背景推播通知。</div>`;return}if(projectTab==='project'||projectTab==='sample'){arr=arr.filter(t=>t.kind===projectTab);m.innerHTML=`<div class="stats"><div class="stat"><b>${arr.length}</b><span>全部單據</span></div><div class="stat"><b>${arr.filter(t=>projStatus(t)!=='已完成').length}</b><span>處理中</span></div><div class="stat"><b>${arr.filter(t=>projStatus(t)==='已完成').length}</b><span>已完成</span></div></div>${projectCards(arr.sort((a,b)=>b.date.localeCompare(a.date)))}`;return}arr=arr.filter(t=>t.items.some((x,i)=>(projectTab==='ship'?shipped(t,i):recovered(t,i))<x.qty));m.innerHTML=`<p class="muted" style="margin-bottom:12px">${projectTab==='recover'?'可查看預計回收日與提醒；樣品須先出貨再回收；專案可依實際流程處理。':'專案與樣品待出貨清單'}</p>${hjV38PendingCards(arr.sort((a,b)=>projectTab==='recover'?(returnDays(a)===null?Infinity:returnDays(a))-(returnDays(b)===null?Infinity:returnDays(b))||b.date.localeCompare(a.date):b.date.localeCompare(a.date)),projectTab==='recover')}`}
+function renderProjects(){const labels={project:'專案申請單',sample:'樣品申請單',ship:'待出貨',recover:'待回收',settings:'設定'};document.getElementById('pageTitle').textContent=labels[projectTab];document.querySelector('header .muted').textContent='滙嘉健康生活科技｜專案與樣品管理';document.getElementById('fab').classList.toggle('hidden',!['project','sample'].includes(projectTab));document.getElementById('fab').onclick=()=>chooseProjectForm();document.getElementById('nav').style.gridTemplateColumns='repeat(5,1fr)';let recoveryUnits=new Set(state.projects.filter(t=>!t.deleted&&isRecoveryReminderDue(t)).map(t=>(t.institution||'').trim()).filter(Boolean)).size;let shipCount=state.projects.filter(t=>!t.deleted&&t.items.some((x,i)=>shipped(t,i)<Number(x.qty))).length;document.getElementById('nav').innerHTML=[['project','▤','專案'],['sample','▤','樣品'],['ship','📦','待出貨'],['recover','↩','待回收'],['settings','⚙','設定']].map(([id,ico,label])=>`<button class="${projectTab===id?'active':''}" onclick="go('${id}')"><span class="ico">${navIcon(id)}${id==='ship'&&shipCount?`<span class="nav-count">${shipCount>99?'99+':shipCount}</span>`:''}${id==='recover'&&recoveryUnits?`<span class="nav-count">${recoveryUnits>99?'99+':recoveryUnits}</span>`:''}</span>${label}</button>`).join('');let arr=state.projects.filter(t=>!t.deleted&&matchesQuick(t)),m=document.getElementById('main');if(projectTab==='settings'){m.innerHTML=`<div class="panel"><div class="setting" onclick="combinedNumberSettings()"><div><b>🔢 單據格式設定</b><p>統一入口，分別編輯專案與樣品單號</p></div>›</div><div class="setting" onclick="reminderSettings()"><div><b>🔔 預計回收提醒</b><p>目前提前 ${state.reminderDays} 天提醒</p></div>›</div><div class="setting" onclick="projectProductsSettings()"><div><b>📋 專案／樣品品項</b><p>維護可選品項</p></div>›</div><div class="setting" onclick="settingsSync()"><div><b>🔑 專屬同步碼</b><p>雲端功能尚未啟用</p></div>›</div><div class="setting" onclick="projectArchive()"><div><b>🗂️ 指定單號封存／查詢</b></div>›</div><div class="setting" onclick="exportBackup()"><div><b>💾 匯出備份</b></div>›</div></div><div class="notice">回收提醒在開啟 APP 時顯示，尚不支援背景推播通知。</div>`;return}if(projectTab==='project'||projectTab==='sample'){arr=arr.filter(t=>t.kind===projectTab);m.innerHTML=`<div class="stats"><div class="stat"><b>${arr.length}</b><span>全部單據</span></div><div class="stat"><b>${arr.filter(t=>projStatus(t)!=='已完成').length}</b><span>處理中</span></div><div class="stat"><b>${arr.filter(t=>projStatus(t)==='已完成').length}</b><span>已完成</span></div></div>${projectCards(arr.sort((a,b)=>b.date.localeCompare(a.date)))}`;return}arr=arr.filter(t=>t.items.some((x,i)=>(projectTab==='ship'?shipped(t,i):recovered(t,i))<x.qty));m.innerHTML=`<p class="muted" style="margin-bottom:12px">${projectTab==='recover'?'可查看預計回收日與提醒；樣品須先出貨再回收；專案可依實際流程處理。':'專案與樣品待出貨清單'}</p>${hjV38PendingCards(arr.sort((a,b)=>projectTab==='recover'?(returnDays(a)===null?Infinity:returnDays(a))-(returnDays(b)===null?Infinity:returnDays(b))||b.date.localeCompare(a.date):b.date.localeCompare(a.date)),projectTab==='recover')}`}
 /* V59：專案樣品右下角新增鍵，先選擇單據類型。既有單據的編輯流程不變。 */
 function chooseProjectForm(){
  modal(`<h2 style="margin:0 0 10px;text-align:center">選擇新建表單</h2>
@@ -2277,13 +2278,28 @@ hjCloudCheckOnStart();
 /* V117: only newest issued document may release its number. Earlier cancellations retain number. */
 function hjDocCollection(t){return t.kind==='project'||t.kind==='sample'?state.projects:state.tickets}
 function hjLatestIssued(t){
- // A document is latest only if it is the final issued document of the same kind
- // across ALL months. Array order is creation order; do not compare monthly serials.
+ // Cascade deletion: skip only the deleted, reusable tail of the issuance ledger.
+ // A voided (non-reusable) document remains a barrier, even after trash purge.
+ const kind=t.kind||'repair';
+ const ledger=(state.hjIssuedLedger||[]).filter(x=>x.kind===kind);
  const list=hjDocCollection(t);
- const ledger=(state.hjIssuedLedger||[]).filter(x=>x.kind===(t.kind||'repair'));
- if(ledger.length)return ledger[ledger.length-1].id===t.id;
- const sameKind=list.filter(x=>(x.kind||'repair')===(t.kind||'repair'));
- return sameKind.length>0&&sameKind[sameKind.length-1].id===t.id;
+ if(ledger.length){
+  for(let i=ledger.length-1;i>=0;i--){
+   const entry=ledger[i];
+   const doc=list.find(x=>x.id===entry.id);
+   const reusable=doc?!!(doc.deleted&&doc.numberReusable):entry.numberReusable===true;
+   if(reusable)continue;
+   return entry.id===t.id;
+  }
+  return false;
+ }
+ const sameKind=list.filter(x=>(x.kind||'repair')===kind);
+ for(let i=sameKind.length-1;i>=0;i--){
+  const doc=sameKind[i];
+  if(doc.deleted&&doc.numberReusable)continue;
+  return doc.id===t.id;
+ }
+ return false;
 }
 function hjRepairOldReusableNumbers(){
  // Safety migration: V117 could mark the last number of an older month reusable.
@@ -2308,7 +2324,8 @@ function hjDeleteOrCancel(id,kind){
  const reuse=hjMayReuseNumber(t);
  const label=reuse?'刪除單據':'作廢此單據';
  if(!confirm(`${label}：${t.number}？\n${reuse?'此為最新單據，刪除後單號可再次使用。':'此為較早建立的單據，將保留取消紀錄，單號永久不可沿用。'}`))return;
- t.deleted=true;t.deletedAt=new Date().toISOString();t.deleteReason=reuse?'最新單據刪除':'不出貨';t.numberReusable=reuse;
+ t.deleted=true;t.deletedAt=new Date().toISOString();t.deleteReason=reuse?'最新單據刪除':'作廢此單據';t.numberReusable=reuse;
+ const issued=(state.hjIssuedLedger||[]).find(x=>x.id===t.id);if(issued)issued.numberReusable=reuse;
  save();closeModal();render();
 }
 repairDeleteUnprocessed=function(id){hjDeleteOrCancel(id,'repair')};
@@ -2317,9 +2334,13 @@ projectDeleteUnprocessed=function(id){hjDeleteOrCancel(id,'project')};
 function hjTrashInit(){
  state.hjTrashMonths=Number.isInteger(state.hjTrashMonths)&&[0,1,3,6,12,24].includes(state.hjTrashMonths)?state.hjTrashMonths:6;
  state.hjIssuedLedger??=[];state.hjPurgedNumbers??=[];
+ for(const entry of state.hjIssuedLedger){
+  const doc=[...state.tickets,...state.projects].find(x=>x.id===entry.id);
+  if(doc)entry.numberReusable=!!(doc.deleted&&doc.numberReusable);
+ }
  const ids=new Set(state.hjIssuedLedger.map(x=>x.id));
  for(const t of [...state.tickets,...state.projects])if(!ids.has(t.id)){
-  state.hjIssuedLedger.push({id:t.id,kind:t.kind||'repair',number:t.number});ids.add(t.id);
+  state.hjIssuedLedger.push({id:t.id,kind:t.kind||'repair',number:t.number,numberReusable:!!(t.deleted&&t.numberReusable)});ids.add(t.id);
  }
 }
 function hjTrashPurgeOne(t,kind){
@@ -2328,6 +2349,7 @@ function hjTrashPurgeOne(t,kind){
  // Keep a permanent number reservation for every non-reusable document.
  if(!t.numberReusable&&!state.hjPurgedNumbers.some(x=>x.kind===(t.kind||'repair')&&x.number===t.number))
   state.hjPurgedNumbers.push({kind:t.kind||'repair',number:t.number});
+ const issued=(state.hjIssuedLedger||[]).find(x=>x.id===t.id);if(issued)issued.numberReusable=!!t.numberReusable;
  const idx=list.findIndex(x=>x.id===t.id);if(idx<0)return false;
  list.splice(idx,1);return true;
 }
@@ -2390,7 +2412,7 @@ render=function(){
 };
 window.addEventListener('focus',()=>{if(!document.body.classList.contains('modal-open'))hjTrashAutoPurge()});
 
-hjRepairOldReusableNumbers();
+// V127: do not retroactively invalidate correctly released cascade numbers.
 const hjV117RepairDetail=detail;
 detail=function(id){
  hjV117RepairDetail(id);const t=get(id);if(!t||t.deleted||t.shipments?.length||t.recoveries?.length)return;
